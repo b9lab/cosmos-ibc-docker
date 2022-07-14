@@ -23,7 +23,7 @@ RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
 RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 # Clone checkers game repository(branch wager-denomination)
-RUN git clone -b wager-denomination https://github.com/cosmos/b9-checkers-academy-draft.git /home/checkers
+RUN git clone -b v1-wager-denomination https://github.com/cosmos/b9-checkers-academy-draft.git /home/checkers
 
 # Install more dependencies
 RUN go get github.com/golangci/golangci-lint/cmd/golangci-lint
