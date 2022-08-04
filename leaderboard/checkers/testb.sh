@@ -1,0 +1,1 @@
+./test.sh 1 checkersb cosmos173czeq76k0lh0m6zcz72yu6zj8c6d0tf294w5k cosmos1a3qmcqgdztx7fctx9asagw8nmj66sr5grg5z97

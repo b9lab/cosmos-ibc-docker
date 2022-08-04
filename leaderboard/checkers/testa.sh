@@ -1,0 +1,1 @@
+./test.sh 1 checkersa cosmos1n4mqetruv26lm2frkjah86h642ts84qyd5uvyz cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8

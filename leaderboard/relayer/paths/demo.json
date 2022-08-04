@@ -1,0 +1,15 @@
+{
+  "src": {
+    "chain-id": "checkersa",
+    "port-id": "checkers",
+    "order": "unordered",
+    "version": "checkers-1"
+  },
+  "dst": {
+    "chain-id": "checkersb",
+    "port-id": "checkers",
+    "order": "unordered",
+    "version": "checkers-1"
+  },
+  "strategy": { "type": "naive" }
+}

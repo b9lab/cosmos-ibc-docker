@@ -1,0 +1,41 @@
+# start with docker-compose -f leaderboard.yml up -d
+
+version: '3'
+
+services:
+
+  checkersa:
+    container_name: checkersa
+    image: "leaderboarda"
+
+    ports:
+      - "26657:26657"
+      - "1317:1317"
+      - "4500:4500"
+
+    networks:
+      - leaderboarddemo
+
+  checkersb:
+    container_name: checkersb
+    image: "leaderboardb"
+
+    ports:
+      - "26658:26657"
+      - "1318:26657"
+      - "4501:26657"
+
+    networks:
+      - leaderboarddemo
+
+  relayer:
+    container_name: relayer
+    image: "relayer"
+    tty: true
+    stdin_open: true
+
+    networks:
+      - leaderboarddemo
+
+networks:
+    leaderboarddemo:
