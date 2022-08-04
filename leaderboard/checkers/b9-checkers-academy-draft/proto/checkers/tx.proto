@@ -1,0 +1,51 @@
+syntax = "proto3";
+package b9lab.checkers.checkers;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/b9lab/checkers/x/checkers/types";
+
+// Msg defines the Msg service.
+service Msg {
+    // this line is used by starport scaffolding # proto/tx/rpc
+  rpc RejectGame(MsgRejectGame) returns (MsgRejectGameResponse);
+  rpc PlayMove(MsgPlayMove) returns (MsgPlayMoveResponse);
+  rpc CreateGame(MsgCreateGame) returns (MsgCreateGameResponse);
+}
+
+// this line is used by starport scaffolding # proto/tx/message
+message MsgRejectGame {
+  string creator = 1;
+  string idValue = 2;
+}
+
+message MsgRejectGameResponse {
+}
+
+message MsgPlayMove {
+  string creator = 1;
+  string idValue = 2;
+  uint64 fromX = 3;
+  uint64 fromY = 4;
+  uint64 toX = 5;
+  uint64 toY = 6;
+}
+
+message MsgPlayMoveResponse {
+  string idValue = 1;
+  int64 capturedX = 2;
+  int64 capturedY = 3;
+  string winner = 4;
+}
+
+message MsgCreateGame {
+  string creator = 1;
+  string red = 2;
+  string black = 3;
+  uint64 wager = 4;
+  string token = 5; // Denomination of the wager.
+}
+
+message MsgCreateGameResponse {
+  string idValue = 1;
+}
