@@ -21,9 +21,18 @@ const (
 	MemStoreKey = "mem_checkers"
 
 	// this line is used by starport scaffolding # ibc/keys/name
+	// Version defines the current version the IBC module supports
+	Version = "checkers-1"
+
+	// PortID is the default port id that module binds to
+	PortID = "checkers"
 )
 
 // this line is used by starport scaffolding # ibc/keys/port
+var (
+	// PortKey defines the key to store the port ID in store
+	PortKey = KeyPrefix("checkerswith-port-")
+)
 
 func KeyPrefix(p string) []byte {
 	return []byte(p)

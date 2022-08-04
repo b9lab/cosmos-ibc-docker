@@ -90,7 +90,7 @@ paths:
                         wonCount:
                           type: string
                           format: uint64
-                        dateAdded:
+                        DateAdded:
                           type: string
         default:
           description: An unexpected error response.
@@ -17803,7 +17803,7 @@ paths:
             latest_height overrrides the height field and queries the latest
             stored
 
-            ConsensusState
+            ConsensusState.
           in: query
           required: false
           type: boolean
@@ -19638,7 +19638,7 @@ definitions:
             wonCount:
               type: string
               format: uint64
-            dateAdded:
+            DateAdded:
               type: string
   b9lab.checkers.checkers.MsgCreateGameResponse:
     type: object
@@ -19659,6 +19659,8 @@ definitions:
       winner:
         type: string
   b9lab.checkers.checkers.MsgRejectGameResponse:
+    type: object
+  b9lab.checkers.checkers.MsgSendScoreResponse:
     type: object
   b9lab.checkers.checkers.NextGame:
     type: object
@@ -19814,7 +19816,7 @@ definitions:
                 wonCount:
                   type: string
                   format: uint64
-                dateAdded:
+                DateAdded:
                   type: string
   b9lab.checkers.checkers.QueryGetNextGameResponse:
     type: object
@@ -19921,7 +19923,7 @@ definitions:
       wonCount:
         type: string
         format: uint64
-      dateAdded:
+      DateAdded:
         type: string
   cosmos.base.query.v1beta1.PageRequest:
     type: object

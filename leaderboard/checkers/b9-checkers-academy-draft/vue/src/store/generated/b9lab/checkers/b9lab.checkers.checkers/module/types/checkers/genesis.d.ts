@@ -14,6 +14,8 @@ export interface GenesisState {
     storedGameList: StoredGame[];
     /** this line is used by starport scaffolding # genesis/proto/stateField */
     nextGame: NextGame | undefined;
+    /** this line is used by starport scaffolding # ibc/genesis/proto */
+    portId: string;
 }
 export declare const GenesisState: {
     encode(message: GenesisState, writer?: Writer): Writer;

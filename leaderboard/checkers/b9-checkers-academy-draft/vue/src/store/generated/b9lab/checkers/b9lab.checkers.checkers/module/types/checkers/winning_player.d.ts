@@ -3,7 +3,7 @@ export declare const protobufPackage = "b9lab.checkers.checkers";
 export interface WinningPlayer {
     playerAddress: string;
     wonCount: number;
-    dateAdded: string;
+    DateAdded: string;
 }
 export declare const WinningPlayer: {
     encode(message: WinningPlayer, writer?: Writer): Writer;

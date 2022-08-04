@@ -6,5 +6,5 @@ option go_package = "github.com/b9lab/checkers/x/checkers/types";
 message WinningPlayer {
   string playerAddress = 1;
   uint64 wonCount = 2; 
-  string dateAdded = 3;
+  string DateAdded = 3;
 }

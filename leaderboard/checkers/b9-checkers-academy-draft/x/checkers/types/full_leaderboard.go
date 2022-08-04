@@ -14,28 +14,28 @@ type winningPlayerParsed struct {
 	DateAdded     time.Time
 }
 
-func (winningPlayer *WinningPlayer) GetDateAddedAsTime() (dateAdded time.Time, err error) {
-	dateAdded, errDateAdded := time.Parse(DateAddedLayout, winningPlayer.DateAdded)
-	return dateAdded, sdkerrors.Wrapf(errDateAdded, ErrInvalidDateAdded.Error(), winningPlayer.DateAdded)
+func (winningPlayer *WinningPlayer) GetDateAddedAsTime() (DateAdded time.Time, err error) {
+	DateAdded, errDateAdded := time.Parse(DateAddedLayout, winningPlayer.DateAdded)
+	return DateAdded, sdkerrors.Wrapf(errDateAdded, ErrInvalidDateAdded.Error(), winningPlayer.DateAdded)
 }
 
 func GetDateAdded(ctx sdk.Context) time.Time {
 	return ctx.BlockTime()
 }
 
-func FormatDateAdded(dateAdded time.Time) string {
-	return dateAdded.UTC().Format(DateAddedLayout)
+func FormatDateAdded(DateAdded time.Time) string {
+	return DateAdded.UTC().Format(DateAddedLayout)
 }
 
 func (winningPlayer *WinningPlayer) parse() (parsed *winningPlayerParsed, err error) {
-	dateAdded, err := winningPlayer.GetDateAddedAsTime()
+	DateAdded, err := winningPlayer.GetDateAddedAsTime()
 	if err != nil {
 		return nil, err
 	}
 	return &winningPlayerParsed{
 		PlayerAddress: winningPlayer.PlayerAddress,
 		WonCount:      winningPlayer.WonCount,
-		DateAdded:     dateAdded,
+		DateAdded:     DateAdded,
 	}, nil
 }
 
@@ -83,7 +83,27 @@ func sortWinners(winners []*winningPlayerParsed) {
 }
 
 func AddParsedCandidatesAndSort(parsedWinners []*winningPlayerParsed, candidates []*winningPlayerParsed) (updated []*winningPlayerParsed) {
-	updated = append(parsedWinners, candidates...)
+	
+	found:= false
+	// if it is end of a game instead of a genesis import
+	if (len(candidates) == 1) {
+		for i := range parsedWinners {
+	    if parsedWinners[i].PlayerAddress == candidates[0].PlayerAddress {
+	        // found the player, update the fields
+	        parsedWinners[i].WonCount = candidates[0].WonCount
+	        parsedWinners[i].DateAdded = candidates[0].DateAdded
+	        found= true
+	        break
+	    }
+		}
+	}
+
+	if(found) {
+		updated = parsedWinners
+	} else {
+		updated = append(parsedWinners, candidates...)
+	}
+	
 	sortWinners(updated)
 	if LeaderboardWinnerLength < len(updated) {
 		updated = updated[:LeaderboardWinnerLength]

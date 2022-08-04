@@ -5,7 +5,7 @@ import { StoredGame } from '../checkers/stored_game';
 import { NextGame } from '../checkers/next_game';
 import { Writer, Reader } from 'protobufjs/minimal';
 export const protobufPackage = 'b9lab.checkers.checkers';
-const baseGenesisState = {};
+const baseGenesisState = { portId: '' };
 export const GenesisState = {
     encode(message, writer = Writer.create()) {
         if (message.leaderboard !== undefined) {
@@ -19,6 +19,9 @@ export const GenesisState = {
         }
         if (message.nextGame !== undefined) {
             NextGame.encode(message.nextGame, writer.uint32(10).fork()).ldelim();
+        }
+        if (message.portId !== '') {
+            writer.uint32(42).string(message.portId);
         }
         return writer;
     },
@@ -42,6 +45,9 @@ export const GenesisState = {
                     break;
                 case 1:
                     message.nextGame = NextGame.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.portId = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -76,6 +82,12 @@ export const GenesisState = {
         else {
             message.nextGame = undefined;
         }
+        if (object.portId !== undefined && object.portId !== null) {
+            message.portId = String(object.portId);
+        }
+        else {
+            message.portId = '';
+        }
         return message;
     },
     toJSON(message) {
@@ -94,6 +106,7 @@ export const GenesisState = {
             obj.storedGameList = [];
         }
         message.nextGame !== undefined && (obj.nextGame = message.nextGame ? NextGame.toJSON(message.nextGame) : undefined);
+        message.portId !== undefined && (obj.portId = message.portId);
         return obj;
     },
     fromPartial(object) {
@@ -121,6 +134,12 @@ export const GenesisState = {
         }
         else {
             message.nextGame = undefined;
+        }
+        if (object.portId !== undefined && object.portId !== null) {
+            message.portId = object.portId;
+        }
+        else {
+            message.portId = '';
         }
         return message;
     }

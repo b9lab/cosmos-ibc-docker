@@ -24,6 +24,7 @@ func DefaultGenesis() *GenesisState {
 			FifoHead: NoFifoIdKey,
 			FifoTail: NoFifoIdKey,
 		},
+		PortId: PortID,
 	}
 }
 

@@ -29,7 +29,9 @@ var (
 	ErrNotInRefundState        = sdkerrors.Register(ModuleName, 1118, "game is not in a state to refund, move count: %d")
 	ErrWinnerNotParseable      = sdkerrors.Register(ModuleName, 1119, "winner is not parseable: %s")
 	ErrThereIsNoWinner         = sdkerrors.Register(ModuleName, 1120, "there is no winner")
-	ErrInvalidDateAdded        = sdkerrors.Register(ModuleName, 1121, "dateAdded cannot be parsed: %s")
+	ErrInvalidDateAdded        = sdkerrors.Register(ModuleName, 1121, "DateAdded cannot be parsed: %s")
 	ErrCannotAddToLeaderboard  = sdkerrors.Register(ModuleName, 1122, "cannot add to leaderboard: %s")
 	// this line is used by starport scaffolding # ibc/errors
+	ErrInvalidPacketTimeout = sdkerrors.Register(ModuleName, 1500, "invalid packet timeout")
+	ErrInvalidVersion       = sdkerrors.Register(ModuleName, 1501, "invalid version")
 )

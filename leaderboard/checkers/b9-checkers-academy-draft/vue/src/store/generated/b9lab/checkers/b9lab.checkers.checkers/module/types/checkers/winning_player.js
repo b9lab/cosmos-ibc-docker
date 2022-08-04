@@ -2,7 +2,7 @@
 import * as Long from 'long';
 import { util, configure, Writer, Reader } from 'protobufjs/minimal';
 export const protobufPackage = 'b9lab.checkers.checkers';
-const baseWinningPlayer = { playerAddress: '', wonCount: 0, dateAdded: '' };
+const baseWinningPlayer = { playerAddress: '', wonCount: 0, DateAdded: '' };
 export const WinningPlayer = {
     encode(message, writer = Writer.create()) {
         if (message.playerAddress !== '') {
@@ -11,8 +11,8 @@ export const WinningPlayer = {
         if (message.wonCount !== 0) {
             writer.uint32(16).uint64(message.wonCount);
         }
-        if (message.dateAdded !== '') {
-            writer.uint32(26).string(message.dateAdded);
+        if (message.DateAdded !== '') {
+            writer.uint32(26).string(message.DateAdded);
         }
         return writer;
     },
@@ -30,7 +30,7 @@ export const WinningPlayer = {
                     message.wonCount = longToNumber(reader.uint64());
                     break;
                 case 3:
-                    message.dateAdded = reader.string();
+                    message.DateAdded = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -53,11 +53,11 @@ export const WinningPlayer = {
         else {
             message.wonCount = 0;
         }
-        if (object.dateAdded !== undefined && object.dateAdded !== null) {
-            message.dateAdded = String(object.dateAdded);
+        if (object.DateAdded !== undefined && object.DateAdded !== null) {
+            message.DateAdded = String(object.DateAdded);
         }
         else {
-            message.dateAdded = '';
+            message.DateAdded = '';
         }
         return message;
     },
@@ -65,7 +65,7 @@ export const WinningPlayer = {
         const obj = {};
         message.playerAddress !== undefined && (obj.playerAddress = message.playerAddress);
         message.wonCount !== undefined && (obj.wonCount = message.wonCount);
-        message.dateAdded !== undefined && (obj.dateAdded = message.dateAdded);
+        message.DateAdded !== undefined && (obj.DateAdded = message.DateAdded);
         return obj;
     },
     fromPartial(object) {
@@ -82,11 +82,11 @@ export const WinningPlayer = {
         else {
             message.wonCount = 0;
         }
-        if (object.dateAdded !== undefined && object.dateAdded !== null) {
-            message.dateAdded = object.dateAdded;
+        if (object.DateAdded !== undefined && object.DateAdded !== null) {
+            message.DateAdded = object.DateAdded;
         }
         else {
-            message.dateAdded = '';
+            message.DateAdded = '';
         }
         return message;
     }

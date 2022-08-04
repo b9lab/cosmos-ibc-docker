@@ -7,10 +7,10 @@ export const protobufPackage = 'b9lab.checkers.checkers'
 export interface WinningPlayer {
   playerAddress: string
   wonCount: number
-  dateAdded: string
+  DateAdded: string
 }
 
-const baseWinningPlayer: object = { playerAddress: '', wonCount: 0, dateAdded: '' }
+const baseWinningPlayer: object = { playerAddress: '', wonCount: 0, DateAdded: '' }
 
 export const WinningPlayer = {
   encode(message: WinningPlayer, writer: Writer = Writer.create()): Writer {
@@ -20,8 +20,8 @@ export const WinningPlayer = {
     if (message.wonCount !== 0) {
       writer.uint32(16).uint64(message.wonCount)
     }
-    if (message.dateAdded !== '') {
-      writer.uint32(26).string(message.dateAdded)
+    if (message.DateAdded !== '') {
+      writer.uint32(26).string(message.DateAdded)
     }
     return writer
   },
@@ -40,7 +40,7 @@ export const WinningPlayer = {
           message.wonCount = longToNumber(reader.uint64() as Long)
           break
         case 3:
-          message.dateAdded = reader.string()
+          message.DateAdded = reader.string()
           break
         default:
           reader.skipType(tag & 7)
@@ -62,10 +62,10 @@ export const WinningPlayer = {
     } else {
       message.wonCount = 0
     }
-    if (object.dateAdded !== undefined && object.dateAdded !== null) {
-      message.dateAdded = String(object.dateAdded)
+    if (object.DateAdded !== undefined && object.DateAdded !== null) {
+      message.DateAdded = String(object.DateAdded)
     } else {
-      message.dateAdded = ''
+      message.DateAdded = ''
     }
     return message
   },
@@ -74,7 +74,7 @@ export const WinningPlayer = {
     const obj: any = {}
     message.playerAddress !== undefined && (obj.playerAddress = message.playerAddress)
     message.wonCount !== undefined && (obj.wonCount = message.wonCount)
-    message.dateAdded !== undefined && (obj.dateAdded = message.dateAdded)
+    message.DateAdded !== undefined && (obj.DateAdded = message.DateAdded)
     return obj
   },
 
@@ -90,10 +90,10 @@ export const WinningPlayer = {
     } else {
       message.wonCount = 0
     }
-    if (object.dateAdded !== undefined && object.dateAdded !== null) {
-      message.dateAdded = object.dateAdded
+    if (object.DateAdded !== undefined && object.DateAdded !== null) {
+      message.DateAdded = object.DateAdded
     } else {
-      message.dateAdded = ''
+      message.DateAdded = ''
     }
     return message
   }

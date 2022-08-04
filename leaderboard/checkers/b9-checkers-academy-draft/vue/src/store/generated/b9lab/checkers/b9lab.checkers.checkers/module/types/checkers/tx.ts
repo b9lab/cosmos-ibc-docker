@@ -5,6 +5,18 @@ import * as Long from 'long'
 export const protobufPackage = 'b9lab.checkers.checkers'
 
 /** this line is used by starport scaffolding # proto/tx/message */
+export interface MsgSendScore {
+  sender: string
+  port: string
+  channelID: string
+  timeoutTimestamp: number
+  playerAddress: string
+  wonCount: number
+  DateAdded: string
+}
+
+export interface MsgSendScoreResponse {}
+
 export interface MsgRejectGame {
   creator: string
   idValue: string
@@ -39,6 +51,201 @@ export interface MsgCreateGame {
 
 export interface MsgCreateGameResponse {
   idValue: string
+}
+
+const baseMsgSendScore: object = { sender: '', port: '', channelID: '', timeoutTimestamp: 0, playerAddress: '', wonCount: 0, DateAdded: '' }
+
+export const MsgSendScore = {
+  encode(message: MsgSendScore, writer: Writer = Writer.create()): Writer {
+    if (message.sender !== '') {
+      writer.uint32(10).string(message.sender)
+    }
+    if (message.port !== '') {
+      writer.uint32(18).string(message.port)
+    }
+    if (message.channelID !== '') {
+      writer.uint32(26).string(message.channelID)
+    }
+    if (message.timeoutTimestamp !== 0) {
+      writer.uint32(32).uint64(message.timeoutTimestamp)
+    }
+    if (message.playerAddress !== '') {
+      writer.uint32(42).string(message.playerAddress)
+    }
+    if (message.wonCount !== 0) {
+      writer.uint32(48).uint64(message.wonCount)
+    }
+    if (message.DateAdded !== '') {
+      writer.uint32(58).string(message.DateAdded)
+    }
+    return writer
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSendScore {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input
+    let end = length === undefined ? reader.len : reader.pos + length
+    const message = { ...baseMsgSendScore } as MsgSendScore
+    while (reader.pos < end) {
+      const tag = reader.uint32()
+      switch (tag >>> 3) {
+        case 1:
+          message.sender = reader.string()
+          break
+        case 2:
+          message.port = reader.string()
+          break
+        case 3:
+          message.channelID = reader.string()
+          break
+        case 4:
+          message.timeoutTimestamp = longToNumber(reader.uint64() as Long)
+          break
+        case 5:
+          message.playerAddress = reader.string()
+          break
+        case 6:
+          message.wonCount = longToNumber(reader.uint64() as Long)
+          break
+        case 7:
+          message.DateAdded = reader.string()
+          break
+        default:
+          reader.skipType(tag & 7)
+          break
+      }
+    }
+    return message
+  },
+
+  fromJSON(object: any): MsgSendScore {
+    const message = { ...baseMsgSendScore } as MsgSendScore
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = String(object.sender)
+    } else {
+      message.sender = ''
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = String(object.port)
+    } else {
+      message.port = ''
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = String(object.channelID)
+    } else {
+      message.channelID = ''
+    }
+    if (object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null) {
+      message.timeoutTimestamp = Number(object.timeoutTimestamp)
+    } else {
+      message.timeoutTimestamp = 0
+    }
+    if (object.playerAddress !== undefined && object.playerAddress !== null) {
+      message.playerAddress = String(object.playerAddress)
+    } else {
+      message.playerAddress = ''
+    }
+    if (object.wonCount !== undefined && object.wonCount !== null) {
+      message.wonCount = Number(object.wonCount)
+    } else {
+      message.wonCount = 0
+    }
+    if (object.DateAdded !== undefined && object.DateAdded !== null) {
+      message.DateAdded = String(object.DateAdded)
+    } else {
+      message.DateAdded = ''
+    }
+    return message
+  },
+
+  toJSON(message: MsgSendScore): unknown {
+    const obj: any = {}
+    message.sender !== undefined && (obj.sender = message.sender)
+    message.port !== undefined && (obj.port = message.port)
+    message.channelID !== undefined && (obj.channelID = message.channelID)
+    message.timeoutTimestamp !== undefined && (obj.timeoutTimestamp = message.timeoutTimestamp)
+    message.playerAddress !== undefined && (obj.playerAddress = message.playerAddress)
+    message.wonCount !== undefined && (obj.wonCount = message.wonCount)
+    message.DateAdded !== undefined && (obj.DateAdded = message.DateAdded)
+    return obj
+  },
+
+  fromPartial(object: DeepPartial<MsgSendScore>): MsgSendScore {
+    const message = { ...baseMsgSendScore } as MsgSendScore
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = object.sender
+    } else {
+      message.sender = ''
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = object.port
+    } else {
+      message.port = ''
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = object.channelID
+    } else {
+      message.channelID = ''
+    }
+    if (object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null) {
+      message.timeoutTimestamp = object.timeoutTimestamp
+    } else {
+      message.timeoutTimestamp = 0
+    }
+    if (object.playerAddress !== undefined && object.playerAddress !== null) {
+      message.playerAddress = object.playerAddress
+    } else {
+      message.playerAddress = ''
+    }
+    if (object.wonCount !== undefined && object.wonCount !== null) {
+      message.wonCount = object.wonCount
+    } else {
+      message.wonCount = 0
+    }
+    if (object.DateAdded !== undefined && object.DateAdded !== null) {
+      message.DateAdded = object.DateAdded
+    } else {
+      message.DateAdded = ''
+    }
+    return message
+  }
+}
+
+const baseMsgSendScoreResponse: object = {}
+
+export const MsgSendScoreResponse = {
+  encode(_: MsgSendScoreResponse, writer: Writer = Writer.create()): Writer {
+    return writer
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSendScoreResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input
+    let end = length === undefined ? reader.len : reader.pos + length
+    const message = { ...baseMsgSendScoreResponse } as MsgSendScoreResponse
+    while (reader.pos < end) {
+      const tag = reader.uint32()
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7)
+          break
+      }
+    }
+    return message
+  },
+
+  fromJSON(_: any): MsgSendScoreResponse {
+    const message = { ...baseMsgSendScoreResponse } as MsgSendScoreResponse
+    return message
+  },
+
+  toJSON(_: MsgSendScoreResponse): unknown {
+    const obj: any = {}
+    return obj
+  },
+
+  fromPartial(_: DeepPartial<MsgSendScoreResponse>): MsgSendScoreResponse {
+    const message = { ...baseMsgSendScoreResponse } as MsgSendScoreResponse
+    return message
+  }
 }
 
 const baseMsgRejectGame: object = { creator: '', idValue: '' }
@@ -578,6 +785,7 @@ export const MsgCreateGameResponse = {
 /** Msg defines the Msg service. */
 export interface Msg {
   /** this line is used by starport scaffolding # proto/tx/rpc */
+  SendScore(request: MsgSendScore): Promise<MsgSendScoreResponse>
   RejectGame(request: MsgRejectGame): Promise<MsgRejectGameResponse>
   PlayMove(request: MsgPlayMove): Promise<MsgPlayMoveResponse>
   CreateGame(request: MsgCreateGame): Promise<MsgCreateGameResponse>
@@ -588,6 +796,12 @@ export class MsgClientImpl implements Msg {
   constructor(rpc: Rpc) {
     this.rpc = rpc
   }
+  SendScore(request: MsgSendScore): Promise<MsgSendScoreResponse> {
+    const data = MsgSendScore.encode(request).finish()
+    const promise = this.rpc.request('b9lab.checkers.checkers.Msg', 'SendScore', data)
+    return promise.then((data) => MsgSendScoreResponse.decode(new Reader(data)))
+  }
+
   RejectGame(request: MsgRejectGame): Promise<MsgRejectGameResponse> {
     const data = MsgRejectGame.encode(request).finish()
     const promise = this.rpc.request('b9lab.checkers.checkers.Msg', 'RejectGame', data)

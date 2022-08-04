@@ -17,9 +17,11 @@ export interface GenesisState {
   storedGameList: StoredGame[]
   /** this line is used by starport scaffolding # genesis/proto/stateField */
   nextGame: NextGame | undefined
+  /** this line is used by starport scaffolding # ibc/genesis/proto */
+  portId: string
 }
 
-const baseGenesisState: object = {}
+const baseGenesisState: object = { portId: '' }
 
 export const GenesisState = {
   encode(message: GenesisState, writer: Writer = Writer.create()): Writer {
@@ -34,6 +36,9 @@ export const GenesisState = {
     }
     if (message.nextGame !== undefined) {
       NextGame.encode(message.nextGame, writer.uint32(10).fork()).ldelim()
+    }
+    if (message.portId !== '') {
+      writer.uint32(42).string(message.portId)
     }
     return writer
   },
@@ -58,6 +63,9 @@ export const GenesisState = {
           break
         case 1:
           message.nextGame = NextGame.decode(reader, reader.uint32())
+          break
+        case 5:
+          message.portId = reader.string()
           break
         default:
           reader.skipType(tag & 7)
@@ -91,6 +99,11 @@ export const GenesisState = {
     } else {
       message.nextGame = undefined
     }
+    if (object.portId !== undefined && object.portId !== null) {
+      message.portId = String(object.portId)
+    } else {
+      message.portId = ''
+    }
     return message
   },
 
@@ -108,6 +121,7 @@ export const GenesisState = {
       obj.storedGameList = []
     }
     message.nextGame !== undefined && (obj.nextGame = message.nextGame ? NextGame.toJSON(message.nextGame) : undefined)
+    message.portId !== undefined && (obj.portId = message.portId)
     return obj
   },
 
@@ -134,6 +148,11 @@ export const GenesisState = {
       message.nextGame = NextGame.fromPartial(object.nextGame)
     } else {
       message.nextGame = undefined
+    }
+    if (object.portId !== undefined && object.portId !== null) {
+      message.portId = object.portId
+    } else {
+      message.portId = ''
     }
     return message
   }

@@ -13,6 +13,7 @@ export interface CheckersMsgPlayMoveResponse {
     winner?: string;
 }
 export declare type CheckersMsgRejectGameResponse = object;
+export declare type CheckersMsgSendScoreResponse = object;
 export interface CheckersNextGame {
     creator?: string;
     /** @format uint64 */
@@ -92,7 +93,7 @@ export interface CheckersWinningPlayer {
     playerAddress?: string;
     /** @format uint64 */
     wonCount?: string;
-    dateAdded?: string;
+    DateAdded?: string;
 }
 export interface ProtobufAny {
     "@type"?: string;

@@ -4,12 +4,16 @@ import { SpVuexError } from '@starport/vuex'
 
 import { Leaderboard } from "./module/types/checkers/leaderboard"
 import { NextGame } from "./module/types/checkers/next_game"
+import { CheckersPacketData } from "./module/types/checkers/packet"
+import { NoData } from "./module/types/checkers/packet"
+import { ScorePacketData } from "./module/types/checkers/packet"
+import { ScorePacketAck } from "./module/types/checkers/packet"
 import { PlayerInfo } from "./module/types/checkers/player_info"
 import { StoredGame } from "./module/types/checkers/stored_game"
 import { WinningPlayer } from "./module/types/checkers/winning_player"
 
 
-export { Leaderboard, NextGame, PlayerInfo, StoredGame, WinningPlayer };
+export { Leaderboard, NextGame, CheckersPacketData, NoData, ScorePacketData, ScorePacketAck, PlayerInfo, StoredGame, WinningPlayer };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -58,6 +62,10 @@ const getDefaultState = () => {
 				_Structure: {
 						Leaderboard: getStructure(Leaderboard.fromPartial({})),
 						NextGame: getStructure(NextGame.fromPartial({})),
+						CheckersPacketData: getStructure(CheckersPacketData.fromPartial({})),
+						NoData: getStructure(NoData.fromPartial({})),
+						ScorePacketData: getStructure(ScorePacketData.fromPartial({})),
+						ScorePacketAck: getStructure(ScorePacketAck.fromPartial({})),
 						PlayerInfo: getStructure(PlayerInfo.fromPartial({})),
 						StoredGame: getStructure(StoredGame.fromPartial({})),
 						WinningPlayer: getStructure(WinningPlayer.fromPartial({})),
@@ -319,6 +327,36 @@ export default {
 		},
 		
 		
+		async sendMsgRejectGame({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgRejectGame(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new SpVuexError('TxClient:MsgRejectGame:Init', 'Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new SpVuexError('TxClient:MsgRejectGame:Send', 'Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgSendScore({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendScore(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new SpVuexError('TxClient:MsgSendScore:Init', 'Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new SpVuexError('TxClient:MsgSendScore:Send', 'Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgCreateGame({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -349,22 +387,35 @@ export default {
 				}
 			}
 		},
-		async sendMsgRejectGame({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		async MsgRejectGame({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgRejectGame(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new SpVuexError('TxClient:MsgRejectGame:Init', 'Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new SpVuexError('TxClient:MsgRejectGame:Send', 'Could not broadcast Tx: '+ e.message)
+					throw new SpVuexError('TxClient:MsgRejectGame:Create', 'Could not create message: ' + e.message)
+					
 				}
 			}
 		},
-		
+		async MsgSendScore({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendScore(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new SpVuexError('TxClient:MsgSendScore:Init', 'Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new SpVuexError('TxClient:MsgSendScore:Create', 'Could not create message: ' + e.message)
+					
+				}
+			}
+		},
 		async MsgCreateGame({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -389,20 +440,6 @@ export default {
 					throw new SpVuexError('TxClient:MsgPlayMove:Init', 'Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new SpVuexError('TxClient:MsgPlayMove:Create', 'Could not create message: ' + e.message)
-					
-				}
-			}
-		},
-		async MsgRejectGame({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgRejectGame(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new SpVuexError('TxClient:MsgRejectGame:Init', 'Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new SpVuexError('TxClient:MsgRejectGame:Create', 'Could not create message: ' + e.message)
 					
 				}
 			}

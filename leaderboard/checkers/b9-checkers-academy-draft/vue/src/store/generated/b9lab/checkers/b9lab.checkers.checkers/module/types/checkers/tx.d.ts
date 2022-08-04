@@ -1,6 +1,17 @@
 import { Reader, Writer } from 'protobufjs/minimal';
 export declare const protobufPackage = "b9lab.checkers.checkers";
 /** this line is used by starport scaffolding # proto/tx/message */
+export interface MsgSendScore {
+    sender: string;
+    port: string;
+    channelID: string;
+    timeoutTimestamp: number;
+    playerAddress: string;
+    wonCount: number;
+    DateAdded: string;
+}
+export interface MsgSendScoreResponse {
+}
 export interface MsgRejectGame {
     creator: string;
     idValue: string;
@@ -32,6 +43,20 @@ export interface MsgCreateGame {
 export interface MsgCreateGameResponse {
     idValue: string;
 }
+export declare const MsgSendScore: {
+    encode(message: MsgSendScore, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgSendScore;
+    fromJSON(object: any): MsgSendScore;
+    toJSON(message: MsgSendScore): unknown;
+    fromPartial(object: DeepPartial<MsgSendScore>): MsgSendScore;
+};
+export declare const MsgSendScoreResponse: {
+    encode(_: MsgSendScoreResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgSendScoreResponse;
+    fromJSON(_: any): MsgSendScoreResponse;
+    toJSON(_: MsgSendScoreResponse): unknown;
+    fromPartial(_: DeepPartial<MsgSendScoreResponse>): MsgSendScoreResponse;
+};
 export declare const MsgRejectGame: {
     encode(message: MsgRejectGame, writer?: Writer): Writer;
     decode(input: Reader | Uint8Array, length?: number): MsgRejectGame;
@@ -77,6 +102,7 @@ export declare const MsgCreateGameResponse: {
 /** Msg defines the Msg service. */
 export interface Msg {
     /** this line is used by starport scaffolding # proto/tx/rpc */
+    SendScore(request: MsgSendScore): Promise<MsgSendScoreResponse>;
     RejectGame(request: MsgRejectGame): Promise<MsgRejectGameResponse>;
     PlayMove(request: MsgPlayMove): Promise<MsgPlayMoveResponse>;
     CreateGame(request: MsgCreateGame): Promise<MsgCreateGameResponse>;
@@ -84,6 +110,7 @@ export interface Msg {
 export declare class MsgClientImpl implements Msg {
     private readonly rpc;
     constructor(rpc: Rpc);
+    SendScore(request: MsgSendScore): Promise<MsgSendScoreResponse>;
     RejectGame(request: MsgRejectGame): Promise<MsgRejectGameResponse>;
     PlayMove(request: MsgPlayMove): Promise<MsgPlayMoveResponse>;
     CreateGame(request: MsgCreateGame): Promise<MsgCreateGameResponse>;

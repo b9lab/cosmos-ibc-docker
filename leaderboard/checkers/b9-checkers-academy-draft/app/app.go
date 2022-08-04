@@ -208,8 +208,8 @@ type App struct {
 	ScopedTransferKeeper capabilitykeeper.ScopedKeeper
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
-
-	CheckersKeeper checkersmodulekeeper.Keeper
+	ScopedCheckersKeeper capabilitykeeper.ScopedKeeper
+	CheckersKeeper       checkersmodulekeeper.Keeper
 
 	// the module manager
 	mm *module.Manager
@@ -365,11 +365,16 @@ func NewApp(
 		&stakingKeeper, govRouter,
 	)
 
+	scopedCheckersKeeper := app.CapabilityKeeper.ScopeToModule(checkersmoduletypes.ModuleName)
+	app.ScopedCheckersKeeper = scopedCheckersKeeper
 	app.CheckersKeeper = *checkersmodulekeeper.NewKeeper(
 		app.BankKeeper,
 		appCodec,
 		keys[checkersmoduletypes.StoreKey],
 		keys[checkersmoduletypes.MemStoreKey],
+		app.IBCKeeper.ChannelKeeper,
+		&app.IBCKeeper.PortKeeper,
+		scopedCheckersKeeper,
 	)
 	checkersModule := checkersmodule.NewAppModule(appCodec, app.CheckersKeeper)
 
@@ -379,6 +384,7 @@ func NewApp(
 	ibcRouter := porttypes.NewRouter()
 	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferModule)
 	// this line is used by starport scaffolding # ibc/app/router
+	ibcRouter.AddRoute(checkersmoduletypes.ModuleName, checkersModule)
 	app.IBCKeeper.SetRouter(ibcRouter)
 
 	/****  Module Options ****/

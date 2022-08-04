@@ -17,4 +17,5 @@ message GenesisState {
 		repeated StoredGame storedGameList = 2; // this line is used by starport scaffolding # genesis/proto/stateField
 		NextGame nextGame = 1; // this line is used by starport scaffolding # genesis/proto/stateField
     // this line is used by starport scaffolding # ibc/genesis/proto
+    	string port_id = 5;
 }

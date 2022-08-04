@@ -18,7 +18,9 @@ type (
 		storeKey sdk.StoreKey
 		memKey   sdk.StoreKey
 		// this line is used by starport scaffolding # ibc/keeper/attribute
-
+		channelKeeper types.ChannelKeeper
+		portKeeper    types.PortKeeper
+		scopedKeeper  types.ScopedKeeper
 	}
 )
 
@@ -28,6 +30,9 @@ func NewKeeper(
 	storeKey,
 	memKey sdk.StoreKey,
 	// this line is used by starport scaffolding # ibc/keeper/parameter
+	channelKeeper types.ChannelKeeper,
+	portKeeper types.PortKeeper,
+	scopedKeeper types.ScopedKeeper,
 
 ) *Keeper {
 	return &Keeper{
@@ -36,7 +41,9 @@ func NewKeeper(
 		storeKey: storeKey,
 		memKey:   memKey,
 		// this line is used by starport scaffolding # ibc/keeper/return
-
+		channelKeeper: channelKeeper,
+		portKeeper:    portKeeper,
+		scopedKeeper:  scopedKeeper,
 	}
 }
 

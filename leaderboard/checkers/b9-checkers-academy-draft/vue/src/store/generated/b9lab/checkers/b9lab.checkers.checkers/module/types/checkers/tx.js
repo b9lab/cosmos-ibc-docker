@@ -2,6 +2,203 @@
 import { Reader, util, configure, Writer } from 'protobufjs/minimal';
 import * as Long from 'long';
 export const protobufPackage = 'b9lab.checkers.checkers';
+const baseMsgSendScore = { sender: '', port: '', channelID: '', timeoutTimestamp: 0, playerAddress: '', wonCount: 0, DateAdded: '' };
+export const MsgSendScore = {
+    encode(message, writer = Writer.create()) {
+        if (message.sender !== '') {
+            writer.uint32(10).string(message.sender);
+        }
+        if (message.port !== '') {
+            writer.uint32(18).string(message.port);
+        }
+        if (message.channelID !== '') {
+            writer.uint32(26).string(message.channelID);
+        }
+        if (message.timeoutTimestamp !== 0) {
+            writer.uint32(32).uint64(message.timeoutTimestamp);
+        }
+        if (message.playerAddress !== '') {
+            writer.uint32(42).string(message.playerAddress);
+        }
+        if (message.wonCount !== 0) {
+            writer.uint32(48).uint64(message.wonCount);
+        }
+        if (message.DateAdded !== '') {
+            writer.uint32(58).string(message.DateAdded);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof Uint8Array ? new Reader(input) : input;
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = { ...baseMsgSendScore };
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.sender = reader.string();
+                    break;
+                case 2:
+                    message.port = reader.string();
+                    break;
+                case 3:
+                    message.channelID = reader.string();
+                    break;
+                case 4:
+                    message.timeoutTimestamp = longToNumber(reader.uint64());
+                    break;
+                case 5:
+                    message.playerAddress = reader.string();
+                    break;
+                case 6:
+                    message.wonCount = longToNumber(reader.uint64());
+                    break;
+                case 7:
+                    message.DateAdded = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(object) {
+        const message = { ...baseMsgSendScore };
+        if (object.sender !== undefined && object.sender !== null) {
+            message.sender = String(object.sender);
+        }
+        else {
+            message.sender = '';
+        }
+        if (object.port !== undefined && object.port !== null) {
+            message.port = String(object.port);
+        }
+        else {
+            message.port = '';
+        }
+        if (object.channelID !== undefined && object.channelID !== null) {
+            message.channelID = String(object.channelID);
+        }
+        else {
+            message.channelID = '';
+        }
+        if (object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null) {
+            message.timeoutTimestamp = Number(object.timeoutTimestamp);
+        }
+        else {
+            message.timeoutTimestamp = 0;
+        }
+        if (object.playerAddress !== undefined && object.playerAddress !== null) {
+            message.playerAddress = String(object.playerAddress);
+        }
+        else {
+            message.playerAddress = '';
+        }
+        if (object.wonCount !== undefined && object.wonCount !== null) {
+            message.wonCount = Number(object.wonCount);
+        }
+        else {
+            message.wonCount = 0;
+        }
+        if (object.DateAdded !== undefined && object.DateAdded !== null) {
+            message.DateAdded = String(object.DateAdded);
+        }
+        else {
+            message.DateAdded = '';
+        }
+        return message;
+    },
+    toJSON(message) {
+        const obj = {};
+        message.sender !== undefined && (obj.sender = message.sender);
+        message.port !== undefined && (obj.port = message.port);
+        message.channelID !== undefined && (obj.channelID = message.channelID);
+        message.timeoutTimestamp !== undefined && (obj.timeoutTimestamp = message.timeoutTimestamp);
+        message.playerAddress !== undefined && (obj.playerAddress = message.playerAddress);
+        message.wonCount !== undefined && (obj.wonCount = message.wonCount);
+        message.DateAdded !== undefined && (obj.DateAdded = message.DateAdded);
+        return obj;
+    },
+    fromPartial(object) {
+        const message = { ...baseMsgSendScore };
+        if (object.sender !== undefined && object.sender !== null) {
+            message.sender = object.sender;
+        }
+        else {
+            message.sender = '';
+        }
+        if (object.port !== undefined && object.port !== null) {
+            message.port = object.port;
+        }
+        else {
+            message.port = '';
+        }
+        if (object.channelID !== undefined && object.channelID !== null) {
+            message.channelID = object.channelID;
+        }
+        else {
+            message.channelID = '';
+        }
+        if (object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null) {
+            message.timeoutTimestamp = object.timeoutTimestamp;
+        }
+        else {
+            message.timeoutTimestamp = 0;
+        }
+        if (object.playerAddress !== undefined && object.playerAddress !== null) {
+            message.playerAddress = object.playerAddress;
+        }
+        else {
+            message.playerAddress = '';
+        }
+        if (object.wonCount !== undefined && object.wonCount !== null) {
+            message.wonCount = object.wonCount;
+        }
+        else {
+            message.wonCount = 0;
+        }
+        if (object.DateAdded !== undefined && object.DateAdded !== null) {
+            message.DateAdded = object.DateAdded;
+        }
+        else {
+            message.DateAdded = '';
+        }
+        return message;
+    }
+};
+const baseMsgSendScoreResponse = {};
+export const MsgSendScoreResponse = {
+    encode(_, writer = Writer.create()) {
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof Uint8Array ? new Reader(input) : input;
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = { ...baseMsgSendScoreResponse };
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(_) {
+        const message = { ...baseMsgSendScoreResponse };
+        return message;
+    },
+    toJSON(_) {
+        const obj = {};
+        return obj;
+    },
+    fromPartial(_) {
+        const message = { ...baseMsgSendScoreResponse };
+        return message;
+    }
+};
 const baseMsgRejectGame = { creator: '', idValue: '' };
 export const MsgRejectGame = {
     encode(message, writer = Writer.create()) {
@@ -539,6 +736,11 @@ export const MsgCreateGameResponse = {
 export class MsgClientImpl {
     constructor(rpc) {
         this.rpc = rpc;
+    }
+    SendScore(request) {
+        const data = MsgSendScore.encode(request).finish();
+        const promise = this.rpc.request('b9lab.checkers.checkers.Msg', 'SendScore', data);
+        return promise.then((data) => MsgSendScoreResponse.decode(new Reader(data)));
     }
     RejectGame(request) {
         const data = MsgRejectGame.encode(request).finish();
