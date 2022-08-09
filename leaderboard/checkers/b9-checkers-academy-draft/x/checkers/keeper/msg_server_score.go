@@ -13,12 +13,30 @@ func (k msgServer) SendScore(goCtx context.Context, msg *types.MsgSendScore) (*t
 
 	// TODO: logic before transmitting the packet
 
+	leaderboard, found := k.GetLeaderboard(ctx)
+
+	if !found {
+		panic("Leaderboard not found")
+	}
+
 	// Construct the packet
 	var packet types.ScorePacketData
 
-	packet.PlayerAddress = msg.PlayerAddress
-	packet.WonCount = msg.WonCount
-	packet.DateAdded = msg.DateAdded
+	found_in_leaderboard := false
+	for i := range leaderboard.Winners {
+	    if leaderboard.Winners[i].PlayerAddress == msg.Sender {
+	        // found the player, send stats
+        	packet.PlayerAddress = leaderboard.Winners[i].PlayerAddress
+					packet.WonCount = leaderboard.Winners[i].WonCount
+					packet.DateAdded = leaderboard.Winners[i].DateAdded
+	        found_in_leaderboard = true
+	        break
+	    }
+	}
+
+	if !found_in_leaderboard {
+		panic("Player not found in the leaderboard")
+	}
 
 	// Transmit the packet
 	err := k.TransmitScorePacket(

@@ -73,38 +73,36 @@ func (k Keeper) OnRecvScorePacket(ctx sdk.Context, packet channeltypes.Packet, d
 		return packetAck, err
 	}
 
-	// if player address is not empty
-	if data.PlayerAddress != "" {
-		score:= types.WinningPlayer {
-		PlayerAddress: data.PlayerAddress,
-		WonCount: data.WonCount,
-		DateAdded: data.DateAdded,
-		}
-		leaderboard, found := k.GetLeaderboard(ctx)
-		if !found {
-			panic("Leaderboard not found")
-		}
-
-		found_in_leaderboard := false
-		for i := range leaderboard.Winners {
-		    if leaderboard.Winners[i].PlayerAddress == data.PlayerAddress {
-		        // found the player, update the fields
-		        leaderboard.Winners[i].WonCount = data.WonCount
-		        leaderboard.Winners[i].DateAdded = data.DateAdded
-		        found_in_leaderboard = true
-		        break
-		    }
-		}
-
-		// we cannot find the player in the leaderboard
-		if(!found_in_leaderboard) {
-			updated:= append(leaderboard.Winners, &score)
-		  leaderboard.Winners = updated
-		} 
-			
-		k.SetLeaderboard(ctx, leaderboard)
-		
+	score:= types.WinningPlayer {
+	PlayerAddress: data.PlayerAddress,
+	WonCount: data.WonCount,
+	DateAdded: data.DateAdded,
 	}
+
+	leaderboard, found := k.GetLeaderboard(ctx)
+	
+	if !found {
+		panic("Leaderboard not found")
+	}
+
+	found_in_leaderboard := false
+	for i := range leaderboard.Winners {
+	    if leaderboard.Winners[i].PlayerAddress == data.PlayerAddress {
+	        // found the player, update the fields
+	        leaderboard.Winners[i].WonCount = data.WonCount
+	        leaderboard.Winners[i].DateAdded = data.DateAdded
+	        found_in_leaderboard = true
+	        break
+	    }
+	}
+
+	// we cannot find the player in the leaderboard
+	if(!found_in_leaderboard) {
+		updated:= append(leaderboard.Winners, &score)
+	  leaderboard.Winners = updated
+	} 
+		
+	k.SetLeaderboard(ctx, leaderboard)
 
 	return packetAck, nil
 }

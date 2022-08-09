@@ -3,7 +3,6 @@ package cli
 import (
 	"github.com/spf13/cobra"
 	"strconv"
-	"context"
 
 	"github.com/b9lab/checkers/x/checkers/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -44,23 +43,6 @@ func CmdSendScore() *cobra.Command {
 			}
 			if timeoutTimestamp != 0 {
 				timeoutTimestamp = consensusState.GetTimestamp() + timeoutTimestamp
-			}
-
-			queryClient := types.NewQueryClient(clientCtx)
-
-			params := &types.QueryGetLeaderboardRequest{}
-
-			leaderboard, err := queryClient.Leaderboard(context.Background(), params)
-			if err != nil {
-				return err
-			}
-
-			for _, winningPlayer := range leaderboard.Leaderboard.Winners {
-				if winningPlayer.PlayerAddress == sender {
-					argsPlayerAddress = winningPlayer.PlayerAddress
-					argsWonCount = winningPlayer.WonCount
-					argsDateAdded = winningPlayer.DateAdded
-				}
 			}
 
 			msg := types.NewMsgSendScore(sender, srcPort, srcChannel, timeoutTimestamp, string(argsPlayerAddress), uint64(argsWonCount), string(argsDateAdded))
