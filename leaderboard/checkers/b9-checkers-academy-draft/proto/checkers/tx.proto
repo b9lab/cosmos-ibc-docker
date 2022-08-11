@@ -20,9 +20,6 @@ message MsgSendScore {
   string port = 2;
   string channelID = 3;
   uint64 timeoutTimestamp = 4;
-  string playerAddress = 5;
-  uint64 wonCount = 6;
-  string DateAdded = 7;
 }
 
 message MsgSendScoreResponse {
