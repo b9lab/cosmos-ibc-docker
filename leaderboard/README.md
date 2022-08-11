@@ -93,9 +93,7 @@ use ignite:
 - ibc.go: ignite template
 - module_ibc.go: ignite template
 - events_ibc_go: ignite template
-- messages_score.go: ignite template
 - expected_keeper_ibc.go: ignit template
-- tx.proto: ignite template, adjusted by ignite
 - handler.go: ignite template, adjusted by ignite
 
 mimic ignite:
@@ -105,7 +103,9 @@ mimic ignite:
 - keeper.go: add `channelKeeper`, `portKeeper` and `scopedKeeper`
 - keeper_test.go: adjust for the keepers
 - packet.proto: include `ScorePacketData`(bc of type WinningPlayer, not possible via ignite)
-
+- tx.proto: ignite template, adjusted to fetch the player info
+- messages_score.go: ignite template, adjusted to fetch the player info
+- 
 implement sendScore:
 - tx_score.go: adjust to fetch the player info instead of getting it via User
 - packet_score.go: include logic to validate score data
