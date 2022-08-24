@@ -1,0 +1,27 @@
+syntax = "proto3";
+package b9lab.checkers.checkers;
+
+option go_package = "github.com/b9lab/checkers/x/checkers/types";
+
+message CheckersPacketData {
+    oneof packet {
+        NoData noData = 1;
+        // this line is used by starport scaffolding # ibc/packet/proto/field
+				ScorePacketData scorePacket = 2; // this line is used by starport scaffolding # ibc/packet/proto/field/number
+    }
+}
+
+message NoData {
+}
+
+// this line is used by starport scaffolding # ibc/packet/proto/message
+// ScorePacketData defines a struct for the packet payload
+message ScorePacketData {
+  string playerAddress = 1;
+  uint64 wonCount = 2;
+  string DateAdded = 3;
+}
+
+// ScorePacketAck defines a struct for the packet acknowledgment
+message ScorePacketAck {
+	}
