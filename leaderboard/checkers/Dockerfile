@@ -1,8 +1,8 @@
 # This Dockerfile will: 
 # set up a Golang environment(using Golang Docker Image)
 # install Ignite
-# clone the checkers game repository
-# with the leaderboard included
+# copy the local checkers game repository
+# with the leaderboard included into the image and
 # start a checkers blockchain
 # expose api endpoints
 
@@ -41,10 +41,6 @@ RUN chmod +x ./test.sh
 ARG testchain
 COPY ${testchain} /home/leaderboard/createandplaygame.sh
 RUN chmod +x ./createandplaygame.sh
-
-# Copy config
-COPY ./run-leaderboard.sh /home/leaderboard
-RUN chmod +x ./run-leaderboard.sh
 
 # copy entrypoint script
 COPY ./run-leaderboard.sh /home/leaderboard
