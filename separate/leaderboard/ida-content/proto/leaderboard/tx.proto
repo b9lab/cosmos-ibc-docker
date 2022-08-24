@@ -1,0 +1,26 @@
+syntax = "proto3";
+package tmsdkeys.leaderboard.leaderboard;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/tmsdkeys/leaderboard/x/leaderboard/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc SendIbcTopRank(MsgSendIbcTopRank) returns (MsgSendIbcTopRankResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgSendIbcTopRank {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+  string playerId = 5;
+  uint64 rank = 6;
+  string score = 7;
+}
+
+message MsgSendIbcTopRankResponse {
+}
+// this line is used by starport scaffolding # proto/tx/message
