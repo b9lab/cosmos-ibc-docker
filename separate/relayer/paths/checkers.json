@@ -1,0 +1,17 @@
+{
+   "src":{
+      "chain-id":"leaderboard",
+      "port-id":"leaderboard",
+      "order":"unordered",
+      "version":"leaderboard-1"
+   },
+   "dst":{
+      "chain-id":"checkers",
+      "port-id":"checkers",
+      "order":"unordered",
+      "version":"checkers-1"
+   },
+   "strategy":{
+      "type":"naive"
+   }
+}
