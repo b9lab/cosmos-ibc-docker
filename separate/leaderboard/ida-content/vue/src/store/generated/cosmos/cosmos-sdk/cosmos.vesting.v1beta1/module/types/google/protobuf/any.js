@@ -1,11 +1,11 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
-export const protobufPackage = "google.protobuf";
-const baseAny = { type_url: "" };
+import { Writer, Reader } from 'protobufjs/minimal';
+export const protobufPackage = 'google.protobuf';
+const baseAny = { typeUrl: '' };
 export const Any = {
     encode(message, writer = Writer.create()) {
-        if (message.type_url !== "") {
-            writer.uint32(10).string(message.type_url);
+        if (message.typeUrl !== '') {
+            writer.uint32(10).string(message.typeUrl);
         }
         if (message.value.length !== 0) {
             writer.uint32(18).bytes(message.value);
@@ -20,7 +20,7 @@ export const Any = {
             const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
-                    message.type_url = reader.string();
+                    message.typeUrl = reader.string();
                     break;
                 case 2:
                     message.value = reader.bytes();
@@ -34,11 +34,11 @@ export const Any = {
     },
     fromJSON(object) {
         const message = { ...baseAny };
-        if (object.type_url !== undefined && object.type_url !== null) {
-            message.type_url = String(object.type_url);
+        if (object.typeUrl !== undefined && object.typeUrl !== null) {
+            message.typeUrl = String(object.typeUrl);
         }
         else {
-            message.type_url = "";
+            message.typeUrl = '';
         }
         if (object.value !== undefined && object.value !== null) {
             message.value = bytesFromBase64(object.value);
@@ -47,18 +47,18 @@ export const Any = {
     },
     toJSON(message) {
         const obj = {};
-        message.type_url !== undefined && (obj.type_url = message.type_url);
+        message.typeUrl !== undefined && (obj.typeUrl = message.typeUrl);
         message.value !== undefined &&
             (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
         return obj;
     },
     fromPartial(object) {
         const message = { ...baseAny };
-        if (object.type_url !== undefined && object.type_url !== null) {
-            message.type_url = object.type_url;
+        if (object.typeUrl !== undefined && object.typeUrl !== null) {
+            message.typeUrl = object.typeUrl;
         }
         else {
-            message.type_url = "";
+            message.typeUrl = '';
         }
         if (object.value !== undefined && object.value !== null) {
             message.value = object.value;
@@ -67,21 +67,21 @@ export const Any = {
             message.value = new Uint8Array();
         }
         return message;
-    },
+    }
 };
 var globalThis = (() => {
-    if (typeof globalThis !== "undefined")
+    if (typeof globalThis !== 'undefined')
         return globalThis;
-    if (typeof self !== "undefined")
+    if (typeof self !== 'undefined')
         return self;
-    if (typeof window !== "undefined")
+    if (typeof window !== 'undefined')
         return window;
-    if (typeof global !== "undefined")
+    if (typeof global !== 'undefined')
         return global;
-    throw "Unable to locate global object";
+    throw 'Unable to locate global object';
 })();
 const atob = globalThis.atob ||
-    ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
+    ((b64) => globalThis.Buffer.from(b64, 'base64').toString('binary'));
 function bytesFromBase64(b64) {
     const bin = atob(b64);
     const arr = new Uint8Array(bin.length);
@@ -91,11 +91,11 @@ function bytesFromBase64(b64) {
     return arr;
 }
 const btoa = globalThis.btoa ||
-    ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
+    ((bin) => globalThis.Buffer.from(bin, 'binary').toString('base64'));
 function base64FromBytes(arr) {
     const bin = [];
     for (let i = 0; i < arr.byteLength; ++i) {
         bin.push(String.fromCharCode(arr[i]));
     }
-    return btoa(bin.join(""));
+    return btoa(bin.join(''));
 }

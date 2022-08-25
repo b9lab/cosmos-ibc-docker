@@ -1,21 +1,21 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
-export const protobufPackage = "cosmos.crisis.v1beta1";
+import { Reader, Writer } from 'protobufjs/minimal';
+export const protobufPackage = 'cosmos.crisis.v1beta1';
 const baseMsgVerifyInvariant = {
-    sender: "",
-    invariant_module_name: "",
-    invariant_route: "",
+    sender: '',
+    invariantModuleName: '',
+    invariantRoute: ''
 };
 export const MsgVerifyInvariant = {
     encode(message, writer = Writer.create()) {
-        if (message.sender !== "") {
+        if (message.sender !== '') {
             writer.uint32(10).string(message.sender);
         }
-        if (message.invariant_module_name !== "") {
-            writer.uint32(18).string(message.invariant_module_name);
+        if (message.invariantModuleName !== '') {
+            writer.uint32(18).string(message.invariantModuleName);
         }
-        if (message.invariant_route !== "") {
-            writer.uint32(26).string(message.invariant_route);
+        if (message.invariantRoute !== '') {
+            writer.uint32(26).string(message.invariantRoute);
         }
         return writer;
     },
@@ -30,10 +30,10 @@ export const MsgVerifyInvariant = {
                     message.sender = reader.string();
                     break;
                 case 2:
-                    message.invariant_module_name = reader.string();
+                    message.invariantModuleName = reader.string();
                     break;
                 case 3:
-                    message.invariant_route = reader.string();
+                    message.invariantRoute = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -48,31 +48,30 @@ export const MsgVerifyInvariant = {
             message.sender = String(object.sender);
         }
         else {
-            message.sender = "";
+            message.sender = '';
         }
-        if (object.invariant_module_name !== undefined &&
-            object.invariant_module_name !== null) {
-            message.invariant_module_name = String(object.invariant_module_name);
-        }
-        else {
-            message.invariant_module_name = "";
-        }
-        if (object.invariant_route !== undefined &&
-            object.invariant_route !== null) {
-            message.invariant_route = String(object.invariant_route);
+        if (object.invariantModuleName !== undefined &&
+            object.invariantModuleName !== null) {
+            message.invariantModuleName = String(object.invariantModuleName);
         }
         else {
-            message.invariant_route = "";
+            message.invariantModuleName = '';
+        }
+        if (object.invariantRoute !== undefined && object.invariantRoute !== null) {
+            message.invariantRoute = String(object.invariantRoute);
+        }
+        else {
+            message.invariantRoute = '';
         }
         return message;
     },
     toJSON(message) {
         const obj = {};
         message.sender !== undefined && (obj.sender = message.sender);
-        message.invariant_module_name !== undefined &&
-            (obj.invariant_module_name = message.invariant_module_name);
-        message.invariant_route !== undefined &&
-            (obj.invariant_route = message.invariant_route);
+        message.invariantModuleName !== undefined &&
+            (obj.invariantModuleName = message.invariantModuleName);
+        message.invariantRoute !== undefined &&
+            (obj.invariantRoute = message.invariantRoute);
         return obj;
     },
     fromPartial(object) {
@@ -81,24 +80,23 @@ export const MsgVerifyInvariant = {
             message.sender = object.sender;
         }
         else {
-            message.sender = "";
+            message.sender = '';
         }
-        if (object.invariant_module_name !== undefined &&
-            object.invariant_module_name !== null) {
-            message.invariant_module_name = object.invariant_module_name;
-        }
-        else {
-            message.invariant_module_name = "";
-        }
-        if (object.invariant_route !== undefined &&
-            object.invariant_route !== null) {
-            message.invariant_route = object.invariant_route;
+        if (object.invariantModuleName !== undefined &&
+            object.invariantModuleName !== null) {
+            message.invariantModuleName = object.invariantModuleName;
         }
         else {
-            message.invariant_route = "";
+            message.invariantModuleName = '';
+        }
+        if (object.invariantRoute !== undefined && object.invariantRoute !== null) {
+            message.invariantRoute = object.invariantRoute;
+        }
+        else {
+            message.invariantRoute = '';
         }
         return message;
-    },
+    }
 };
 const baseMsgVerifyInvariantResponse = {};
 export const MsgVerifyInvariantResponse = {
@@ -109,7 +107,7 @@ export const MsgVerifyInvariantResponse = {
         const reader = input instanceof Uint8Array ? new Reader(input) : input;
         let end = length === undefined ? reader.len : reader.pos + length;
         const message = {
-            ...baseMsgVerifyInvariantResponse,
+            ...baseMsgVerifyInvariantResponse
         };
         while (reader.pos < end) {
             const tag = reader.uint32();
@@ -123,7 +121,7 @@ export const MsgVerifyInvariantResponse = {
     },
     fromJSON(_) {
         const message = {
-            ...baseMsgVerifyInvariantResponse,
+            ...baseMsgVerifyInvariantResponse
         };
         return message;
     },
@@ -133,10 +131,10 @@ export const MsgVerifyInvariantResponse = {
     },
     fromPartial(_) {
         const message = {
-            ...baseMsgVerifyInvariantResponse,
+            ...baseMsgVerifyInvariantResponse
         };
         return message;
-    },
+    }
 };
 export class MsgClientImpl {
     constructor(rpc) {
@@ -144,7 +142,7 @@ export class MsgClientImpl {
     }
     VerifyInvariant(request) {
         const data = MsgVerifyInvariant.encode(request).finish();
-        const promise = this.rpc.request("cosmos.crisis.v1beta1.Msg", "VerifyInvariant", data);
+        const promise = this.rpc.request('cosmos.crisis.v1beta1.Msg', 'VerifyInvariant', data);
         return promise.then((data) => MsgVerifyInvariantResponse.decode(new Reader(data)));
     }
 }

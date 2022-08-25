@@ -1,15 +1,15 @@
-import { Reader, Writer } from "protobufjs/minimal";
-import { Description, CommissionRates } from "../../../cosmos/staking/v1beta1/staking";
-import { Any } from "../../../google/protobuf/any";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Reader, Writer } from 'protobufjs/minimal';
+import { Description, CommissionRates } from '../../../cosmos/staking/v1beta1/staking';
+import { Any } from '../../../google/protobuf/any';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
 export declare const protobufPackage = "cosmos.staking.v1beta1";
 /** MsgCreateValidator defines a SDK message for creating a new validator. */
 export interface MsgCreateValidator {
     description: Description | undefined;
     commission: CommissionRates | undefined;
-    min_self_delegation: string;
-    delegator_address: string;
-    validator_address: string;
+    minSelfDelegation: string;
+    delegatorAddress: string;
+    validatorAddress: string;
     pubkey: Any | undefined;
     value: Coin | undefined;
 }
@@ -19,15 +19,15 @@ export interface MsgCreateValidatorResponse {
 /** MsgEditValidator defines a SDK message for editing an existing validator. */
 export interface MsgEditValidator {
     description: Description | undefined;
-    validator_address: string;
+    validatorAddress: string;
     /**
      * We pass a reference to the new commission rate and min self delegation as
      * it's not mandatory to update. If not updated, the deserialized rate will be
      * zero with no way to distinguish if an update was intended.
      * REF: #2373
      */
-    commission_rate: string;
-    min_self_delegation: string;
+    commissionRate: string;
+    minSelfDelegation: string;
 }
 /** MsgEditValidatorResponse defines the Msg/EditValidator response type. */
 export interface MsgEditValidatorResponse {
@@ -37,8 +37,8 @@ export interface MsgEditValidatorResponse {
  * from a delegator to a validator.
  */
 export interface MsgDelegate {
-    delegator_address: string;
-    validator_address: string;
+    delegatorAddress: string;
+    validatorAddress: string;
     amount: Coin | undefined;
 }
 /** MsgDelegateResponse defines the Msg/Delegate response type. */
@@ -49,27 +49,27 @@ export interface MsgDelegateResponse {
  * of coins from a delegator and source validator to a destination validator.
  */
 export interface MsgBeginRedelegate {
-    delegator_address: string;
-    validator_src_address: string;
-    validator_dst_address: string;
+    delegatorAddress: string;
+    validatorSrcAddress: string;
+    validatorDstAddress: string;
     amount: Coin | undefined;
 }
 /** MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type. */
 export interface MsgBeginRedelegateResponse {
-    completion_time: Date | undefined;
+    completionTime: Date | undefined;
 }
 /**
  * MsgUndelegate defines a SDK message for performing an undelegation from a
  * delegate and a validator.
  */
 export interface MsgUndelegate {
-    delegator_address: string;
-    validator_address: string;
+    delegatorAddress: string;
+    validatorAddress: string;
     amount: Coin | undefined;
 }
 /** MsgUndelegateResponse defines the Msg/Undelegate response type. */
 export interface MsgUndelegateResponse {
-    completion_time: Date | undefined;
+    completionTime: Date | undefined;
 }
 export declare const MsgCreateValidator: {
     encode(message: MsgCreateValidator, writer?: Writer): Writer;

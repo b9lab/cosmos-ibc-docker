@@ -48,13 +48,10 @@ Example 2: Pack and unpack a message in Java.
  Example 4: Pack and unpack a message in Go
 
      foo := &pb.Foo{...}
-     any, err := anypb.New(foo)
-     if err != nil {
-       ...
-     }
+     any, err := ptypes.MarshalAny(foo)
      ...
      foo := &pb.Foo{}
-     if err := any.UnmarshalTo(foo); err != nil {
+     if err := ptypes.UnmarshalAny(any, foo); err != nil {
        ...
      }
 
@@ -123,7 +120,13 @@ export interface ProtobufAny {
    * Schemes other than `http`, `https` (or the empty scheme) might be
    * used with implementation specific semantics.
    */
-  "@type"?: string;
+  typeUrl?: string;
+
+  /**
+   * Must be a valid serialized protocol buffer of the above specified type.
+   * @format byte
+   */
+  value?: string;
 }
 
 export interface RpcStatus {
@@ -180,14 +183,7 @@ export interface V1Beta1PageRequest {
    * count_total is only respected when offset is used. It is ignored when key
    * is set.
    */
-  count_total?: boolean;
-
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  reverse?: boolean;
+  countTotal?: boolean;
 }
 
 /**
@@ -201,7 +197,7 @@ corresponding request message has used PageRequest.
 */
 export interface V1Beta1PageResponse {
   /** @format byte */
-  next_key?: string;
+  nextKey?: string;
 
   /** @format uint64 */
   total?: string;
@@ -436,8 +432,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.key"?: string;
       "pagination.offset"?: string;
       "pagination.limit"?: string;
-      "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
+      "pagination.countTotal"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -455,11 +450,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryEvidence
    * @summary Evidence queries evidence based on evidence hash.
-   * @request GET:/cosmos/evidence/v1beta1/evidence/{evidence_hash}
+   * @request GET:/cosmos/evidence/v1beta1/evidence/{evidenceHash}
    */
-  queryEvidence = (evidence_hash: string, params: RequestParams = {}) =>
+  queryEvidence = (evidenceHash: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryEvidenceResponse, RpcStatus>({
-      path: `/cosmos/evidence/v1beta1/evidence/${evidence_hash}`,
+      path: `/cosmos/evidence/v1beta1/evidence/${evidenceHash}`,
       method: "GET",
       format: "json",
       ...params,

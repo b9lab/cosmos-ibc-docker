@@ -1,4 +1,4 @@
-import { Writer, Reader } from "protobufjs/minimal";
+import { Writer, Reader } from 'protobufjs/minimal';
 export declare const protobufPackage = "google.protobuf";
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a
@@ -39,13 +39,10 @@ export declare const protobufPackage = "google.protobuf";
  *  Example 4: Pack and unpack a message in Go
  *
  *      foo := &pb.Foo{...}
- *      any, err := anypb.New(foo)
- *      if err != nil {
- *        ...
- *      }
+ *      any, err := ptypes.MarshalAny(foo)
  *      ...
  *      foo := &pb.Foo{}
- *      if err := any.UnmarshalTo(foo); err != nil {
+ *      if err := ptypes.UnmarshalAny(any, foo); err != nil {
  *        ...
  *      }
  *
@@ -114,7 +111,7 @@ export interface Any {
      * Schemes other than `http`, `https` (or the empty scheme) might be
      * used with implementation specific semantics.
      */
-    type_url: string;
+    typeUrl: string;
     /** Must be a valid serialized protocol buffer of the above specified type. */
     value: Uint8Array;
 }

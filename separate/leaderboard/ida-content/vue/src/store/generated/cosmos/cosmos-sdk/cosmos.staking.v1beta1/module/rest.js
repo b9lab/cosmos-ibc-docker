@@ -145,7 +145,7 @@ export class HttpClient {
     }
 }
 /**
- * @title cosmos/staking/v1beta1/authz.proto
+ * @title cosmos/staking/v1beta1/genesis.proto
  * @version version not set
  */
 export class Api extends HttpClient {
@@ -157,10 +157,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryDelegatorDelegations
          * @summary DelegatorDelegations queries all delegations of a given delegator address.
-         * @request GET:/cosmos/staking/v1beta1/delegations/{delegator_addr}
+         * @request GET:/cosmos/staking/v1beta1/delegations/{delegatorAddr}
          */
-        this.queryDelegatorDelegations = (delegator_addr, query, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/delegations/${delegator_addr}`,
+        this.queryDelegatorDelegations = (delegatorAddr, query, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/delegations/${delegatorAddr}`,
             method: "GET",
             query: query,
             format: "json",
@@ -172,10 +172,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryRedelegations
          * @summary Redelegations queries redelegations of given address.
-         * @request GET:/cosmos/staking/v1beta1/delegators/{delegator_addr}/redelegations
+         * @request GET:/cosmos/staking/v1beta1/delegators/{delegatorAddr}/redelegations
          */
-        this.queryRedelegations = (delegator_addr, query, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/delegators/${delegator_addr}/redelegations`,
+        this.queryRedelegations = (delegatorAddr, query, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/delegators/${delegatorAddr}/redelegations`,
             method: "GET",
             query: query,
             format: "json",
@@ -188,10 +188,10 @@ export class Api extends HttpClient {
        * @name QueryDelegatorUnbondingDelegations
        * @summary DelegatorUnbondingDelegations queries all unbonding delegations of a given
       delegator address.
-       * @request GET:/cosmos/staking/v1beta1/delegators/{delegator_addr}/unbonding_delegations
+       * @request GET:/cosmos/staking/v1beta1/delegators/{delegatorAddr}/unbonding_delegations
        */
-        this.queryDelegatorUnbondingDelegations = (delegator_addr, query, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/delegators/${delegator_addr}/unbonding_delegations`,
+        this.queryDelegatorUnbondingDelegations = (delegatorAddr, query, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/delegators/${delegatorAddr}/unbonding_delegations`,
             method: "GET",
             query: query,
             format: "json",
@@ -204,10 +204,10 @@ export class Api extends HttpClient {
        * @name QueryDelegatorValidators
        * @summary DelegatorValidators queries all validators info for given delegator
       address.
-       * @request GET:/cosmos/staking/v1beta1/delegators/{delegator_addr}/validators
+       * @request GET:/cosmos/staking/v1beta1/delegators/{delegatorAddr}/validators
        */
-        this.queryDelegatorValidators = (delegator_addr, query, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/delegators/${delegator_addr}/validators`,
+        this.queryDelegatorValidators = (delegatorAddr, query, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/delegators/${delegatorAddr}/validators`,
             method: "GET",
             query: query,
             format: "json",
@@ -220,10 +220,10 @@ export class Api extends HttpClient {
        * @name QueryDelegatorValidator
        * @summary DelegatorValidator queries validator info for given delegator validator
       pair.
-       * @request GET:/cosmos/staking/v1beta1/delegators/{delegator_addr}/validators/{validator_addr}
+       * @request GET:/cosmos/staking/v1beta1/delegators/{delegatorAddr}/validators/{validatorAddr}
        */
-        this.queryDelegatorValidator = (delegator_addr, validator_addr, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/delegators/${delegator_addr}/validators/${validator_addr}`,
+        this.queryDelegatorValidator = (delegatorAddr, validatorAddr, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/delegators/${delegatorAddr}/validators/${validatorAddr}`,
             method: "GET",
             format: "json",
             ...params,
@@ -291,10 +291,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryValidator
          * @summary Validator queries validator info for given validator address.
-         * @request GET:/cosmos/staking/v1beta1/validators/{validator_addr}
+         * @request GET:/cosmos/staking/v1beta1/validators/{validatorAddr}
          */
-        this.queryValidator = (validator_addr, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/validators/${validator_addr}`,
+        this.queryValidator = (validatorAddr, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/validators/${validatorAddr}`,
             method: "GET",
             format: "json",
             ...params,
@@ -305,10 +305,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryValidatorDelegations
          * @summary ValidatorDelegations queries delegate info for given validator.
-         * @request GET:/cosmos/staking/v1beta1/validators/{validator_addr}/delegations
+         * @request GET:/cosmos/staking/v1beta1/validators/{validatorAddr}/delegations
          */
-        this.queryValidatorDelegations = (validator_addr, query, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/validators/${validator_addr}/delegations`,
+        this.queryValidatorDelegations = (validatorAddr, query, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/validators/${validatorAddr}/delegations`,
             method: "GET",
             query: query,
             format: "json",
@@ -320,10 +320,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryDelegation
          * @summary Delegation queries delegate info for given validator delegator pair.
-         * @request GET:/cosmos/staking/v1beta1/validators/{validator_addr}/delegations/{delegator_addr}
+         * @request GET:/cosmos/staking/v1beta1/validators/{validatorAddr}/delegations/{delegatorAddr}
          */
-        this.queryDelegation = (validator_addr, delegator_addr, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/validators/${validator_addr}/delegations/${delegator_addr}`,
+        this.queryDelegation = (validatorAddr, delegatorAddr, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/validators/${validatorAddr}/delegations/${delegatorAddr}`,
             method: "GET",
             format: "json",
             ...params,
@@ -335,10 +335,10 @@ export class Api extends HttpClient {
        * @name QueryUnbondingDelegation
        * @summary UnbondingDelegation queries unbonding info for given validator delegator
       pair.
-       * @request GET:/cosmos/staking/v1beta1/validators/{validator_addr}/delegations/{delegator_addr}/unbonding_delegation
+       * @request GET:/cosmos/staking/v1beta1/validators/{validatorAddr}/delegations/{delegatorAddr}/unbonding_delegation
        */
-        this.queryUnbondingDelegation = (validator_addr, delegator_addr, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/validators/${validator_addr}/delegations/${delegator_addr}/unbonding_delegation`,
+        this.queryUnbondingDelegation = (validatorAddr, delegatorAddr, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/validators/${validatorAddr}/delegations/${delegatorAddr}/unbonding_delegation`,
             method: "GET",
             format: "json",
             ...params,
@@ -349,10 +349,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryValidatorUnbondingDelegations
          * @summary ValidatorUnbondingDelegations queries unbonding delegations of a validator.
-         * @request GET:/cosmos/staking/v1beta1/validators/{validator_addr}/unbonding_delegations
+         * @request GET:/cosmos/staking/v1beta1/validators/{validatorAddr}/unbonding_delegations
          */
-        this.queryValidatorUnbondingDelegations = (validator_addr, query, params = {}) => this.request({
-            path: `/cosmos/staking/v1beta1/validators/${validator_addr}/unbonding_delegations`,
+        this.queryValidatorUnbondingDelegations = (validatorAddr, query, params = {}) => this.request({
+            path: `/cosmos/staking/v1beta1/validators/${validatorAddr}/unbonding_delegations`,
             method: "GET",
             query: query,
             format: "json",

@@ -1,4 +1,6 @@
-import { txClient, queryClient, MissingWalletError, registry } from './module';
+import { txClient, queryClient, MissingWalletError } from './module';
+// @ts-ignore
+import { SpVuexError } from '@starport/vuex';
 async function initTxClient(vuexGetters) {
     return await txClient(vuexGetters['common/wallet/signer'], {
         addr: vuexGetters['common/env/apiTendermint']
@@ -33,7 +35,6 @@ function getStructure(template) {
 const getDefaultState = () => {
     return {
         _Structure: {},
-        _Registry: registry,
         _Subscriptions: new Set(),
     };
 };
@@ -50,18 +51,15 @@ export default {
             state[query][JSON.stringify(key)] = value;
         },
         SUBSCRIBE(state, subscription) {
-            state._Subscriptions.add(JSON.stringify(subscription));
+            state._Subscriptions.add(subscription);
         },
         UNSUBSCRIBE(state, subscription) {
-            state._Subscriptions.delete(JSON.stringify(subscription));
+            state._Subscriptions.delete(subscription);
         }
     },
     getters: {
         getTypeStructure: (state) => (type) => {
             return state._Structure[type].fields;
-        },
-        getRegistry: (state) => {
-            return state._Registry;
         }
     },
     actions: {
@@ -82,11 +80,10 @@ export default {
         async StoreUpdate({ state, dispatch }) {
             state._Subscriptions.forEach(async (subscription) => {
                 try {
-                    const sub = JSON.parse(subscription);
-                    await dispatch(sub.action, sub.payload);
+                    await dispatch(subscription.action, subscription.payload);
                 }
                 catch (e) {
-                    throw new Error('Subscriptions: ' + e.message);
+                    throw new SpVuexError('Subscriptions: ' + e.message);
                 }
             });
         },
@@ -100,10 +97,10 @@ export default {
             }
             catch (e) {
                 if (e == MissingWalletError) {
-                    throw new Error('TxClient:MsgVerifyInvariant:Init Could not initialize signing client. Wallet is required.');
+                    throw new SpVuexError('TxClient:MsgVerifyInvariant:Init', 'Could not initialize signing client. Wallet is required.');
                 }
                 else {
-                    throw new Error('TxClient:MsgVerifyInvariant:Send Could not broadcast Tx: ' + e.message);
+                    throw new SpVuexError('TxClient:MsgVerifyInvariant:Send', 'Could not broadcast Tx: ' + e.message);
                 }
             }
         },
@@ -115,10 +112,10 @@ export default {
             }
             catch (e) {
                 if (e == MissingWalletError) {
-                    throw new Error('TxClient:MsgVerifyInvariant:Init Could not initialize signing client. Wallet is required.');
+                    throw new SpVuexError('TxClient:MsgVerifyInvariant:Init', 'Could not initialize signing client. Wallet is required.');
                 }
                 else {
-                    throw new Error('TxClient:MsgVerifyInvariant:Create Could not create message: ' + e.message);
+                    throw new SpVuexError('TxClient:MsgVerifyInvariant:Create', 'Could not create message: ' + e.message);
                 }
             }
         },

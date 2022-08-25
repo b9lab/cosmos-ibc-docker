@@ -112,6 +112,7 @@ const baseScorePacketData = {
     playerAddress: "",
     wonCount: 0,
     DateAdded: "",
+    GameID: "",
 };
 export const ScorePacketData = {
     encode(message, writer = Writer.create()) {
@@ -123,6 +124,9 @@ export const ScorePacketData = {
         }
         if (message.DateAdded !== "") {
             writer.uint32(26).string(message.DateAdded);
+        }
+        if (message.GameID !== "") {
+            writer.uint32(34).string(message.GameID);
         }
         return writer;
     },
@@ -141,6 +145,9 @@ export const ScorePacketData = {
                     break;
                 case 3:
                     message.DateAdded = reader.string();
+                    break;
+                case 4:
+                    message.GameID = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -169,6 +176,12 @@ export const ScorePacketData = {
         else {
             message.DateAdded = "";
         }
+        if (object.GameID !== undefined && object.GameID !== null) {
+            message.GameID = String(object.GameID);
+        }
+        else {
+            message.GameID = "";
+        }
         return message;
     },
     toJSON(message) {
@@ -177,6 +190,7 @@ export const ScorePacketData = {
             (obj.playerAddress = message.playerAddress);
         message.wonCount !== undefined && (obj.wonCount = message.wonCount);
         message.DateAdded !== undefined && (obj.DateAdded = message.DateAdded);
+        message.GameID !== undefined && (obj.GameID = message.GameID);
         return obj;
     },
     fromPartial(object) {
@@ -198,6 +212,12 @@ export const ScorePacketData = {
         }
         else {
             message.DateAdded = "";
+        }
+        if (object.GameID !== undefined && object.GameID !== null) {
+            message.GameID = object.GameID;
+        }
+        else {
+            message.GameID = "";
         }
         return message;
     },

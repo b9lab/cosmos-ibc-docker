@@ -1,8 +1,8 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import { Header } from "../../../tendermint/types/types";
-import { Any } from "../../../google/protobuf/any";
-import { Duration } from "../../../google/protobuf/duration";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Writer, Reader } from 'protobufjs/minimal';
+import { Header } from '../../../tendermint/types/types';
+import { Any } from '../../../google/protobuf/any';
+import { Duration } from '../../../google/protobuf/duration';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
 export declare const protobufPackage = "cosmos.staking.v1beta1";
 /** BondStatus is the status of a validator. */
 export declare enum BondStatus {
@@ -36,16 +36,16 @@ export interface CommissionRates {
     /** rate is the commission rate charged to delegators, as a fraction. */
     rate: string;
     /** max_rate defines the maximum commission rate which validator can ever charge, as a fraction. */
-    max_rate: string;
+    maxRate: string;
     /** max_change_rate defines the maximum daily increase of the validator commission, as a fraction. */
-    max_change_rate: string;
+    maxChangeRate: string;
 }
 /** Commission defines commission parameters for a given validator. */
 export interface Commission {
     /** commission_rates defines the initial commission rates to be used for creating a validator. */
-    commission_rates: CommissionRates | undefined;
+    commissionRates: CommissionRates | undefined;
     /** update_time is the last time the commission rate was changed. */
-    update_time: Date | undefined;
+    updateTime: Date | undefined;
 }
 /** Description defines a validator description. */
 export interface Description {
@@ -56,7 +56,7 @@ export interface Description {
     /** website defines an optional website link. */
     website: string;
     /** security_contact defines an optional email for security contact. */
-    security_contact: string;
+    securityContact: string;
     /** details define other optional details. */
     details: string;
 }
@@ -72,9 +72,9 @@ export interface Description {
  */
 export interface Validator {
     /** operator_address defines the address of the validator's operator; bech encoded in JSON. */
-    operator_address: string;
+    operatorAddress: string;
     /** consensus_pubkey is the consensus public key of the validator, as a Protobuf Any. */
-    consensus_pubkey: Any | undefined;
+    consensusPubkey: Any | undefined;
     /** jailed defined whether the validator has been jailed from bonded status or not. */
     jailed: boolean;
     /** status is the validator status (bonded/unbonding/unbonded). */
@@ -82,17 +82,17 @@ export interface Validator {
     /** tokens define the delegated tokens (incl. self-delegation). */
     tokens: string;
     /** delegator_shares defines total shares issued to a validator's delegators. */
-    delegator_shares: string;
+    delegatorShares: string;
     /** description defines the description terms for the validator. */
     description: Description | undefined;
     /** unbonding_height defines, if unbonding, the height at which this validator has begun unbonding. */
-    unbonding_height: number;
+    unbondingHeight: number;
     /** unbonding_time defines, if unbonding, the min time for the validator to complete unbonding. */
-    unbonding_time: Date | undefined;
+    unbondingTime: Date | undefined;
     /** commission defines the commission parameters. */
     commission: Commission | undefined;
     /** min_self_delegation is the validator's self declared minimum self delegation. */
-    min_self_delegation: string;
+    minSelfDelegation: string;
 }
 /** ValAddresses defines a repeated set of validator addresses. */
 export interface ValAddresses {
@@ -104,8 +104,8 @@ export interface ValAddresses {
  * be used to construct the key to getting an UnbondingDelegation from state.
  */
 export interface DVPair {
-    delegator_address: string;
-    validator_address: string;
+    delegatorAddress: string;
+    validatorAddress: string;
 }
 /** DVPairs defines an array of DVPair objects. */
 export interface DVPairs {
@@ -118,9 +118,9 @@ export interface DVPairs {
  * Redelegation from state.
  */
 export interface DVVTriplet {
-    delegator_address: string;
-    validator_src_address: string;
-    validator_dst_address: string;
+    delegatorAddress: string;
+    validatorSrcAddress: string;
+    validatorDstAddress: string;
 }
 /** DVVTriplets defines an array of DVVTriplet objects. */
 export interface DVVTriplets {
@@ -133,9 +133,9 @@ export interface DVVTriplets {
  */
 export interface Delegation {
     /** delegator_address is the bech32-encoded address of the delegator. */
-    delegator_address: string;
+    delegatorAddress: string;
     /** validator_address is the bech32-encoded address of the validator. */
-    validator_address: string;
+    validatorAddress: string;
     /** shares define the delegation shares received. */
     shares: string;
 }
@@ -145,33 +145,33 @@ export interface Delegation {
  */
 export interface UnbondingDelegation {
     /** delegator_address is the bech32-encoded address of the delegator. */
-    delegator_address: string;
+    delegatorAddress: string;
     /** validator_address is the bech32-encoded address of the validator. */
-    validator_address: string;
+    validatorAddress: string;
     /** entries are the unbonding delegation entries. */
     entries: UnbondingDelegationEntry[];
 }
 /** UnbondingDelegationEntry defines an unbonding object with relevant metadata. */
 export interface UnbondingDelegationEntry {
     /** creation_height is the height which the unbonding took place. */
-    creation_height: number;
+    creationHeight: number;
     /** completion_time is the unix time for unbonding completion. */
-    completion_time: Date | undefined;
+    completionTime: Date | undefined;
     /** initial_balance defines the tokens initially scheduled to receive at completion. */
-    initial_balance: string;
+    initialBalance: string;
     /** balance defines the tokens to receive at completion. */
     balance: string;
 }
 /** RedelegationEntry defines a redelegation object with relevant metadata. */
 export interface RedelegationEntry {
     /** creation_height  defines the height which the redelegation took place. */
-    creation_height: number;
+    creationHeight: number;
     /** completion_time defines the unix time for redelegation completion. */
-    completion_time: Date | undefined;
+    completionTime: Date | undefined;
     /** initial_balance defines the initial balance when redelegation started. */
-    initial_balance: string;
+    initialBalance: string;
     /** shares_dst is the amount of destination-validator shares created by redelegation. */
-    shares_dst: string;
+    sharesDst: string;
 }
 /**
  * Redelegation contains the list of a particular delegator's redelegating bonds
@@ -179,26 +179,26 @@ export interface RedelegationEntry {
  */
 export interface Redelegation {
     /** delegator_address is the bech32-encoded address of the delegator. */
-    delegator_address: string;
+    delegatorAddress: string;
     /** validator_src_address is the validator redelegation source operator address. */
-    validator_src_address: string;
+    validatorSrcAddress: string;
     /** validator_dst_address is the validator redelegation destination operator address. */
-    validator_dst_address: string;
+    validatorDstAddress: string;
     /** entries are the redelegation entries. */
     entries: RedelegationEntry[];
 }
 /** Params defines the parameters for the staking module. */
 export interface Params {
     /** unbonding_time is the time duration of unbonding. */
-    unbonding_time: Duration | undefined;
+    unbondingTime: Duration | undefined;
     /** max_validators is the maximum number of validators. */
-    max_validators: number;
+    maxValidators: number;
     /** max_entries is the max entries for either unbonding delegation or redelegation (per pair/trio). */
-    max_entries: number;
+    maxEntries: number;
     /** historical_entries is the number of historical entries to persist. */
-    historical_entries: number;
+    historicalEntries: number;
     /** bond_denom defines the bondable coin denomination. */
-    bond_denom: string;
+    bondDenom: string;
 }
 /**
  * DelegationResponse is equivalent to Delegation except that it contains a
@@ -214,7 +214,7 @@ export interface DelegationResponse {
  * responses.
  */
 export interface RedelegationEntryResponse {
-    redelegation_entry: RedelegationEntry | undefined;
+    redelegationEntry: RedelegationEntry | undefined;
     balance: string;
 }
 /**
@@ -231,8 +231,8 @@ export interface RedelegationResponse {
  * denomination.
  */
 export interface Pool {
-    not_bonded_tokens: string;
-    bonded_tokens: string;
+    notBondedTokens: string;
+    bondedTokens: string;
 }
 export declare const HistoricalInfo: {
     encode(message: HistoricalInfo, writer?: Writer): Writer;

@@ -8,7 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"github.com/tmsdkeys/leaderboard/x/leaderboard/types"
+	"github.com/cosmonaut/leaderboard/x/leaderboard/types"
 )
 
 var (
@@ -17,7 +17,6 @@ var (
 
 const (
 	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
-	listSeparator              = ","
 )
 
 // GetTxCmd returns the transaction commands for this module
@@ -30,8 +29,8 @@ func GetTxCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(CmdSendIbcTopRank())
 	// this line is used by starport scaffolding # 1
+	cmd.AddCommand(CmdSendIbcTopRank())
 
 	return cmd
 }

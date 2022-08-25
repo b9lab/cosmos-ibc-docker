@@ -5,27 +5,27 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const TypeMsgSendIbcTopRank = "send_ibc_top_rank"
-
 var _ sdk.Msg = &MsgSendIbcTopRank{}
 
 func NewMsgSendIbcTopRank(
-	creator string,
+	sender string,
 	port string,
 	channelID string,
 	timeoutTimestamp uint64,
 	playerId string,
-	rank uint64,
-	score string,
+	score uint64,
+	dateAdded string,
+	gameId string,
 ) *MsgSendIbcTopRank {
 	return &MsgSendIbcTopRank{
-		Creator:          creator,
+		Sender:           sender,
 		Port:             port,
 		ChannelID:        channelID,
 		TimeoutTimestamp: timeoutTimestamp,
 		PlayerId:         playerId,
-		Rank:             rank,
 		Score:            score,
+		DateAdded:        dateAdded,
+		GameId:           gameId,
 	}
 }
 
@@ -34,15 +34,15 @@ func (msg *MsgSendIbcTopRank) Route() string {
 }
 
 func (msg *MsgSendIbcTopRank) Type() string {
-	return TypeMsgSendIbcTopRank
+	return "SendIbcTopRank"
 }
 
 func (msg *MsgSendIbcTopRank) GetSigners() []sdk.AccAddress {
-	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	sender, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
 		panic(err)
 	}
-	return []sdk.AccAddress{creator}
+	return []sdk.AccAddress{sender}
 }
 
 func (msg *MsgSendIbcTopRank) GetSignBytes() []byte {
@@ -51,18 +51,9 @@ func (msg *MsgSendIbcTopRank) GetSignBytes() []byte {
 }
 
 func (msg *MsgSendIbcTopRank) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
-	}
-	if msg.Port == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid packet port")
-	}
-	if msg.ChannelID == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid packet channel")
-	}
-	if msg.TimeoutTimestamp == 0 {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid packet timeout")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid sender address (%s)", err)
 	}
 	return nil
 }

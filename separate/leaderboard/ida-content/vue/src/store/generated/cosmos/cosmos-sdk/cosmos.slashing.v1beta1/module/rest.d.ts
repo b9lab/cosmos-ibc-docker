@@ -1,5 +1,7 @@
 export interface ProtobufAny {
-    "@type"?: string;
+    typeUrl?: string;
+    /** @format byte */
+    value?: string;
 }
 export interface RpcStatus {
     /** @format int32 */
@@ -41,13 +43,7 @@ export interface V1Beta1PageRequest {
      * count_total is only respected when offset is used. It is ignored when key
      * is set.
      */
-    count_total?: boolean;
-    /**
-     * reverse is set to true if results are to be returned in the descending order.
-     *
-     * Since: cosmos-sdk 0.43
-     */
-    reverse?: boolean;
+    countTotal?: boolean;
 }
 /**
 * PageResponse is to be embedded in gRPC response messages where the
@@ -60,7 +56,7 @@ corresponding request message has used PageRequest.
 */
 export interface V1Beta1PageResponse {
     /** @format byte */
-    next_key?: string;
+    nextKey?: string;
     /** @format uint64 */
     total?: string;
 }
@@ -69,14 +65,14 @@ export interface V1Beta1PageResponse {
  */
 export interface V1Beta1Params {
     /** @format int64 */
-    signed_blocks_window?: string;
+    signedBlocksWindow?: string;
     /** @format byte */
-    min_signed_per_window?: string;
-    downtime_jail_duration?: string;
+    minSignedPerWindow?: string;
+    downtimeJailDuration?: string;
     /** @format byte */
-    slash_fraction_double_sign?: string;
+    slashFractionDoubleSign?: string;
     /** @format byte */
-    slash_fraction_downtime?: string;
+    slashFractionDowntime?: string;
 }
 export interface V1Beta1QueryParamsResponse {
     /** Params represents the parameters used for by the slashing module. */
@@ -87,7 +83,7 @@ export interface V1Beta1QuerySigningInfoResponse {
      * ValidatorSigningInfo defines a validator's signing info for monitoring their
      * liveness activity.
      */
-    val_signing_info?: V1Beta1ValidatorSigningInfo;
+    valSigningInfo?: V1Beta1ValidatorSigningInfo;
 }
 export interface V1Beta1QuerySigningInfosResponse {
     info?: V1Beta1ValidatorSigningInfo[];
@@ -109,30 +105,14 @@ liveness activity.
 export interface V1Beta1ValidatorSigningInfo {
     address?: string;
     /** @format int64 */
-    start_height?: string;
-    /**
-     * Index which is incremented each time the validator was a bonded
-     * in a block and may have signed a precommit or not. This in conjunction with the
-     * `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
-     * @format int64
-     */
-    index_offset?: string;
-    /**
-     * Timestamp until which the validator is jailed due to liveness downtime.
-     * @format date-time
-     */
-    jailed_until?: string;
-    /**
-     * Whether or not a validator has been tombstoned (killed out of validator set). It is set
-     * once the validator commits an equivocation or for any other configured misbehiavor.
-     */
+    startHeight?: string;
+    /** @format int64 */
+    indexOffset?: string;
+    /** @format date-time */
+    jailedUntil?: string;
     tombstoned?: boolean;
-    /**
-     * A counter kept to avoid unnecessary array reads.
-     * Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
-     * @format int64
-     */
-    missed_blocks_counter?: string;
+    /** @format int64 */
+    missedBlocksCounter?: string;
 }
 export declare type QueryParamsType = Record<string | number, any>;
 export declare type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
@@ -213,8 +193,7 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
         "pagination.key"?: string;
         "pagination.offset"?: string;
         "pagination.limit"?: string;
-        "pagination.count_total"?: boolean;
-        "pagination.reverse"?: boolean;
+        "pagination.countTotal"?: boolean;
     }, params?: RequestParams) => Promise<HttpResponse<V1Beta1QuerySigningInfosResponse, RpcStatus>>;
     /**
      * No description
@@ -222,8 +201,8 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @tags Query
      * @name QuerySigningInfo
      * @summary SigningInfo queries the signing info of given cons address
-     * @request GET:/cosmos/slashing/v1beta1/signing_infos/{cons_address}
+     * @request GET:/cosmos/slashing/v1beta1/signing_infos/{consAddress}
      */
-    querySigningInfo: (cons_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QuerySigningInfoResponse, RpcStatus>>;
+    querySigningInfo: (consAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QuerySigningInfoResponse, RpcStatus>>;
 }
 export {};

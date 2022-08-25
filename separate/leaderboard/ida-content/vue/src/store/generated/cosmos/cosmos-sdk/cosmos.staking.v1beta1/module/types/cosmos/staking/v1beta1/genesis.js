@@ -1,18 +1,18 @@
 /* eslint-disable */
-import * as Long from "long";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { Params, Validator, Delegation, UnbondingDelegation, Redelegation, } from "../../../cosmos/staking/v1beta1/staking";
-export const protobufPackage = "cosmos.staking.v1beta1";
+import * as Long from 'long';
+import { util, configure, Writer, Reader } from 'protobufjs/minimal';
+import { Params, Validator, Delegation, UnbondingDelegation, Redelegation } from '../../../cosmos/staking/v1beta1/staking';
+export const protobufPackage = 'cosmos.staking.v1beta1';
 const baseGenesisState = { exported: false };
 export const GenesisState = {
     encode(message, writer = Writer.create()) {
         if (message.params !== undefined) {
             Params.encode(message.params, writer.uint32(10).fork()).ldelim();
         }
-        if (message.last_total_power.length !== 0) {
-            writer.uint32(18).bytes(message.last_total_power);
+        if (message.lastTotalPower.length !== 0) {
+            writer.uint32(18).bytes(message.lastTotalPower);
         }
-        for (const v of message.last_validator_powers) {
+        for (const v of message.lastValidatorPowers) {
             LastValidatorPower.encode(v, writer.uint32(26).fork()).ldelim();
         }
         for (const v of message.validators) {
@@ -21,7 +21,7 @@ export const GenesisState = {
         for (const v of message.delegations) {
             Delegation.encode(v, writer.uint32(42).fork()).ldelim();
         }
-        for (const v of message.unbonding_delegations) {
+        for (const v of message.unbondingDelegations) {
             UnbondingDelegation.encode(v, writer.uint32(50).fork()).ldelim();
         }
         for (const v of message.redelegations) {
@@ -36,10 +36,10 @@ export const GenesisState = {
         const reader = input instanceof Uint8Array ? new Reader(input) : input;
         let end = length === undefined ? reader.len : reader.pos + length;
         const message = { ...baseGenesisState };
-        message.last_validator_powers = [];
+        message.lastValidatorPowers = [];
         message.validators = [];
         message.delegations = [];
-        message.unbonding_delegations = [];
+        message.unbondingDelegations = [];
         message.redelegations = [];
         while (reader.pos < end) {
             const tag = reader.uint32();
@@ -48,10 +48,10 @@ export const GenesisState = {
                     message.params = Params.decode(reader, reader.uint32());
                     break;
                 case 2:
-                    message.last_total_power = reader.bytes();
+                    message.lastTotalPower = reader.bytes();
                     break;
                 case 3:
-                    message.last_validator_powers.push(LastValidatorPower.decode(reader, reader.uint32()));
+                    message.lastValidatorPowers.push(LastValidatorPower.decode(reader, reader.uint32()));
                     break;
                 case 4:
                     message.validators.push(Validator.decode(reader, reader.uint32()));
@@ -60,7 +60,7 @@ export const GenesisState = {
                     message.delegations.push(Delegation.decode(reader, reader.uint32()));
                     break;
                 case 6:
-                    message.unbonding_delegations.push(UnbondingDelegation.decode(reader, reader.uint32()));
+                    message.unbondingDelegations.push(UnbondingDelegation.decode(reader, reader.uint32()));
                     break;
                 case 7:
                     message.redelegations.push(Redelegation.decode(reader, reader.uint32()));
@@ -77,10 +77,10 @@ export const GenesisState = {
     },
     fromJSON(object) {
         const message = { ...baseGenesisState };
-        message.last_validator_powers = [];
+        message.lastValidatorPowers = [];
         message.validators = [];
         message.delegations = [];
-        message.unbonding_delegations = [];
+        message.unbondingDelegations = [];
         message.redelegations = [];
         if (object.params !== undefined && object.params !== null) {
             message.params = Params.fromJSON(object.params);
@@ -88,14 +88,13 @@ export const GenesisState = {
         else {
             message.params = undefined;
         }
-        if (object.last_total_power !== undefined &&
-            object.last_total_power !== null) {
-            message.last_total_power = bytesFromBase64(object.last_total_power);
+        if (object.lastTotalPower !== undefined && object.lastTotalPower !== null) {
+            message.lastTotalPower = bytesFromBase64(object.lastTotalPower);
         }
-        if (object.last_validator_powers !== undefined &&
-            object.last_validator_powers !== null) {
-            for (const e of object.last_validator_powers) {
-                message.last_validator_powers.push(LastValidatorPower.fromJSON(e));
+        if (object.lastValidatorPowers !== undefined &&
+            object.lastValidatorPowers !== null) {
+            for (const e of object.lastValidatorPowers) {
+                message.lastValidatorPowers.push(LastValidatorPower.fromJSON(e));
             }
         }
         if (object.validators !== undefined && object.validators !== null) {
@@ -108,10 +107,10 @@ export const GenesisState = {
                 message.delegations.push(Delegation.fromJSON(e));
             }
         }
-        if (object.unbonding_delegations !== undefined &&
-            object.unbonding_delegations !== null) {
-            for (const e of object.unbonding_delegations) {
-                message.unbonding_delegations.push(UnbondingDelegation.fromJSON(e));
+        if (object.unbondingDelegations !== undefined &&
+            object.unbondingDelegations !== null) {
+            for (const e of object.unbondingDelegations) {
+                message.unbondingDelegations.push(UnbondingDelegation.fromJSON(e));
             }
         }
         if (object.redelegations !== undefined && object.redelegations !== null) {
@@ -131,15 +130,15 @@ export const GenesisState = {
         const obj = {};
         message.params !== undefined &&
             (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-        message.last_total_power !== undefined &&
-            (obj.last_total_power = base64FromBytes(message.last_total_power !== undefined
-                ? message.last_total_power
+        message.lastTotalPower !== undefined &&
+            (obj.lastTotalPower = base64FromBytes(message.lastTotalPower !== undefined
+                ? message.lastTotalPower
                 : new Uint8Array()));
-        if (message.last_validator_powers) {
-            obj.last_validator_powers = message.last_validator_powers.map((e) => e ? LastValidatorPower.toJSON(e) : undefined);
+        if (message.lastValidatorPowers) {
+            obj.lastValidatorPowers = message.lastValidatorPowers.map((e) => e ? LastValidatorPower.toJSON(e) : undefined);
         }
         else {
-            obj.last_validator_powers = [];
+            obj.lastValidatorPowers = [];
         }
         if (message.validators) {
             obj.validators = message.validators.map((e) => e ? Validator.toJSON(e) : undefined);
@@ -153,11 +152,11 @@ export const GenesisState = {
         else {
             obj.delegations = [];
         }
-        if (message.unbonding_delegations) {
-            obj.unbonding_delegations = message.unbonding_delegations.map((e) => e ? UnbondingDelegation.toJSON(e) : undefined);
+        if (message.unbondingDelegations) {
+            obj.unbondingDelegations = message.unbondingDelegations.map((e) => e ? UnbondingDelegation.toJSON(e) : undefined);
         }
         else {
-            obj.unbonding_delegations = [];
+            obj.unbondingDelegations = [];
         }
         if (message.redelegations) {
             obj.redelegations = message.redelegations.map((e) => e ? Redelegation.toJSON(e) : undefined);
@@ -170,10 +169,10 @@ export const GenesisState = {
     },
     fromPartial(object) {
         const message = { ...baseGenesisState };
-        message.last_validator_powers = [];
+        message.lastValidatorPowers = [];
         message.validators = [];
         message.delegations = [];
-        message.unbonding_delegations = [];
+        message.unbondingDelegations = [];
         message.redelegations = [];
         if (object.params !== undefined && object.params !== null) {
             message.params = Params.fromPartial(object.params);
@@ -181,17 +180,16 @@ export const GenesisState = {
         else {
             message.params = undefined;
         }
-        if (object.last_total_power !== undefined &&
-            object.last_total_power !== null) {
-            message.last_total_power = object.last_total_power;
+        if (object.lastTotalPower !== undefined && object.lastTotalPower !== null) {
+            message.lastTotalPower = object.lastTotalPower;
         }
         else {
-            message.last_total_power = new Uint8Array();
+            message.lastTotalPower = new Uint8Array();
         }
-        if (object.last_validator_powers !== undefined &&
-            object.last_validator_powers !== null) {
-            for (const e of object.last_validator_powers) {
-                message.last_validator_powers.push(LastValidatorPower.fromPartial(e));
+        if (object.lastValidatorPowers !== undefined &&
+            object.lastValidatorPowers !== null) {
+            for (const e of object.lastValidatorPowers) {
+                message.lastValidatorPowers.push(LastValidatorPower.fromPartial(e));
             }
         }
         if (object.validators !== undefined && object.validators !== null) {
@@ -204,10 +202,10 @@ export const GenesisState = {
                 message.delegations.push(Delegation.fromPartial(e));
             }
         }
-        if (object.unbonding_delegations !== undefined &&
-            object.unbonding_delegations !== null) {
-            for (const e of object.unbonding_delegations) {
-                message.unbonding_delegations.push(UnbondingDelegation.fromPartial(e));
+        if (object.unbondingDelegations !== undefined &&
+            object.unbondingDelegations !== null) {
+            for (const e of object.unbondingDelegations) {
+                message.unbondingDelegations.push(UnbondingDelegation.fromPartial(e));
             }
         }
         if (object.redelegations !== undefined && object.redelegations !== null) {
@@ -222,12 +220,12 @@ export const GenesisState = {
             message.exported = false;
         }
         return message;
-    },
+    }
 };
-const baseLastValidatorPower = { address: "", power: 0 };
+const baseLastValidatorPower = { address: '', power: 0 };
 export const LastValidatorPower = {
     encode(message, writer = Writer.create()) {
-        if (message.address !== "") {
+        if (message.address !== '') {
             writer.uint32(10).string(message.address);
         }
         if (message.power !== 0) {
@@ -261,7 +259,7 @@ export const LastValidatorPower = {
             message.address = String(object.address);
         }
         else {
-            message.address = "";
+            message.address = '';
         }
         if (object.power !== undefined && object.power !== null) {
             message.power = Number(object.power);
@@ -283,7 +281,7 @@ export const LastValidatorPower = {
             message.address = object.address;
         }
         else {
-            message.address = "";
+            message.address = '';
         }
         if (object.power !== undefined && object.power !== null) {
             message.power = object.power;
@@ -292,21 +290,21 @@ export const LastValidatorPower = {
             message.power = 0;
         }
         return message;
-    },
+    }
 };
 var globalThis = (() => {
-    if (typeof globalThis !== "undefined")
+    if (typeof globalThis !== 'undefined')
         return globalThis;
-    if (typeof self !== "undefined")
+    if (typeof self !== 'undefined')
         return self;
-    if (typeof window !== "undefined")
+    if (typeof window !== 'undefined')
         return window;
-    if (typeof global !== "undefined")
+    if (typeof global !== 'undefined')
         return global;
-    throw "Unable to locate global object";
+    throw 'Unable to locate global object';
 })();
 const atob = globalThis.atob ||
-    ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
+    ((b64) => globalThis.Buffer.from(b64, 'base64').toString('binary'));
 function bytesFromBase64(b64) {
     const bin = atob(b64);
     const arr = new Uint8Array(bin.length);
@@ -316,17 +314,17 @@ function bytesFromBase64(b64) {
     return arr;
 }
 const btoa = globalThis.btoa ||
-    ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
+    ((bin) => globalThis.Buffer.from(bin, 'binary').toString('base64'));
 function base64FromBytes(arr) {
     const bin = [];
     for (let i = 0; i < arr.byteLength; ++i) {
         bin.push(String.fromCharCode(arr[i]));
     }
-    return btoa(bin.join(""));
+    return btoa(bin.join(''));
 }
 function longToNumber(long) {
     if (long.gt(Number.MAX_SAFE_INTEGER)) {
-        throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+        throw new globalThis.Error('Value is larger than Number.MAX_SAFE_INTEGER');
     }
     return long.toNumber();
 }

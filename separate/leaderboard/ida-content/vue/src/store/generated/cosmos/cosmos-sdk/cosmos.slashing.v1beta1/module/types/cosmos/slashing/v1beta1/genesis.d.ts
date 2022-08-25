@@ -1,5 +1,5 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import { Params, ValidatorSigningInfo } from "../../../cosmos/slashing/v1beta1/slashing";
+import { Writer, Reader } from 'protobufjs/minimal';
+import { Params, ValidatorSigningInfo } from '../../../cosmos/slashing/v1beta1/slashing';
 export declare const protobufPackage = "cosmos.slashing.v1beta1";
 /** GenesisState defines the slashing module's genesis state. */
 export interface GenesisState {
@@ -9,19 +9,19 @@ export interface GenesisState {
      * signing_infos represents a map between validator addresses and their
      * signing infos.
      */
-    signing_infos: SigningInfo[];
+    signingInfos: SigningInfo[];
     /**
-     * missed_blocks represents a map between validator addresses and their
+     * signing_infos represents a map between validator addresses and their
      * missed blocks.
      */
-    missed_blocks: ValidatorMissedBlocks[];
+    missedBlocks: ValidatorMissedBlocks[];
 }
 /** SigningInfo stores validator signing info of corresponding address. */
 export interface SigningInfo {
     /** address is the validator address. */
     address: string;
     /** validator_signing_info represents the signing info of this validator. */
-    validator_signing_info: ValidatorSigningInfo | undefined;
+    validatorSigningInfo: ValidatorSigningInfo | undefined;
 }
 /**
  * ValidatorMissedBlocks contains array of missed blocks of corresponding
@@ -31,7 +31,7 @@ export interface ValidatorMissedBlocks {
     /** address is the validator address. */
     address: string;
     /** missed_blocks is an array of missed blocks by the validator. */
-    missed_blocks: MissedBlock[];
+    missedBlocks: MissedBlock[];
 }
 /** MissedBlock contains height and missed status as boolean. */
 export interface MissedBlock {

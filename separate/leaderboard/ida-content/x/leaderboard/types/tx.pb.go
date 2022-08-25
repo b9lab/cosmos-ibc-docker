@@ -27,14 +27,16 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// this line is used by starport scaffolding # proto/tx/message
 type MsgSendIbcTopRank struct {
-	Creator          string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Sender           string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
 	Port             string `protobuf:"bytes,2,opt,name=port,proto3" json:"port,omitempty"`
 	ChannelID        string `protobuf:"bytes,3,opt,name=channelID,proto3" json:"channelID,omitempty"`
 	TimeoutTimestamp uint64 `protobuf:"varint,4,opt,name=timeoutTimestamp,proto3" json:"timeoutTimestamp,omitempty"`
 	PlayerId         string `protobuf:"bytes,5,opt,name=playerId,proto3" json:"playerId,omitempty"`
-	Rank             uint64 `protobuf:"varint,6,opt,name=rank,proto3" json:"rank,omitempty"`
-	Score            string `protobuf:"bytes,7,opt,name=score,proto3" json:"score,omitempty"`
+	Score            uint64 `protobuf:"varint,6,opt,name=score,proto3" json:"score,omitempty"`
+	DateAdded        string `protobuf:"bytes,7,opt,name=dateAdded,proto3" json:"dateAdded,omitempty"`
+	GameId           string `protobuf:"bytes,8,opt,name=gameId,proto3" json:"gameId,omitempty"`
 }
 
 func (m *MsgSendIbcTopRank) Reset()         { *m = MsgSendIbcTopRank{} }
@@ -70,9 +72,9 @@ func (m *MsgSendIbcTopRank) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgSendIbcTopRank proto.InternalMessageInfo
 
-func (m *MsgSendIbcTopRank) GetCreator() string {
+func (m *MsgSendIbcTopRank) GetSender() string {
 	if m != nil {
-		return m.Creator
+		return m.Sender
 	}
 	return ""
 }
@@ -105,16 +107,23 @@ func (m *MsgSendIbcTopRank) GetPlayerId() string {
 	return ""
 }
 
-func (m *MsgSendIbcTopRank) GetRank() uint64 {
+func (m *MsgSendIbcTopRank) GetScore() uint64 {
 	if m != nil {
-		return m.Rank
+		return m.Score
 	}
 	return 0
 }
 
-func (m *MsgSendIbcTopRank) GetScore() string {
+func (m *MsgSendIbcTopRank) GetDateAdded() string {
 	if m != nil {
-		return m.Score
+		return m.DateAdded
+	}
+	return ""
+}
+
+func (m *MsgSendIbcTopRank) GetGameId() string {
+	if m != nil {
+		return m.GameId
 	}
 	return ""
 }
@@ -156,34 +165,35 @@ func (m *MsgSendIbcTopRankResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgSendIbcTopRankResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*MsgSendIbcTopRank)(nil), "tmsdkeys.leaderboard.leaderboard.MsgSendIbcTopRank")
-	proto.RegisterType((*MsgSendIbcTopRankResponse)(nil), "tmsdkeys.leaderboard.leaderboard.MsgSendIbcTopRankResponse")
+	proto.RegisterType((*MsgSendIbcTopRank)(nil), "cosmonaut.leaderboard.leaderboard.MsgSendIbcTopRank")
+	proto.RegisterType((*MsgSendIbcTopRankResponse)(nil), "cosmonaut.leaderboard.leaderboard.MsgSendIbcTopRankResponse")
 }
 
 func init() { proto.RegisterFile("leaderboard/tx.proto", fileDescriptor_abcbe4eb090e075c) }
 
 var fileDescriptor_abcbe4eb090e075c = []byte{
-	// 308 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x91, 0x3f, 0x4f, 0xf3, 0x30,
-	0x10, 0xc6, 0xeb, 0xb7, 0xff, 0xde, 0x7a, 0x40, 0x60, 0x75, 0x30, 0x05, 0x59, 0x55, 0xa7, 0x8a,
-	0x21, 0x95, 0xe8, 0xc8, 0x86, 0x58, 0x3a, 0x74, 0x09, 0x9d, 0xd8, 0x9c, 0xe4, 0x94, 0x46, 0x49,
-	0x6c, 0xcb, 0x76, 0xa5, 0x66, 0x65, 0x64, 0xe2, 0x63, 0x31, 0x96, 0x8d, 0x11, 0x25, 0x5f, 0x04,
-	0x61, 0x14, 0x08, 0x64, 0x40, 0x62, 0x7b, 0x7e, 0xcf, 0xf9, 0xee, 0x7c, 0x77, 0x78, 0x9c, 0x01,
-	0x8f, 0x40, 0x07, 0x92, 0xeb, 0x68, 0x61, 0xf7, 0x9e, 0xd2, 0xd2, 0x4a, 0x32, 0xb5, 0xb9, 0x89,
-	0x52, 0x28, 0x8c, 0xd7, 0x08, 0x37, 0xf5, 0xec, 0x19, 0xe1, 0x93, 0xb5, 0x89, 0x6f, 0x41, 0x44,
-	0xab, 0x20, 0xdc, 0x48, 0xe5, 0x73, 0x91, 0x12, 0x8a, 0x87, 0xa1, 0x06, 0x6e, 0xa5, 0xa6, 0x68,
-	0x8a, 0xe6, 0x23, 0xbf, 0x46, 0x42, 0x70, 0x4f, 0x49, 0x6d, 0xe9, 0x3f, 0x67, 0x3b, 0x4d, 0xce,
-	0xf1, 0x28, 0xdc, 0x72, 0x21, 0x20, 0x5b, 0xdd, 0xd0, 0xae, 0x0b, 0x7c, 0x19, 0xe4, 0x02, 0x1f,
-	0xdb, 0x24, 0x07, 0xb9, 0xb3, 0x9b, 0x24, 0x07, 0x63, 0x79, 0xae, 0x68, 0x6f, 0x8a, 0xe6, 0x3d,
-	0xbf, 0xe5, 0x93, 0x09, 0xfe, 0xaf, 0x32, 0x5e, 0x80, 0x5e, 0x45, 0xb4, 0xef, 0x0a, 0x7d, 0xf2,
-	0x7b, 0x67, 0xcd, 0x45, 0x4a, 0x07, 0x2e, 0xd7, 0x69, 0x32, 0xc6, 0x7d, 0x13, 0x4a, 0x0d, 0x74,
-	0xe8, 0x1e, 0x7f, 0xc0, 0xec, 0x0c, 0x9f, 0xb6, 0x46, 0xf2, 0xc1, 0x28, 0x29, 0x0c, 0x5c, 0x3e,
-	0x20, 0xdc, 0x5d, 0x9b, 0x98, 0xdc, 0x23, 0x7c, 0xf4, 0x63, 0xea, 0xa5, 0xf7, 0xdb, 0xba, 0xbc,
-	0x56, 0xdd, 0xc9, 0xd5, 0x1f, 0x92, 0xea, 0xcf, 0x5c, 0xaf, 0x9f, 0x4a, 0x86, 0x0e, 0x25, 0x43,
-	0xaf, 0x25, 0x43, 0x8f, 0x15, 0xeb, 0x1c, 0x2a, 0xd6, 0x79, 0xa9, 0x58, 0xe7, 0x6e, 0x19, 0x27,
-	0x76, 0xbb, 0x0b, 0xbc, 0x50, 0xe6, 0x8b, 0xba, 0xc1, 0xa2, 0x79, 0xe3, 0xfd, 0x37, 0xb2, 0x85,
-	0x02, 0x13, 0x0c, 0xdc, 0xd5, 0x97, 0x6f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xba, 0x15, 0x08, 0xfd,
-	0x0d, 0x02, 0x00, 0x00,
+	// 326 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x92, 0xbf, 0x4e, 0x02, 0x41,
+	0x10, 0xc6, 0x59, 0xf9, 0x23, 0x6c, 0x61, 0x74, 0x43, 0xcc, 0x8a, 0xe6, 0x82, 0x54, 0xc4, 0xe2,
+	0x48, 0x94, 0xd2, 0x46, 0x63, 0x73, 0x05, 0x16, 0x27, 0x95, 0xdd, 0xde, 0xed, 0xe4, 0x20, 0xb2,
+	0x7f, 0xb2, 0xbb, 0x24, 0xd0, 0x5b, 0x5a, 0xf8, 0x58, 0x96, 0x94, 0x96, 0x06, 0x9e, 0xc0, 0x37,
+	0x30, 0xec, 0x29, 0xa2, 0x57, 0x98, 0xd8, 0xed, 0xef, 0x9b, 0xcc, 0x7c, 0xfb, 0x4d, 0x06, 0x37,
+	0x27, 0xc0, 0x38, 0x98, 0x44, 0x31, 0xc3, 0x7b, 0x6e, 0x16, 0x6a, 0xa3, 0x9c, 0x22, 0xa7, 0xa9,
+	0xb2, 0x42, 0x49, 0x36, 0x75, 0xe1, 0x56, 0x7d, 0xfb, 0xdd, 0x79, 0x47, 0xf8, 0x60, 0x60, 0xb3,
+	0x3b, 0x90, 0x3c, 0x4a, 0xd2, 0xa1, 0xd2, 0x31, 0x93, 0x0f, 0xe4, 0x10, 0xd7, 0x2c, 0x48, 0x0e,
+	0x86, 0xa2, 0x36, 0xea, 0x36, 0xe2, 0x4f, 0x22, 0x04, 0x57, 0xb4, 0x32, 0x8e, 0xee, 0x78, 0xd5,
+	0xbf, 0xc9, 0x09, 0x6e, 0xa4, 0x23, 0x26, 0x25, 0x4c, 0xa2, 0x1b, 0x5a, 0xf6, 0x85, 0x6f, 0x81,
+	0x9c, 0xe1, 0x7d, 0x37, 0x16, 0xa0, 0xa6, 0x6e, 0x38, 0x16, 0x60, 0x1d, 0x13, 0x9a, 0x56, 0xda,
+	0xa8, 0x5b, 0x89, 0x0b, 0x3a, 0x69, 0xe1, 0xba, 0x9e, 0xb0, 0x39, 0x98, 0x88, 0xd3, 0xaa, 0x1f,
+	0xb4, 0x61, 0xd2, 0xc4, 0x55, 0x9b, 0x2a, 0x03, 0xb4, 0xe6, 0x9b, 0x73, 0x58, 0x7b, 0x73, 0xe6,
+	0xe0, 0x8a, 0x73, 0xe0, 0x74, 0x37, 0xf7, 0xde, 0x08, 0xeb, 0x14, 0x19, 0x13, 0x10, 0x71, 0x5a,
+	0xcf, 0x53, 0xe4, 0xd4, 0x39, 0xc6, 0x47, 0x85, 0xc8, 0x31, 0x58, 0xad, 0xa4, 0x85, 0xf3, 0x27,
+	0x84, 0xcb, 0x03, 0x9b, 0x91, 0x47, 0x84, 0xf7, 0x7e, 0x6d, 0xa5, 0x1f, 0xfe, 0xb9, 0xcf, 0xb0,
+	0x30, 0xb8, 0x75, 0xf9, 0x9f, 0xae, 0xaf, 0xef, 0x5c, 0xdf, 0xbe, 0x2c, 0x03, 0xb4, 0x58, 0x06,
+	0xe8, 0x6d, 0x19, 0xa0, 0xe7, 0x55, 0x50, 0x5a, 0xac, 0x82, 0xd2, 0xeb, 0x2a, 0x28, 0xdd, 0xf7,
+	0xb3, 0xb1, 0x1b, 0x4d, 0x93, 0x30, 0x55, 0xa2, 0xb7, 0x71, 0xe8, 0x6d, 0xdf, 0xc1, 0xec, 0x07,
+	0xb9, 0xb9, 0x06, 0x9b, 0xd4, 0xfc, 0x65, 0x5c, 0x7c, 0x04, 0x00, 0x00, 0xff, 0xff, 0x5f, 0x3f,
+	0xc1, 0xcb, 0x31, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -198,6 +208,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
+	// this line is used by starport scaffolding # proto/tx/rpc
 	SendIbcTopRank(ctx context.Context, in *MsgSendIbcTopRank, opts ...grpc.CallOption) (*MsgSendIbcTopRankResponse, error)
 }
 
@@ -211,7 +222,7 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 
 func (c *msgClient) SendIbcTopRank(ctx context.Context, in *MsgSendIbcTopRank, opts ...grpc.CallOption) (*MsgSendIbcTopRankResponse, error) {
 	out := new(MsgSendIbcTopRankResponse)
-	err := c.cc.Invoke(ctx, "/tmsdkeys.leaderboard.leaderboard.Msg/SendIbcTopRank", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cosmonaut.leaderboard.leaderboard.Msg/SendIbcTopRank", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -220,6 +231,7 @@ func (c *msgClient) SendIbcTopRank(ctx context.Context, in *MsgSendIbcTopRank, o
 
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
+	// this line is used by starport scaffolding # proto/tx/rpc
 	SendIbcTopRank(context.Context, *MsgSendIbcTopRank) (*MsgSendIbcTopRankResponse, error)
 }
 
@@ -245,7 +257,7 @@ func _Msg_SendIbcTopRank_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tmsdkeys.leaderboard.leaderboard.Msg/SendIbcTopRank",
+		FullMethod: "/cosmonaut.leaderboard.leaderboard.Msg/SendIbcTopRank",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).SendIbcTopRank(ctx, req.(*MsgSendIbcTopRank))
@@ -254,7 +266,7 @@ func _Msg_SendIbcTopRank_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 var _Msg_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "tmsdkeys.leaderboard.leaderboard.Msg",
+	ServiceName: "cosmonaut.leaderboard.leaderboard.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -286,15 +298,22 @@ func (m *MsgSendIbcTopRank) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Score) > 0 {
-		i -= len(m.Score)
-		copy(dAtA[i:], m.Score)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Score)))
+	if len(m.GameId) > 0 {
+		i -= len(m.GameId)
+		copy(dAtA[i:], m.GameId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.GameId)))
+		i--
+		dAtA[i] = 0x42
+	}
+	if len(m.DateAdded) > 0 {
+		i -= len(m.DateAdded)
+		copy(dAtA[i:], m.DateAdded)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DateAdded)))
 		i--
 		dAtA[i] = 0x3a
 	}
-	if m.Rank != 0 {
-		i = encodeVarintTx(dAtA, i, uint64(m.Rank))
+	if m.Score != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Score))
 		i--
 		dAtA[i] = 0x30
 	}
@@ -324,10 +343,10 @@ func (m *MsgSendIbcTopRank) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Creator) > 0 {
-		i -= len(m.Creator)
-		copy(dAtA[i:], m.Creator)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -374,7 +393,7 @@ func (m *MsgSendIbcTopRank) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Creator)
+	l = len(m.Sender)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -393,10 +412,14 @@ func (m *MsgSendIbcTopRank) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	if m.Rank != 0 {
-		n += 1 + sovTx(uint64(m.Rank))
+	if m.Score != 0 {
+		n += 1 + sovTx(uint64(m.Score))
 	}
-	l = len(m.Score)
+	l = len(m.DateAdded)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.GameId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -449,7 +472,7 @@ func (m *MsgSendIbcTopRank) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -477,7 +500,7 @@ func (m *MsgSendIbcTopRank) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Creator = string(dAtA[iNdEx:postIndex])
+			m.Sender = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -596,9 +619,9 @@ func (m *MsgSendIbcTopRank) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 6:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Rank", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Score", wireType)
 			}
-			m.Rank = 0
+			m.Score = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -608,14 +631,14 @@ func (m *MsgSendIbcTopRank) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Rank |= uint64(b&0x7F) << shift
+				m.Score |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
 		case 7:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Score", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DateAdded", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -643,7 +666,39 @@ func (m *MsgSendIbcTopRank) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Score = string(dAtA[iNdEx:postIndex])
+			m.DateAdded = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GameId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.GameId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

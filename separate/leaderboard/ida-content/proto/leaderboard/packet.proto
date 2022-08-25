@@ -1,9 +1,7 @@
 syntax = "proto3";
-package tmsdkeys.leaderboard.leaderboard;
+package cosmonaut.leaderboard.leaderboard;
 
-// this line is used by starport scaffolding # proto/packet/import
-
-option go_package = "github.com/tmsdkeys/leaderboard/x/leaderboard/types";
+option go_package = "github.com/cosmonaut/leaderboard/x/leaderboard/types";
 
 message LeaderboardPacketData {
     oneof packet {
@@ -16,15 +14,16 @@ message LeaderboardPacketData {
 message NoData {
 }
 
+// this line is used by starport scaffolding # ibc/packet/proto/message
 // IbcTopRankPacketData defines a struct for the packet payload
 message IbcTopRankPacketData {
-  string playerId = 1;
-  uint64 rank = 2;
-  string score = 3;
+	  string playerId = 1;
+  uint64 score = 2;
+  string dateAdded = 3;
+  string gameId = 4;
 }
 
 // IbcTopRankPacketAck defines a struct for the packet acknowledgment
 message IbcTopRankPacketAck {
 	  string playerId = 1;
 }
-// this line is used by starport scaffolding # ibc/packet/proto/message

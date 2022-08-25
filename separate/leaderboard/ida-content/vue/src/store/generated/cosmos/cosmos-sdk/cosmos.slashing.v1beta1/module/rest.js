@@ -171,10 +171,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QuerySigningInfo
          * @summary SigningInfo queries the signing info of given cons address
-         * @request GET:/cosmos/slashing/v1beta1/signing_infos/{cons_address}
+         * @request GET:/cosmos/slashing/v1beta1/signing_infos/{consAddress}
          */
-        this.querySigningInfo = (cons_address, params = {}) => this.request({
-            path: `/cosmos/slashing/v1beta1/signing_infos/${cons_address}`,
+        this.querySigningInfo = (consAddress, params = {}) => this.request({
+            path: `/cosmos/slashing/v1beta1/signing_infos/${consAddress}`,
             method: "GET",
             format: "json",
             ...params,

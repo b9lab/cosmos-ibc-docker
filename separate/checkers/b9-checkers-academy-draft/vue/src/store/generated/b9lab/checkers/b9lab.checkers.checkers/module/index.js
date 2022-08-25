@@ -2,13 +2,13 @@
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgSendScore } from "./types/checkers/tx";
 import { MsgRejectGame } from "./types/checkers/tx";
+import { MsgSendScore } from "./types/checkers/tx";
 import { MsgPlayMove } from "./types/checkers/tx";
 import { MsgCreateGame } from "./types/checkers/tx";
 const types = [
-    ["/b9lab.checkers.checkers.MsgSendScore", MsgSendScore],
     ["/b9lab.checkers.checkers.MsgRejectGame", MsgRejectGame],
+    ["/b9lab.checkers.checkers.MsgSendScore", MsgSendScore],
     ["/b9lab.checkers.checkers.MsgPlayMove", MsgPlayMove],
     ["/b9lab.checkers.checkers.MsgCreateGame", MsgCreateGame],
 ];
@@ -25,8 +25,8 @@ const txClient = async (wallet, { addr: addr } = { addr: "http://localhost:26657
     const { address } = (await wallet.getAccounts())[0];
     return {
         signAndBroadcast: (msgs, { fee, memo } = { fee: defaultFee, memo: "" }) => client.signAndBroadcast(address, msgs, fee, memo),
-        msgSendScore: (data) => ({ typeUrl: "/b9lab.checkers.checkers.MsgSendScore", value: data }),
         msgRejectGame: (data) => ({ typeUrl: "/b9lab.checkers.checkers.MsgRejectGame", value: data }),
+        msgSendScore: (data) => ({ typeUrl: "/b9lab.checkers.checkers.MsgSendScore", value: data }),
         msgPlayMove: (data) => ({ typeUrl: "/b9lab.checkers.checkers.MsgPlayMove", value: data }),
         msgCreateGame: (data) => ({ typeUrl: "/b9lab.checkers.checkers.MsgCreateGame", value: data }),
     };

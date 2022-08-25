@@ -1,15 +1,16 @@
 syntax = "proto3";
-package tmsdkeys.leaderboard.leaderboard;
+package cosmonaut.leaderboard.leaderboard;
 
-import "gogoproto/gogo.proto";
-import "leaderboard/params.proto";
 // this line is used by starport scaffolding # genesis/proto/import
+import "leaderboard/board.proto";
+import "leaderboard/player_info.proto";
 
-option go_package = "github.com/tmsdkeys/leaderboard/x/leaderboard/types";
+option go_package = "github.com/cosmonaut/leaderboard/x/leaderboard/types";
 
 // GenesisState defines the leaderboard module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
-  string port_id = 2;
-  // this line is used by starport scaffolding # genesis/proto/state
+    // this line is used by starport scaffolding # genesis/proto/state
+		repeated Board boardList = 3; // this line is used by starport scaffolding # genesis/proto/stateField
+		repeated PlayerInfo playerInfoList = 2; // this line is used by starport scaffolding # genesis/proto/stateField
+    string port_id = 1; // this line is used by starport scaffolding # genesis/proto/stateField
 }

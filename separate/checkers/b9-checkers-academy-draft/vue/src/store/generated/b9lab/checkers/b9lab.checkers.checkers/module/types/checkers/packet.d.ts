@@ -15,6 +15,7 @@ export interface ScorePacketData {
     playerAddress: string;
     wonCount: number;
     DateAdded: string;
+    GameID: string;
 }
 /** ScorePacketAck defines a struct for the packet acknowledgment */
 export interface ScorePacketAck {

@@ -14,6 +14,11 @@ func (p ScorePacketData) ValidateBasic() error {
 		return errors.New("Player address cannot be empty")
 	}
 
+	// check the gameID
+	if p.GameID != p.ChannelID {
+		return errors.New("GameID does not match")
+	}
+
 	return nil
 }
 

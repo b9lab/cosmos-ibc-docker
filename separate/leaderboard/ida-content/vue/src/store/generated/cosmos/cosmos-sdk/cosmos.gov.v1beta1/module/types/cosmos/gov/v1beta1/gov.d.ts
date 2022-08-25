@@ -1,7 +1,7 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
-import { Any } from "../../../google/protobuf/any";
-import { Duration } from "../../../google/protobuf/duration";
+import { Writer, Reader } from 'protobufjs/minimal';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
+import { Any } from '../../../google/protobuf/any';
+import { Duration } from '../../../google/protobuf/duration';
 export declare const protobufPackage = "cosmos.gov.v1beta1";
 /** VoteOption enumerates the valid vote options for a given governance proposal. */
 export declare enum VoteOption {
@@ -53,15 +53,6 @@ export declare enum ProposalStatus {
 export declare function proposalStatusFromJSON(object: any): ProposalStatus;
 export declare function proposalStatusToJSON(object: ProposalStatus): string;
 /**
- * WeightedVoteOption defines a unit of vote for vote split.
- *
- * Since: cosmos-sdk 0.43
- */
-export interface WeightedVoteOption {
-    option: VoteOption;
-    weight: string;
-}
-/**
  * TextProposal defines a standard text proposal whose changes need to be
  * manually updated in case of approval.
  */
@@ -74,61 +65,52 @@ export interface TextProposal {
  * proposal.
  */
 export interface Deposit {
-    proposal_id: number;
+    proposalId: number;
     depositor: string;
     amount: Coin[];
 }
 /** Proposal defines the core field members of a governance proposal. */
 export interface Proposal {
-    proposal_id: number;
+    proposalId: number;
     content: Any | undefined;
     status: ProposalStatus;
-    final_tally_result: TallyResult | undefined;
-    submit_time: Date | undefined;
-    deposit_end_time: Date | undefined;
-    total_deposit: Coin[];
-    voting_start_time: Date | undefined;
-    voting_end_time: Date | undefined;
+    finalTallyResult: TallyResult | undefined;
+    submitTime: Date | undefined;
+    depositEndTime: Date | undefined;
+    totalDeposit: Coin[];
+    votingStartTime: Date | undefined;
+    votingEndTime: Date | undefined;
 }
 /** TallyResult defines a standard tally for a governance proposal. */
 export interface TallyResult {
     yes: string;
     abstain: string;
     no: string;
-    no_with_veto: string;
+    noWithVeto: string;
 }
 /**
  * Vote defines a vote on a governance proposal.
  * A Vote consists of a proposal ID, the voter, and the vote option.
  */
 export interface Vote {
-    proposal_id: number;
+    proposalId: number;
     voter: string;
-    /**
-     * Deprecated: Prefer to use `options` instead. This field is set in queries
-     * if and only if `len(options) == 1` and that option has weight 1. In all
-     * other cases, this field will default to VOTE_OPTION_UNSPECIFIED.
-     *
-     * @deprecated
-     */
     option: VoteOption;
-    /** Since: cosmos-sdk 0.43 */
-    options: WeightedVoteOption[];
 }
 /** DepositParams defines the params for deposits on governance proposals. */
 export interface DepositParams {
     /** Minimum deposit for a proposal to enter voting period. */
-    min_deposit: Coin[];
+    minDeposit: Coin[];
     /**
      * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
      *  months.
      */
-    max_deposit_period: Duration | undefined;
+    maxDepositPeriod: Duration | undefined;
 }
 /** VotingParams defines the params for voting on governance proposals. */
 export interface VotingParams {
     /** Length of the voting period. */
-    voting_period: Duration | undefined;
+    votingPeriod: Duration | undefined;
 }
 /** TallyParams defines the params for tallying votes on governance proposals. */
 export interface TallyParams {
@@ -143,15 +125,8 @@ export interface TallyParams {
      * Minimum value of Veto votes to Total votes ratio for proposal to be
      *  vetoed. Default value: 1/3.
      */
-    veto_threshold: Uint8Array;
+    vetoThreshold: Uint8Array;
 }
-export declare const WeightedVoteOption: {
-    encode(message: WeightedVoteOption, writer?: Writer): Writer;
-    decode(input: Reader | Uint8Array, length?: number): WeightedVoteOption;
-    fromJSON(object: any): WeightedVoteOption;
-    toJSON(message: WeightedVoteOption): unknown;
-    fromPartial(object: DeepPartial<WeightedVoteOption>): WeightedVoteOption;
-};
 export declare const TextProposal: {
     encode(message: TextProposal, writer?: Writer): Writer;
     decode(input: Reader | Uint8Array, length?: number): TextProposal;

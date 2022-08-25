@@ -20,6 +20,7 @@ message ScorePacketData {
   string playerAddress = 1;
   uint64 wonCount = 2;
   string DateAdded = 3;
+  string GameID = 4;
 }
 
 // ScorePacketAck defines a struct for the packet acknowledgment

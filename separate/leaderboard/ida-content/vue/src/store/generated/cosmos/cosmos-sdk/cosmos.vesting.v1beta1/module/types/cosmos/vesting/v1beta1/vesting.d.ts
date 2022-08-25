@@ -1,25 +1,25 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import { BaseAccount } from "../../../cosmos/auth/v1beta1/auth";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Writer, Reader } from 'protobufjs/minimal';
+import { BaseAccount } from '../../../cosmos/auth/v1beta1/auth';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
 export declare const protobufPackage = "cosmos.vesting.v1beta1";
 /**
  * BaseVestingAccount implements the VestingAccount interface. It contains all
  * the necessary fields needed for any vesting account implementation.
  */
 export interface BaseVestingAccount {
-    base_account: BaseAccount | undefined;
-    original_vesting: Coin[];
-    delegated_free: Coin[];
-    delegated_vesting: Coin[];
-    end_time: number;
+    baseAccount: BaseAccount | undefined;
+    originalVesting: Coin[];
+    delegatedFree: Coin[];
+    delegatedVesting: Coin[];
+    endTime: number;
 }
 /**
  * ContinuousVestingAccount implements the VestingAccount interface. It
  * continuously vests by unlocking coins linearly with respect to time.
  */
 export interface ContinuousVestingAccount {
-    base_vesting_account: BaseVestingAccount | undefined;
-    start_time: number;
+    baseVestingAccount: BaseVestingAccount | undefined;
+    startTime: number;
 }
 /**
  * DelayedVestingAccount implements the VestingAccount interface. It vests all
@@ -27,7 +27,7 @@ export interface ContinuousVestingAccount {
  * locked until a specified time.
  */
 export interface DelayedVestingAccount {
-    base_vesting_account: BaseVestingAccount | undefined;
+    baseVestingAccount: BaseVestingAccount | undefined;
 }
 /** Period defines a length of time and amount of coins that will vest. */
 export interface Period {
@@ -39,19 +39,9 @@ export interface Period {
  * periodically vests by unlocking coins during each specified period.
  */
 export interface PeriodicVestingAccount {
-    base_vesting_account: BaseVestingAccount | undefined;
-    start_time: number;
-    vesting_periods: Period[];
-}
-/**
- * PermanentLockedAccount implements the VestingAccount interface. It does
- * not ever release coins, locking them indefinitely. Coins in this account can
- * still be used for delegating and for governance votes even while locked.
- *
- * Since: cosmos-sdk 0.43
- */
-export interface PermanentLockedAccount {
-    base_vesting_account: BaseVestingAccount | undefined;
+    baseVestingAccount: BaseVestingAccount | undefined;
+    startTime: number;
+    vestingPeriods: Period[];
 }
 export declare const BaseVestingAccount: {
     encode(message: BaseVestingAccount, writer?: Writer): Writer;
@@ -87,13 +77,6 @@ export declare const PeriodicVestingAccount: {
     fromJSON(object: any): PeriodicVestingAccount;
     toJSON(message: PeriodicVestingAccount): unknown;
     fromPartial(object: DeepPartial<PeriodicVestingAccount>): PeriodicVestingAccount;
-};
-export declare const PermanentLockedAccount: {
-    encode(message: PermanentLockedAccount, writer?: Writer): Writer;
-    decode(input: Reader | Uint8Array, length?: number): PermanentLockedAccount;
-    fromJSON(object: any): PermanentLockedAccount;
-    toJSON(message: PermanentLockedAccount): unknown;
-    fromPartial(object: DeepPartial<PermanentLockedAccount>): PermanentLockedAccount;
 };
 declare type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export declare type DeepPartial<T> = T extends Builtin ? T : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {

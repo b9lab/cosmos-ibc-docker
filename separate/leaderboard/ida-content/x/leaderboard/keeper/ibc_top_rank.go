@@ -3,12 +3,12 @@ package keeper
 import (
 	"errors"
 
+	"github.com/cosmonaut/leaderboard/x/leaderboard/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
-	"github.com/tmsdkeys/leaderboard/x/leaderboard/types"
+	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
+	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
+	host "github.com/cosmos/cosmos-sdk/x/ibc/core/24-host"
 )
 
 // TransmitIbcTopRankPacket transmits the packet over IBC with the specified source port and source channel
@@ -21,7 +21,7 @@ func (k Keeper) TransmitIbcTopRankPacket(
 	timeoutTimestamp uint64,
 ) error {
 
-	sourceChannelEnd, found := k.ChannelKeeper.GetChannel(ctx, sourcePort, sourceChannel)
+	sourceChannelEnd, found := k.channelKeeper.GetChannel(ctx, sourcePort, sourceChannel)
 	if !found {
 		return sdkerrors.Wrapf(channeltypes.ErrChannelNotFound, "port ID (%s) channel ID (%s)", sourcePort, sourceChannel)
 	}
@@ -30,7 +30,7 @@ func (k Keeper) TransmitIbcTopRankPacket(
 	destinationChannel := sourceChannelEnd.GetCounterparty().GetChannelID()
 
 	// get the next sequence
-	sequence, found := k.ChannelKeeper.GetNextSequenceSend(ctx, sourcePort, sourceChannel)
+	sequence, found := k.channelKeeper.GetNextSequenceSend(ctx, sourcePort, sourceChannel)
 	if !found {
 		return sdkerrors.Wrapf(
 			channeltypes.ErrSequenceSendNotFound,
@@ -38,7 +38,7 @@ func (k Keeper) TransmitIbcTopRankPacket(
 		)
 	}
 
-	channelCap, ok := k.ScopedKeeper.GetCapability(ctx, host.ChannelCapabilityPath(sourcePort, sourceChannel))
+	channelCap, ok := k.scopedKeeper.GetCapability(ctx, host.ChannelCapabilityPath(sourcePort, sourceChannel))
 	if !ok {
 		return sdkerrors.Wrap(channeltypes.ErrChannelCapabilityNotFound, "module does not own channel capability")
 	}
@@ -59,7 +59,7 @@ func (k Keeper) TransmitIbcTopRankPacket(
 		timeoutTimestamp,
 	)
 
-	if err := k.ChannelKeeper.SendPacket(ctx, channelCap, packet); err != nil {
+	if err := k.channelKeeper.SendPacket(ctx, channelCap, packet); err != nil {
 		return err
 	}
 
@@ -74,6 +74,42 @@ func (k Keeper) OnRecvIbcTopRankPacket(ctx sdk.Context, packet channeltypes.Pack
 	}
 
 	// TODO: packet reception logic
+
+	score:= types.PlayerInfo {
+		PlayerID: data.PlayerId,
+		Score: data.Score,
+		DateAdded: data.DateAdded,
+	}
+
+	leaderboard, found := k.GetBoard(ctx, data.GameId)
+	
+	if !found {
+		board:= types.Board {
+				Player:[]*types.PlayerInfo{&score},
+				GameID: data.GameId,        
+		}
+
+		k.SetBoard(ctx, board)
+	}
+
+	found_in_leaderboard := false
+	for i := range leaderboard.Player {
+	    if leaderboard.Player[i].PlayerID == data.PlayerId {
+	        // found the player, update the fields
+	        leaderboard.Player[i].Score = data.Score
+	        leaderboard.Player[i].DateAdded = data.DateAdded
+	        found_in_leaderboard = true
+	        break
+	    }
+	}
+
+	// we cannot find the player in the leaderboard
+	if(!found_in_leaderboard) {
+		updated:= append(leaderboard.Player, &score)
+	  leaderboard.Player = updated
+	} 
+		
+	k.SetBoard(ctx, leaderboard)
 
 	return packetAck, nil
 }

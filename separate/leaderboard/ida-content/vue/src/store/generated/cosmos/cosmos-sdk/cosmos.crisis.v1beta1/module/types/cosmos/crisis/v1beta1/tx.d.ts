@@ -1,10 +1,10 @@
-import { Reader, Writer } from "protobufjs/minimal";
+import { Reader, Writer } from 'protobufjs/minimal';
 export declare const protobufPackage = "cosmos.crisis.v1beta1";
 /** MsgVerifyInvariant represents a message to verify a particular invariance. */
 export interface MsgVerifyInvariant {
     sender: string;
-    invariant_module_name: string;
-    invariant_route: string;
+    invariantModuleName: string;
+    invariantRoute: string;
 }
 /** MsgVerifyInvariantResponse defines the Msg/VerifyInvariant response type. */
 export interface MsgVerifyInvariantResponse {

@@ -1,30 +1,71 @@
 syntax = "proto3";
-package tmsdkeys.leaderboard.leaderboard;
+package cosmonaut.leaderboard.leaderboard;
 
-import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
-import "leaderboard/params.proto";
 // this line is used by starport scaffolding # 1
+import "leaderboard/board.proto";
+import "leaderboard/player_info.proto";
 
-option go_package = "github.com/tmsdkeys/leaderboard/x/leaderboard/types";
+option go_package = "github.com/cosmonaut/leaderboard/x/leaderboard/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/tmsdkeys/leaderboard/leaderboard/params";
-  }
-  // this line is used by starport scaffolding # 2
-}
+    // this line is used by starport scaffolding # 2
 
-// QueryParamsRequest is request type for the Query/Params RPC method.
-message QueryParamsRequest {}
+	// Queries a board by index.
+	rpc Board(QueryGetBoardRequest) returns (QueryGetBoardResponse) {
+		option (google.api.http).get = "/cosmonaut/leaderboard/leaderboard/board/{index}";
+	}
 
-// QueryParamsResponse is response type for the Query/Params RPC method.
-message QueryParamsResponse {
-  // params holds all the parameters of this module.
-  Params params = 1 [(gogoproto.nullable) = false];
+	// Queries a list of board items.
+	rpc BoardAll(QueryAllBoardRequest) returns (QueryAllBoardResponse) {
+		option (google.api.http).get = "/cosmonaut/leaderboard/leaderboard/board";
+	}
+
+
+	// Queries a playerInfo by index.
+	rpc PlayerInfo(QueryGetPlayerInfoRequest) returns (QueryGetPlayerInfoResponse) {
+		option (google.api.http).get = "/cosmonaut/leaderboard/leaderboard/playerInfo/{index}";
+	}
+
+	// Queries a list of playerInfo items.
+	rpc PlayerInfoAll(QueryAllPlayerInfoRequest) returns (QueryAllPlayerInfoResponse) {
+		option (google.api.http).get = "/cosmonaut/leaderboard/leaderboard/playerInfo";
+	}
+
 }
 
 // this line is used by starport scaffolding # 3
+message QueryGetBoardRequest {
+	string index = 1;
+}
+
+message QueryGetBoardResponse {
+	Board Board = 1;
+}
+
+message QueryAllBoardRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllBoardResponse {
+	repeated Board Board = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+message QueryGetPlayerInfoRequest {
+	string index = 1;
+}
+
+message QueryGetPlayerInfoResponse {
+	PlayerInfo PlayerInfo = 1;
+}
+
+message QueryAllPlayerInfoRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPlayerInfoResponse {
+	repeated PlayerInfo PlayerInfo = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

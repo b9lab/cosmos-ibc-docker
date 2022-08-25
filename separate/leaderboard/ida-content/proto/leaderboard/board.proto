@@ -1,0 +1,12 @@
+syntax = "proto3";
+package cosmonaut.leaderboard.leaderboard;
+
+option go_package = "github.com/cosmonaut/leaderboard/x/leaderboard/types";
+
+import "gogoproto/gogo.proto";
+import "leaderboard/player_info.proto";
+
+message Board {
+  repeated PlayerInfo player = 1; 
+  string gameID = 2; 
+}

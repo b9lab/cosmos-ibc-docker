@@ -183,10 +183,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryParams
          * @summary Params queries all parameters of the gov module.
-         * @request GET:/cosmos/gov/v1beta1/params/{params_type}
+         * @request GET:/cosmos/gov/v1beta1/params/{paramsType}
          */
-        this.queryParams = (params_type, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/params/${params_type}`,
+        this.queryParams = (paramsType, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/params/${paramsType}`,
             method: "GET",
             format: "json",
             ...params,
@@ -212,10 +212,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryProposal
          * @summary Proposal queries proposal details based on ProposalID.
-         * @request GET:/cosmos/gov/v1beta1/proposals/{proposal_id}
+         * @request GET:/cosmos/gov/v1beta1/proposals/{proposalId}
          */
-        this.queryProposal = (proposal_id, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/proposals/${proposal_id}`,
+        this.queryProposal = (proposalId, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/proposals/${proposalId}`,
             method: "GET",
             format: "json",
             ...params,
@@ -226,10 +226,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryDeposits
          * @summary Deposits queries all deposits of a single proposal.
-         * @request GET:/cosmos/gov/v1beta1/proposals/{proposal_id}/deposits
+         * @request GET:/cosmos/gov/v1beta1/proposals/{proposalId}/deposits
          */
-        this.queryDeposits = (proposal_id, query, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/proposals/${proposal_id}/deposits`,
+        this.queryDeposits = (proposalId, query, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/proposals/${proposalId}/deposits`,
             method: "GET",
             query: query,
             format: "json",
@@ -241,10 +241,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryDeposit
          * @summary Deposit queries single deposit information based proposalID, depositAddr.
-         * @request GET:/cosmos/gov/v1beta1/proposals/{proposal_id}/deposits/{depositor}
+         * @request GET:/cosmos/gov/v1beta1/proposals/{proposalId}/deposits/{depositor}
          */
-        this.queryDeposit = (proposal_id, depositor, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/proposals/${proposal_id}/deposits/${depositor}`,
+        this.queryDeposit = (proposalId, depositor, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/proposals/${proposalId}/deposits/${depositor}`,
             method: "GET",
             format: "json",
             ...params,
@@ -255,10 +255,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryTallyResult
          * @summary TallyResult queries the tally of a proposal vote.
-         * @request GET:/cosmos/gov/v1beta1/proposals/{proposal_id}/tally
+         * @request GET:/cosmos/gov/v1beta1/proposals/{proposalId}/tally
          */
-        this.queryTallyResult = (proposal_id, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/proposals/${proposal_id}/tally`,
+        this.queryTallyResult = (proposalId, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/proposals/${proposalId}/tally`,
             method: "GET",
             format: "json",
             ...params,
@@ -269,10 +269,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryVotes
          * @summary Votes queries votes of a given proposal.
-         * @request GET:/cosmos/gov/v1beta1/proposals/{proposal_id}/votes
+         * @request GET:/cosmos/gov/v1beta1/proposals/{proposalId}/votes
          */
-        this.queryVotes = (proposal_id, query, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/proposals/${proposal_id}/votes`,
+        this.queryVotes = (proposalId, query, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/proposals/${proposalId}/votes`,
             method: "GET",
             query: query,
             format: "json",
@@ -284,10 +284,10 @@ export class Api extends HttpClient {
          * @tags Query
          * @name QueryVote
          * @summary Vote queries voted information based on proposalID, voterAddr.
-         * @request GET:/cosmos/gov/v1beta1/proposals/{proposal_id}/votes/{voter}
+         * @request GET:/cosmos/gov/v1beta1/proposals/{proposalId}/votes/{voter}
          */
-        this.queryVote = (proposal_id, voter, params = {}) => this.request({
-            path: `/cosmos/gov/v1beta1/proposals/${proposal_id}/votes/${voter}`,
+        this.queryVote = (proposalId, voter, params = {}) => this.request({
+            path: `/cosmos/gov/v1beta1/proposals/${proposalId}/votes/${voter}`,
             method: "GET",
             format: "json",
             ...params,

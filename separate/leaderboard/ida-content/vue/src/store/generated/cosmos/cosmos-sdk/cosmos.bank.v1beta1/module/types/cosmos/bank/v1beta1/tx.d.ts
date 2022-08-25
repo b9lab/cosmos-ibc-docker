@@ -1,11 +1,11 @@
-import { Reader, Writer } from "protobufjs/minimal";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
-import { Input, Output } from "../../../cosmos/bank/v1beta1/bank";
+import { Reader, Writer } from 'protobufjs/minimal';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
+import { Input, Output } from '../../../cosmos/bank/v1beta1/bank';
 export declare const protobufPackage = "cosmos.bank.v1beta1";
 /** MsgSend represents a message to send coins from one account to another. */
 export interface MsgSend {
-    from_address: string;
-    to_address: string;
+    fromAddress: string;
+    toAddress: string;
     amount: Coin[];
 }
 /** MsgSendResponse defines the Msg/Send response type. */

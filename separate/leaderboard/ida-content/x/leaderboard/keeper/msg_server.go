@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/tmsdkeys/leaderboard/x/leaderboard/types"
+	"github.com/cosmonaut/leaderboard/x/leaderboard/types"
 )
 
 type msgServer struct {

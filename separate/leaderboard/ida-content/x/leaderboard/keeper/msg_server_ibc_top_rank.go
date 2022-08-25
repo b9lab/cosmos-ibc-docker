@@ -3,9 +3,9 @@ package keeper
 import (
 	"context"
 
+	"github.com/cosmonaut/leaderboard/x/leaderboard/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	"github.com/tmsdkeys/leaderboard/x/leaderboard/types"
+	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
 )
 
 func (k msgServer) SendIbcTopRank(goCtx context.Context, msg *types.MsgSendIbcTopRank) (*types.MsgSendIbcTopRankResponse, error) {
@@ -17,8 +17,9 @@ func (k msgServer) SendIbcTopRank(goCtx context.Context, msg *types.MsgSendIbcTo
 	var packet types.IbcTopRankPacketData
 
 	packet.PlayerId = msg.PlayerId
-	packet.Rank = msg.Rank
 	packet.Score = msg.Score
+	packet.DateAdded = msg.DateAdded
+	packet.GameId = msg.GameId
 
 	// Transmit the packet
 	err := k.TransmitIbcTopRankPacket(

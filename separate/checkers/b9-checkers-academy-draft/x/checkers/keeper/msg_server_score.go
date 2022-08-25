@@ -29,6 +29,7 @@ func (k msgServer) SendScore(goCtx context.Context, msg *types.MsgSendScore) (*t
         	packet.PlayerAddress = leaderboard.Winners[i].PlayerAddress
 					packet.WonCount = leaderboard.Winners[i].WonCount
 					packet.DateAdded = leaderboard.Winners[i].DateAdded
+					packet.GameID = msg.ChannelID
 	        found_in_leaderboard = true
 	        break
 	    }

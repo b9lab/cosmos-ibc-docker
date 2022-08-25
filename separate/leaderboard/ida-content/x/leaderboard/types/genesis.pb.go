@@ -5,7 +5,6 @@ package types
 
 import (
 	fmt "fmt"
-	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
@@ -25,8 +24,10 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // GenesisState defines the leaderboard module's genesis state.
 type GenesisState struct {
-	Params Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
-	PortId string `protobuf:"bytes,2,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
+	// this line is used by starport scaffolding # genesis/proto/state
+	BoardList      []*Board      `protobuf:"bytes,3,rep,name=boardList,proto3" json:"boardList,omitempty"`
+	PlayerInfoList []*PlayerInfo `protobuf:"bytes,2,rep,name=playerInfoList,proto3" json:"playerInfoList,omitempty"`
+	PortId         string        `protobuf:"bytes,1,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }
@@ -62,11 +63,18 @@ func (m *GenesisState) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GenesisState proto.InternalMessageInfo
 
-func (m *GenesisState) GetParams() Params {
+func (m *GenesisState) GetBoardList() []*Board {
 	if m != nil {
-		return m.Params
+		return m.BoardList
 	}
-	return Params{}
+	return nil
+}
+
+func (m *GenesisState) GetPlayerInfoList() []*PlayerInfo {
+	if m != nil {
+		return m.PlayerInfoList
+	}
+	return nil
 }
 
 func (m *GenesisState) GetPortId() string {
@@ -77,27 +85,28 @@ func (m *GenesisState) GetPortId() string {
 }
 
 func init() {
-	proto.RegisterType((*GenesisState)(nil), "tmsdkeys.leaderboard.leaderboard.GenesisState")
+	proto.RegisterType((*GenesisState)(nil), "cosmonaut.leaderboard.leaderboard.GenesisState")
 }
 
 func init() { proto.RegisterFile("leaderboard/genesis.proto", fileDescriptor_825cd9816b861d53) }
 
 var fileDescriptor_825cd9816b861d53 = []byte{
-	// 215 bytes of a gzipped FileDescriptorProto
+	// 240 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcc, 0x49, 0x4d, 0x4c,
 	0x49, 0x2d, 0x4a, 0xca, 0x4f, 0x2c, 0x4a, 0xd1, 0x4f, 0x4f, 0xcd, 0x4b, 0x2d, 0xce, 0x2c, 0xd6,
-	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x52, 0x28, 0xc9, 0x2d, 0x4e, 0xc9, 0x4e, 0xad, 0x2c, 0xd6,
-	0x43, 0x52, 0x83, 0xcc, 0x96, 0x12, 0x49, 0xcf, 0x4f, 0xcf, 0x07, 0x2b, 0xd6, 0x07, 0xb1, 0x20,
-	0xfa, 0xa4, 0x24, 0x90, 0x8d, 0x2c, 0x48, 0x2c, 0x4a, 0xcc, 0x85, 0x9a, 0xa8, 0x94, 0xcf, 0xc5,
-	0xe3, 0x0e, 0xb1, 0x22, 0xb8, 0x24, 0xb1, 0x24, 0x55, 0xc8, 0x8d, 0x8b, 0x0d, 0x22, 0x2f, 0xc1,
-	0xa8, 0xc0, 0xa8, 0xc1, 0x6d, 0xa4, 0xa1, 0x47, 0xc8, 0x4a, 0xbd, 0x00, 0xb0, 0x7a, 0x27, 0x96,
-	0x13, 0xf7, 0xe4, 0x19, 0x82, 0xa0, 0xba, 0x85, 0xc4, 0xb9, 0xd8, 0x0b, 0xf2, 0x8b, 0x4a, 0xe2,
-	0x33, 0x53, 0x24, 0x98, 0x14, 0x18, 0x35, 0x38, 0x83, 0xd8, 0x40, 0x5c, 0xcf, 0x14, 0x27, 0xdf,
-	0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39,
-	0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0x32, 0x4e, 0xcf, 0x2c, 0xc9, 0x28,
-	0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0x87, 0x59, 0xaa, 0x8f, 0xec, 0xf0, 0x0a, 0x14, 0x5e, 0x49,
-	0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0xd8, 0x1b, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x37,
-	0xef, 0x35, 0x60, 0x35, 0x01, 0x00, 0x00,
+	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x52, 0x4c, 0xce, 0x2f, 0xce, 0xcd, 0xcf, 0x4b, 0x2c, 0x2d,
+	0xd1, 0x43, 0x52, 0x84, 0xcc, 0x96, 0x12, 0x47, 0xd6, 0x0d, 0x91, 0x06, 0xeb, 0x95, 0x92, 0x45,
+	0x96, 0x28, 0xc8, 0x49, 0xac, 0x4c, 0x2d, 0x8a, 0xcf, 0xcc, 0x4b, 0xcb, 0x87, 0x48, 0x2b, 0x1d,
+	0x63, 0xe4, 0xe2, 0x71, 0x87, 0x58, 0x16, 0x5c, 0x92, 0x58, 0x92, 0x2a, 0xe4, 0xc6, 0xc5, 0x09,
+	0x56, 0xeb, 0x93, 0x59, 0x5c, 0x22, 0xc1, 0xac, 0xc0, 0xac, 0xc1, 0x6d, 0xa4, 0xa1, 0x47, 0xd0,
+	0x7e, 0x3d, 0x27, 0x10, 0x19, 0x84, 0xd0, 0x2a, 0x14, 0xca, 0xc5, 0x07, 0xb1, 0xcd, 0x33, 0x2f,
+	0x2d, 0x1f, 0x6c, 0x18, 0x13, 0xd8, 0x30, 0x5d, 0x22, 0x0c, 0x0b, 0x80, 0x6b, 0x0c, 0x42, 0x33,
+	0x44, 0x48, 0x9c, 0x8b, 0xbd, 0x20, 0xbf, 0xa8, 0x24, 0x3e, 0x33, 0x45, 0x82, 0x51, 0x81, 0x51,
+	0x83, 0x33, 0x88, 0x0d, 0xc4, 0xf5, 0x4c, 0x71, 0xf2, 0x3b, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23,
+	0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6,
+	0x63, 0x39, 0x86, 0x28, 0x93, 0xf4, 0xcc, 0x92, 0x8c, 0xd2, 0x24, 0xbd, 0xe4, 0xfc, 0x5c, 0x7d,
+	0xb8, 0xdd, 0xfa, 0xc8, 0xc1, 0x52, 0x81, 0xc2, 0x2b, 0xa9, 0x2c, 0x48, 0x2d, 0x4e, 0x62, 0x03,
+	0x87, 0x8f, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xb3, 0xb3, 0xb3, 0x9e, 0x97, 0x01, 0x00, 0x00,
 }
 
 func (m *GenesisState) Marshal() (dAtA []byte, err error) {
@@ -120,23 +129,41 @@ func (m *GenesisState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.BoardList) > 0 {
+		for iNdEx := len(m.BoardList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.BoardList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.PlayerInfoList) > 0 {
+		for iNdEx := len(m.PlayerInfoList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.PlayerInfoList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
 	if len(m.PortId) > 0 {
 		i -= len(m.PortId)
 		copy(dAtA[i:], m.PortId)
 		i = encodeVarintGenesis(dAtA, i, uint64(len(m.PortId)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0xa
 	}
-	{
-		size, err := m.Params.MarshalToSizedBuffer(dAtA[:i])
-		if err != nil {
-			return 0, err
-		}
-		i -= size
-		i = encodeVarintGenesis(dAtA, i, uint64(size))
-	}
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -157,11 +184,21 @@ func (m *GenesisState) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.Params.Size()
-	n += 1 + l + sovGenesis(uint64(l))
 	l = len(m.PortId)
 	if l > 0 {
 		n += 1 + l + sovGenesis(uint64(l))
+	}
+	if len(m.PlayerInfoList) > 0 {
+		for _, e := range m.PlayerInfoList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if len(m.BoardList) > 0 {
+		for _, e := range m.BoardList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
 	}
 	return n
 }
@@ -203,39 +240,6 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Params", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
 			}
 			var stringLen uint64
@@ -265,6 +269,74 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.PortId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PlayerInfoList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PlayerInfoList = append(m.PlayerInfoList, &PlayerInfo{})
+			if err := m.PlayerInfoList[len(m.PlayerInfoList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoardList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BoardList = append(m.BoardList, &Board{})
+			if err := m.BoardList[len(m.BoardList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

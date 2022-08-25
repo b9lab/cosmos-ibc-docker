@@ -1,15 +1,15 @@
-import { Reader, Writer } from "protobufjs/minimal";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Reader, Writer } from 'protobufjs/minimal';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
 export declare const protobufPackage = "cosmos.vesting.v1beta1";
 /**
  * MsgCreateVestingAccount defines a message that enables creating a vesting
  * account.
  */
 export interface MsgCreateVestingAccount {
-    from_address: string;
-    to_address: string;
+    fromAddress: string;
+    toAddress: string;
     amount: Coin[];
-    end_time: number;
+    endTime: number;
     delayed: boolean;
 }
 /** MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type. */

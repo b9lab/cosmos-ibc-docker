@@ -1,8 +1,8 @@
 package types
 
 import (
-	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
-	// this line is used by starport scaffolding # genesis/types/import
+	"fmt"
+	host "github.com/cosmos/cosmos-sdk/x/ibc/core/24-host"
 )
 
 // DefaultIndex is the default capability global index
@@ -13,7 +13,8 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		PortId: PortID,
 		// this line is used by starport scaffolding # genesis/types/default
-		Params: DefaultParams(),
+		BoardList:      []*Board{},
+		PlayerInfoList: []*PlayerInfo{},
 	}
 }
 
@@ -23,7 +24,26 @@ func (gs GenesisState) Validate() error {
 	if err := host.PortIdentifierValidator(gs.PortId); err != nil {
 		return err
 	}
-	// this line is used by starport scaffolding # genesis/types/validate
 
-	return gs.Params.Validate()
+	// this line is used by starport scaffolding # genesis/types/validate
+	// Check for duplicated index in board
+	boardGameIdMap := make(map[string]bool)
+
+	for _, elem := range gs.BoardList {
+		if _, ok := boardGameIdMap[elem.GameID]; ok {
+			return fmt.Errorf("duplicated index for board")
+		}
+		boardGameIdMap[elem.GameID] = true
+	}
+	// Check for duplicated index in playerInfo
+	playerInfoPlayerIDMap := make(map[string]bool)
+
+	for _, elem := range gs.PlayerInfoList {
+		if _, ok := playerInfoPlayerIDMap[elem.PlayerID]; ok {
+			return fmt.Errorf("duplicated index for playerInfo")
+		}
+		playerInfoPlayerIDMap[elem.PlayerID] = true
+	}
+
+	return nil
 }

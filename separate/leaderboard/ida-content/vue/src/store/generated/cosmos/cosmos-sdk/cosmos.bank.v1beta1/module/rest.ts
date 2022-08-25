@@ -10,7 +10,10 @@
  */
 
 export interface ProtobufAny {
-  "@type"?: string;
+  typeUrl?: string;
+
+  /** @format byte */
+  value?: string;
 }
 
 export interface RpcStatus {
@@ -65,7 +68,7 @@ a basic token.
 */
 export interface V1Beta1Metadata {
   description?: string;
-  denom_units?: V1Beta1DenomUnit[];
+  denomUnits?: V1Beta1DenomUnit[];
 
   /** base represents the base denom (should be the DenomUnit with exponent = 0). */
   base?: string;
@@ -75,17 +78,6 @@ export interface V1Beta1Metadata {
    * displayed in clients.
    */
   display?: string;
-
-  /** Since: cosmos-sdk 0.43 */
-  name?: string;
-
-  /**
-   * symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
-   * be the same as the display.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  symbol?: string;
 }
 
 /**
@@ -142,14 +134,7 @@ export interface V1Beta1PageRequest {
    * count_total is only respected when offset is used. It is ignored when key
    * is set.
    */
-  count_total?: boolean;
-
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  reverse?: boolean;
+  countTotal?: boolean;
 }
 
 /**
@@ -163,7 +148,7 @@ corresponding request message has used PageRequest.
 */
 export interface V1Beta1PageResponse {
   /** @format byte */
-  next_key?: string;
+  nextKey?: string;
 
   /** @format uint64 */
   total?: string;
@@ -173,8 +158,8 @@ export interface V1Beta1PageResponse {
  * Params defines the parameters for the bank module.
  */
 export interface V1Beta1Params {
-  send_enabled?: V1Beta1SendEnabled[];
-  default_send_enabled?: boolean;
+  sendEnabled?: V1Beta1SendEnabled[];
+  defaultSendEnabled?: boolean;
 }
 
 /**
@@ -236,13 +221,6 @@ export interface V1Beta1QuerySupplyOfResponse {
 
 export interface V1Beta1QueryTotalSupplyResponse {
   supply?: V1Beta1Coin[];
-
-  /**
-   * pagination defines the pagination in the response.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  pagination?: V1Beta1PageResponse;
 }
 
 /**
@@ -446,7 +424,7 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title cosmos/bank/v1beta1/authz.proto
+ * @title cosmos/bank/v1beta1/bank.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
@@ -464,8 +442,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.key"?: string;
       "pagination.offset"?: string;
       "pagination.limit"?: string;
-      "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
+      "pagination.countTotal"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -483,13 +460,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryBalance
    * @summary Balance queries the balance of a single coin for a single account.
-   * @request GET:/cosmos/bank/v1beta1/balances/{address}/by_denom
+   * @request GET:/cosmos/bank/v1beta1/balances/{address}/{denom}
    */
-  queryBalance = (address: string, query?: { denom?: string }, params: RequestParams = {}) =>
+  queryBalance = (address: string, denom: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryBalanceResponse, RpcStatus>({
-      path: `/cosmos/bank/v1beta1/balances/${address}/by_denom`,
+      path: `/cosmos/bank/v1beta1/balances/${address}/${denom}`,
       method: "GET",
-      query: query,
       format: "json",
       ...params,
     });
@@ -507,8 +483,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.key"?: string;
       "pagination.offset"?: string;
       "pagination.limit"?: string;
-      "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
+      "pagination.countTotal"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -560,20 +535,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @summary TotalSupply queries the total supply of all coins.
    * @request GET:/cosmos/bank/v1beta1/supply
    */
-  queryTotalSupply = (
-    query?: {
-      "pagination.key"?: string;
-      "pagination.offset"?: string;
-      "pagination.limit"?: string;
-      "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
-    },
-    params: RequestParams = {},
-  ) =>
+  queryTotalSupply = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryTotalSupplyResponse, RpcStatus>({
       path: `/cosmos/bank/v1beta1/supply`,
       method: "GET",
-      query: query,
       format: "json",
       ...params,
     });

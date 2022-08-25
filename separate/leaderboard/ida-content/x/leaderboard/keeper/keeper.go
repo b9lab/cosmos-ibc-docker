@@ -5,50 +5,39 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
+	"github.com/cosmonaut/leaderboard/x/leaderboard/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	"github.com/ignite/cli/ignite/pkg/cosmosibckeeper"
-	"github.com/tmsdkeys/leaderboard/x/leaderboard/types"
+	// this line is used by starport scaffolding # ibc/keeper/import
 )
 
 type (
 	Keeper struct {
-		*cosmosibckeeper.Keeper
-		cdc        codec.BinaryCodec
-		storeKey   sdk.StoreKey
-		memKey     sdk.StoreKey
-		paramstore paramtypes.Subspace
+		cdc           codec.Marshaler
+		storeKey      sdk.StoreKey
+		memKey        sdk.StoreKey
+		channelKeeper types.ChannelKeeper
+		portKeeper    types.PortKeeper
+		scopedKeeper  types.ScopedKeeper
 	}
 )
 
 func NewKeeper(
-	cdc codec.BinaryCodec,
+	cdc codec.Marshaler,
 	storeKey,
 	memKey sdk.StoreKey,
-	ps paramtypes.Subspace,
-	channelKeeper cosmosibckeeper.ChannelKeeper,
-	portKeeper cosmosibckeeper.PortKeeper,
-	scopedKeeper cosmosibckeeper.ScopedKeeper,
+	channelKeeper types.ChannelKeeper,
+	portKeeper types.PortKeeper,
+	scopedKeeper types.ScopedKeeper,
 
 ) *Keeper {
-	// set KeyTable if it has not already been set
-	if !ps.HasKeyTable() {
-		ps = ps.WithKeyTable(types.ParamKeyTable())
-	}
-
 	return &Keeper{
-		Keeper: cosmosibckeeper.NewKeeper(
-			types.PortKey,
-			storeKey,
-			channelKeeper,
-			portKeeper,
-			scopedKeeper,
-		),
-		cdc:        cdc,
-		storeKey:   storeKey,
-		memKey:     memKey,
-		paramstore: ps,
+		cdc:           cdc,
+		storeKey:      storeKey,
+		memKey:        memKey,
+		channelKeeper: channelKeeper,
+		portKeeper:    portKeeper,
+		scopedKeeper:  scopedKeeper,
 	}
 }
 

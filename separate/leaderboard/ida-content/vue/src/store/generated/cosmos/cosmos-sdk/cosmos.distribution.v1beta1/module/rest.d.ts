@@ -1,5 +1,7 @@
 export interface ProtobufAny {
-    "@type"?: string;
+    typeUrl?: string;
+    /** @format byte */
+    value?: string;
 }
 export interface RpcStatus {
     /** @format int32 */
@@ -32,7 +34,7 @@ export interface V1Beta1DecCoin {
 of a delegator's delegation reward.
 */
 export interface V1Beta1DelegationDelegatorReward {
-    validator_address?: string;
+    validatorAddress?: string;
     reward?: V1Beta1DecCoin[];
 }
 /**
@@ -84,13 +86,7 @@ export interface V1Beta1PageRequest {
      * count_total is only respected when offset is used. It is ignored when key
      * is set.
      */
-    count_total?: boolean;
-    /**
-     * reverse is set to true if results are to be returned in the descending order.
-     *
-     * Since: cosmos-sdk 0.43
-     */
-    reverse?: boolean;
+    countTotal?: boolean;
 }
 /**
 * PageResponse is to be embedded in gRPC response messages where the
@@ -103,7 +99,7 @@ corresponding request message has used PageRequest.
 */
 export interface V1Beta1PageResponse {
     /** @format byte */
-    next_key?: string;
+    nextKey?: string;
     /** @format uint64 */
     total?: string;
 }
@@ -111,10 +107,10 @@ export interface V1Beta1PageResponse {
  * Params defines the set of params for the distribution module.
  */
 export interface V1Beta1Params {
-    community_tax?: string;
-    base_proposer_reward?: string;
-    bonus_proposer_reward?: string;
-    withdraw_addr_enabled?: boolean;
+    communityTax?: string;
+    baseProposerReward?: string;
+    bonusProposerReward?: string;
+    withdrawAddrEnabled?: boolean;
 }
 /**
 * QueryCommunityPoolResponse is the response type for the Query/CommunityPool
@@ -156,7 +152,7 @@ Query/DelegatorWithdrawAddress RPC method.
 */
 export interface V1Beta1QueryDelegatorWithdrawAddressResponse {
     /** withdraw_address defines the delegator address to query for. */
-    withdraw_address?: string;
+    withdrawAddress?: string;
 }
 /**
  * QueryParamsResponse is the response type for the Query/Params RPC method.
@@ -212,7 +208,7 @@ for delegations which are withdrawn after a slash has occurred.
 */
 export interface V1Beta1ValidatorSlashEvent {
     /** @format uint64 */
-    validator_period?: string;
+    validatorPeriod?: string;
     fraction?: string;
 }
 export declare type QueryParamsType = Record<string | number, any>;
@@ -289,36 +285,36 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
    * @name QueryDelegationTotalRewards
    * @summary DelegationTotalRewards queries the total rewards accrued by a each
   validator.
-   * @request GET:/cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards
+   * @request GET:/cosmos/distribution/v1beta1/delegators/{delegatorAddress}/rewards
    */
-    queryDelegationTotalRewards: (delegator_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegationTotalRewardsResponse, RpcStatus>>;
+    queryDelegationTotalRewards: (delegatorAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegationTotalRewardsResponse, RpcStatus>>;
     /**
      * No description
      *
      * @tags Query
      * @name QueryDelegationRewards
      * @summary DelegationRewards queries the total rewards accrued by a delegation.
-     * @request GET:/cosmos/distribution/v1beta1/delegators/{delegator_address}/rewards/{validator_address}
+     * @request GET:/cosmos/distribution/v1beta1/delegators/{delegatorAddress}/rewards/{validatorAddress}
      */
-    queryDelegationRewards: (delegator_address: string, validator_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegationRewardsResponse, RpcStatus>>;
+    queryDelegationRewards: (delegatorAddress: string, validatorAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegationRewardsResponse, RpcStatus>>;
     /**
      * No description
      *
      * @tags Query
      * @name QueryDelegatorValidators
      * @summary DelegatorValidators queries the validators of a delegator.
-     * @request GET:/cosmos/distribution/v1beta1/delegators/{delegator_address}/validators
+     * @request GET:/cosmos/distribution/v1beta1/delegators/{delegatorAddress}/validators
      */
-    queryDelegatorValidators: (delegator_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegatorValidatorsResponse, RpcStatus>>;
+    queryDelegatorValidators: (delegatorAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegatorValidatorsResponse, RpcStatus>>;
     /**
      * No description
      *
      * @tags Query
      * @name QueryDelegatorWithdrawAddress
      * @summary DelegatorWithdrawAddress queries withdraw address of a delegator.
-     * @request GET:/cosmos/distribution/v1beta1/delegators/{delegator_address}/withdraw_address
+     * @request GET:/cosmos/distribution/v1beta1/delegators/{delegatorAddress}/withdraw_address
      */
-    queryDelegatorWithdrawAddress: (delegator_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegatorWithdrawAddressResponse, RpcStatus>>;
+    queryDelegatorWithdrawAddress: (delegatorAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryDelegatorWithdrawAddressResponse, RpcStatus>>;
     /**
      * No description
      *
@@ -334,34 +330,33 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @tags Query
      * @name QueryValidatorCommission
      * @summary ValidatorCommission queries accumulated commission for a validator.
-     * @request GET:/cosmos/distribution/v1beta1/validators/{validator_address}/commission
+     * @request GET:/cosmos/distribution/v1beta1/validators/{validatorAddress}/commission
      */
-    queryValidatorCommission: (validator_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryValidatorCommissionResponse, RpcStatus>>;
+    queryValidatorCommission: (validatorAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryValidatorCommissionResponse, RpcStatus>>;
     /**
      * No description
      *
      * @tags Query
      * @name QueryValidatorOutstandingRewards
      * @summary ValidatorOutstandingRewards queries rewards of a validator address.
-     * @request GET:/cosmos/distribution/v1beta1/validators/{validator_address}/outstanding_rewards
+     * @request GET:/cosmos/distribution/v1beta1/validators/{validatorAddress}/outstanding_rewards
      */
-    queryValidatorOutstandingRewards: (validator_address: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryValidatorOutstandingRewardsResponse, RpcStatus>>;
+    queryValidatorOutstandingRewards: (validatorAddress: string, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryValidatorOutstandingRewardsResponse, RpcStatus>>;
     /**
      * No description
      *
      * @tags Query
      * @name QueryValidatorSlashes
      * @summary ValidatorSlashes queries slash events of a validator.
-     * @request GET:/cosmos/distribution/v1beta1/validators/{validator_address}/slashes
+     * @request GET:/cosmos/distribution/v1beta1/validators/{validatorAddress}/slashes
      */
-    queryValidatorSlashes: (validator_address: string, query?: {
-        starting_height?: string;
-        ending_height?: string;
+    queryValidatorSlashes: (validatorAddress: string, query?: {
+        startingHeight?: string;
+        endingHeight?: string;
         "pagination.key"?: string;
         "pagination.offset"?: string;
         "pagination.limit"?: string;
-        "pagination.count_total"?: boolean;
-        "pagination.reverse"?: boolean;
+        "pagination.countTotal"?: boolean;
     }, params?: RequestParams) => Promise<HttpResponse<V1Beta1QueryValidatorSlashesResponse, RpcStatus>>;
 }
 export {};

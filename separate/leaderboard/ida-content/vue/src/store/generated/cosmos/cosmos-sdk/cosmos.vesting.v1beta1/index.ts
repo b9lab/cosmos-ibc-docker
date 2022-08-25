@@ -1,14 +1,15 @@
-import { txClient, queryClient, MissingWalletError , registry} from './module'
+import { txClient, queryClient, MissingWalletError } from './module'
+// @ts-ignore
+import { SpVuexError } from '@starport/vuex'
 
 import { BaseVestingAccount } from "./module/types/cosmos/vesting/v1beta1/vesting"
 import { ContinuousVestingAccount } from "./module/types/cosmos/vesting/v1beta1/vesting"
 import { DelayedVestingAccount } from "./module/types/cosmos/vesting/v1beta1/vesting"
 import { Period } from "./module/types/cosmos/vesting/v1beta1/vesting"
 import { PeriodicVestingAccount } from "./module/types/cosmos/vesting/v1beta1/vesting"
-import { PermanentLockedAccount } from "./module/types/cosmos/vesting/v1beta1/vesting"
 
 
-export { BaseVestingAccount, ContinuousVestingAccount, DelayedVestingAccount, Period, PeriodicVestingAccount, PermanentLockedAccount };
+export { BaseVestingAccount, ContinuousVestingAccount, DelayedVestingAccount, Period, PeriodicVestingAccount };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -53,10 +54,8 @@ const getDefaultState = () => {
 						DelayedVestingAccount: getStructure(DelayedVestingAccount.fromPartial({})),
 						Period: getStructure(Period.fromPartial({})),
 						PeriodicVestingAccount: getStructure(PeriodicVestingAccount.fromPartial({})),
-						PermanentLockedAccount: getStructure(PermanentLockedAccount.fromPartial({})),
 						
 		},
-		_Registry: registry,
 		_Subscriptions: new Set(),
 	}
 }
@@ -75,19 +74,16 @@ export default {
 			state[query][JSON.stringify(key)] = value
 		},
 		SUBSCRIBE(state, subscription) {
-			state._Subscriptions.add(JSON.stringify(subscription))
+			state._Subscriptions.add(subscription)
 		},
 		UNSUBSCRIBE(state, subscription) {
-			state._Subscriptions.delete(JSON.stringify(subscription))
+			state._Subscriptions.delete(subscription)
 		}
 	},
 	getters: {
 				
 		getTypeStructure: (state) => (type) => {
 			return state._Structure[type].fields
-		},
-		getRegistry: (state) => {
-			return state._Registry
 		}
 	},
 	actions: {
@@ -108,10 +104,9 @@ export default {
 		async StoreUpdate({ state, dispatch }) {
 			state._Subscriptions.forEach(async (subscription) => {
 				try {
-					const sub=JSON.parse(subscription)
-					await dispatch(sub.action, sub.payload)
+					await dispatch(subscription.action, subscription.payload)
 				}catch(e) {
-					throw new Error('Subscriptions: ' + e.message)
+					throw new SpVuexError('Subscriptions: ' + e.message)
 				}
 			})
 		},
@@ -125,9 +120,9 @@ export default {
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateVestingAccount:Init Could not initialize signing client. Wallet is required.')
+					throw new SpVuexError('TxClient:MsgCreateVestingAccount:Init', 'Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateVestingAccount:Send Could not broadcast Tx: '+ e.message)
+					throw new SpVuexError('TxClient:MsgCreateVestingAccount:Send', 'Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -139,9 +134,10 @@ export default {
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateVestingAccount:Init Could not initialize signing client. Wallet is required.')
+					throw new SpVuexError('TxClient:MsgCreateVestingAccount:Init', 'Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateVestingAccount:Create Could not create message: ' + e.message)
+					throw new SpVuexError('TxClient:MsgCreateVestingAccount:Create', 'Could not create message: ' + e.message)
+					
 				}
 			}
 		},

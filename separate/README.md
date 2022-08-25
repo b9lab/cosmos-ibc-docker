@@ -43,7 +43,27 @@ $ docker exec relayer ./run-relayer.sh
 
 wait till the connection is etablished and a channel is created. 
 
-## Send an arbitary score from leaderboard to the checkers blockchain
+## Create and play a game
+
+Jump into checkers container:
+
+```
+$ docker exec -it checkersb bash
+```
+
+let the test script create and play a game:
+
+```
+ ./test.sh 1 checkers cosmos1n4mqetruv26lm2frkjah86h642ts84qyd5uvyz cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8
+```
+
+Send the score if the game is over:
+
+```
+$  checkersd tx checkers send-score checkers channel-0 --from cosmos1n4mqetruv26lm2frkjah86h642ts84qyd5uvyz --chain-id checkers
+```
+
+## Check Ibc Score
 
 Jump into leaderboard chain:
 
@@ -51,14 +71,8 @@ Jump into leaderboard chain:
 $ docker exec -it leaderboard bash
 ```
 
-send a score packet to the checkers chain:
+and check the board:
 
 ```
-$ leaderboardd tx leaderboard send-ibc-top-rank leaderboard channel-0 test test test --from cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8
-```
-
-check in the checkers chain that the score has arrived:
-
-```
-$ docker exec checkers checkersd q checkers show-leaderboard
+$ leaderboardd q leaderboard list-board
 ```

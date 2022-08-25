@@ -1,2 +1,0 @@
-docker build -f Dockerfile . -t leaderboarda --build-arg configyml=./configa.yml --build-arg testchain=./testa.sh --no-cache
-docker build -f Dockerfile . -t leaderboardb --build-arg configyml=./configb.yml --build-arg testchain=./testb.sh --no-cache

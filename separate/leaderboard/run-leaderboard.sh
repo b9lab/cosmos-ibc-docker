@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ignite chain serve
+ignite chain serve --reset-once

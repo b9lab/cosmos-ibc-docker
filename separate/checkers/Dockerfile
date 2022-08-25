@@ -35,6 +35,10 @@ RUN git clone https://github.com/regen-network/cosmos-proto && cd cosmos-proto/p
 ARG configyml
 COPY ${configyml} /home/checkers/config.yml
 
+# Copy Test
+COPY ./test.sh /home/checkers
+RUN chmod +x ./test.sh
+
 # Copy serve script
 COPY ./run-checkers.sh /home/checkers
 RUN chmod +x ./run-checkers.sh

@@ -31,3 +31,11 @@ var (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	PlayerInfoKey = "PlayerInfo-value-"
+)
+
+const (
+	BoardKey = "Board-value-"
+)

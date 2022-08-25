@@ -1,13 +1,13 @@
-import { Reader, Writer } from "protobufjs/minimal";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Reader, Writer } from 'protobufjs/minimal';
+import { Coin } from '../../../cosmos/base/v1beta1/coin';
 export declare const protobufPackage = "cosmos.distribution.v1beta1";
 /**
  * MsgSetWithdrawAddress sets the withdraw address for
  * a delegator (or validator self-delegation).
  */
 export interface MsgSetWithdrawAddress {
-    delegator_address: string;
-    withdraw_address: string;
+    delegatorAddress: string;
+    withdrawAddress: string;
 }
 /** MsgSetWithdrawAddressResponse defines the Msg/SetWithdrawAddress response type. */
 export interface MsgSetWithdrawAddressResponse {
@@ -17,8 +17,8 @@ export interface MsgSetWithdrawAddressResponse {
  * from a single validator.
  */
 export interface MsgWithdrawDelegatorReward {
-    delegator_address: string;
-    validator_address: string;
+    delegatorAddress: string;
+    validatorAddress: string;
 }
 /** MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type. */
 export interface MsgWithdrawDelegatorRewardResponse {
@@ -28,7 +28,7 @@ export interface MsgWithdrawDelegatorRewardResponse {
  * address.
  */
 export interface MsgWithdrawValidatorCommission {
-    validator_address: string;
+    validatorAddress: string;
 }
 /** MsgWithdrawValidatorCommissionResponse defines the Msg/WithdrawValidatorCommission response type. */
 export interface MsgWithdrawValidatorCommissionResponse {

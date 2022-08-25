@@ -10,7 +10,7 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/tmsdkeys/leaderboard/x/leaderboard/types"
+	"github.com/cosmonaut/leaderboard/x/leaderboard/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module
@@ -24,8 +24,13 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(CmdQueryParams())
 	// this line is used by starport scaffolding # 1
+
+	cmd.AddCommand(CmdListBoard())
+	cmd.AddCommand(CmdShowBoard())
+
+	cmd.AddCommand(CmdListPlayerInfo())
+	cmd.AddCommand(CmdShowPlayerInfo())
 
 	return cmd
 }
