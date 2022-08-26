@@ -15,20 +15,10 @@ WORKDIR /home/checkers
 RUN apt-get install curl git
 
 # Install ignite
-RUN curl -L https://get.ignite.com/cli@v0.17.3! | bash
-
-# Install dependencies
-RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@latest
-RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
-RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+RUN curl -L https://get.ignite.com/cli@v0.22.1! | bash
 
 # Clone checkers game repository(branch wager-denomination)
-RUN git clone -b v1-wager-denomination https://github.com/cosmos/b9-checkers-academy-draft.git /home/checkers
-
-# Install more dependencies
-RUN go get github.com/golangci/golangci-lint/cmd/golangci-lint
-RUN go get golang.org/x/crypto/ssh/terminal@v0.0.0-20220411220226-7b82a4e95df4
-RUN git clone https://github.com/regen-network/cosmos-proto && cd cosmos-proto/protoc-gen-gocosmos && go install
+RUN git clone -b wager-denomination https://github.com/cosmos/b9-checkers-academy-draft.git /home/checkers
 
 # Copy Config.yml
 ARG configyml
