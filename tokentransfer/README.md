@@ -7,10 +7,18 @@ $ cd cosmos-ibc-docker/tokentransfer/checkers
 $ ./build-images.sh
 ```
 
-In addition, you will need to build the **relayer image**:
+In addition, you will need to build the **relayer images**. 
+If you want to test the Go relayer:
 
 ```
-$ cd cosmos-ibc-docker/tokentransfer/relayer
+$ cd cosmos-ibc-docker/tokentransfer/relayer_go
+$ docker build -f Dockerfile . -t relayer --no-cache
+```
+
+and if you want to do your test with the Hermes relayer:
+
+```
+$ cd cosmos-ibc-docker/tokentransfer/relayer_hermes
 $ docker build -f Dockerfile . -t relayer --no-cache
 ```
 
@@ -34,7 +42,7 @@ If the chains are ready, you can start the relayer process:
 $ docker exec relayer ./run-relayer.sh 
 ```
 
-## Transfer some token
+## Transfer some token(Go Relayer)
 
 The chains have pre-created accounts with some token. In a new terminal, check the balance of the accounts:
 

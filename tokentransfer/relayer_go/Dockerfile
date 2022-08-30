@@ -1,6 +1,6 @@
 # This Dockerfile will: 
-# set up a Golang environment(using Golang Docker Image)
-# and install Go Relayer
+# set up a Golang environment(using the Golang Docker Image)
+# and install the Go Relayer
 
 # Use Golang Docker Image
 FROM golang:1.18
