@@ -65,3 +65,20 @@ $ docker exec relayer rly tx transfer checkersa checkersb 10token cosmos173czeq7
 ```
 
 And, check the balances again. 
+
+## Transfer some token(Hermes Relayer)
+
+The chains have pre-created accounts with some token. In a new terminal, check the balance of the accounts:
+
+```
+$ docker exec checkersa checkersd query bank balances cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8
+$ docker exec checkersb checkersd query bank balances cosmos173czeq76k0lh0m6zcz72yu6zj8c6d0tf294w5k
+```
+
+You can use the relayer to send an IBC transaction:
+
+```
+$ docker exec relayer hermes tx ft-transfer --src-chain checkersa --dst-chain checkersb --src-port transfer --src-channel channel-0 --amount 100 --denom token --timeout-height-offset 1000
+```
+
+And, check the balances again. 

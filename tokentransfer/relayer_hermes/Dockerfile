@@ -26,3 +26,15 @@ COPY ./bob.json /home/rly/bob.json
 # Add the keys
 RUN hermes keys add --chain checkersa --mnemonic-file "alice.json"
 RUN hermes keys add --chain checkersb --mnemonic-file "bob.json"
+
+# Copy entrypoint script
+COPY ./run-relayer.sh /home/rly/
+
+# Set permission
+RUN chmod +x ./run-relayer.sh
+
+# Run entrypoint script
+# ENTRYPOINT ["/bin/bash", "-c", "/home/rly/run-relayer.sh"]
+
+# build with
+# docker build -f Dockerfile . -t relayer
