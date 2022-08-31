@@ -36,10 +36,16 @@ Observe the output of `docker-compose` until the chains are ready - it will take
 
 ## Start the relayer
 
-If the chains are ready, you can start the relayer process:
+If the chains are ready, you can start the relayer process. In a new terminal, jump into the relayer container:
 
 ```
-$ docker exec relayer ./run-relayer.sh 
+$ docker exec -it relayer bash
+```
+
+in it, initialize and start the relayer process:
+
+```
+$ ./run-relayer.sh 
 ```
 
 ## Transfer some token(Go Relayer)
