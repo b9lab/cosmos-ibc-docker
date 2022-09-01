@@ -24,7 +24,7 @@ services:
     networks:
       - tokendemo
 
-  relayer:
+  relayer_hermes:
     profiles: ["hermes"]
     build: ./relayer_hermes
     container_name: relayer
@@ -34,7 +34,7 @@ services:
     networks:
       - tokendemo
 
-  relayer:
+  relayer_go:
     profiles: ["go"]
     build: ./relayer_go
     container_name: relayer
