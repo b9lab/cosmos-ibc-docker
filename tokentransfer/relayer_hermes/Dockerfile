@@ -6,7 +6,7 @@
 FROM rust:1.61.0
 
 # Set working dir
-WORKDIR /home/rly
+WORKDIR /home/hermes
 
 RUN rustup default nightly && rustup update
 
@@ -20,21 +20,17 @@ COPY ./config.toml /root/.hermes/config.toml
 RUN hermes config validate
 
 # Copy mnemonic files
-COPY ./alice.json /home/rly/alice.json
-COPY ./bob.json /home/rly/bob.json
-
-# Add the keys
-RUN hermes keys add --chain checkersa --mnemonic-file "alice.json"
-RUN hermes keys add --chain checkersb --mnemonic-file "bob.json"
+COPY ./alice.json /home/hermes/alice.json
+COPY ./bob.json /home/hermes/bob.json
 
 # Copy entrypoint script
-COPY ./run-relayer.sh /home/rly/
+COPY ./run-relayer.sh /home/hermes/
 
 # Set permission
 RUN chmod +x ./run-relayer.sh
 
 # Run entrypoint script
-# ENTRYPOINT ["/bin/bash", "-c", "/home/rly/run-relayer.sh"]
+# ENTRYPOINT ["/bin/bash", "-c", "/home/hermes/run-relayer.sh"]
 
 # build with
-# docker build -f Dockerfile . -t relayer
+# docker build -f Dockerfile . -t relayer_hermes

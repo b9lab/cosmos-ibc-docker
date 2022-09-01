@@ -30,5 +30,5 @@ RUN chmod +x ./run-relayer.sh
 # ENTRYPOINT ["/bin/bash", "-c", "/home/rly/run-relayer.sh"]
 
 # build with
-# docker build -f Dockerfile . -t relayer
+# docker build -f Dockerfile . -t relayer_go
 

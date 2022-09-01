@@ -7,29 +7,20 @@ $ cd cosmos-ibc-docker/tokentransfer/checkers
 $ ./build-images.sh
 ```
 
-In addition, you will need to build the **relayer images**. 
-If you want to test the Go relayer:
-
-```
-$ cd cosmos-ibc-docker/tokentransfer/relayer_go
-$ docker build -f Dockerfile . -t relayer --no-cache
-```
-
-and if you want to do your test with the Hermes relayer:
-
-```
-$ cd cosmos-ibc-docker/tokentransfer/relayer_hermes
-$ docker build -f Dockerfile . -t relayer --no-cache
-```
-
 ## Start the network
 
-You can use the provided compose file to spin up a network with two checkers blockchains and a relayer:
+You can use the provided compose file to spin up a network with two checkers blockchains and a relayer. You can determine with the `--profile` flag, which relayer should be used. For the `ibc-go` relayer, use:
 
 ```
 $ cd cosmos-ibc-docker/tokentransfer
-$ docker-compose -f tokentransfer.yml up
+$ docker-compose -f tokentransfer.yml --profile go up
 
+```
+
+and for the Hermes relayer:
+
+```
+$ docker-compose -f tokentransfer.yml --profile hermes up
 ```
 
 Observe the output of `docker-compose` until the chains are ready - it will take some time for the chains to be ready. 
