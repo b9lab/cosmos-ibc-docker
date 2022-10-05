@@ -12,12 +12,18 @@ func NewMsgSendScore(
 	port string,
 	channelID string,
 	timeoutTimestamp uint64,
+	playerAddress string,
+	wonCount uint64,
+	DateAdded string,
 ) *MsgSendScore {
 	return &MsgSendScore{
 		Sender:           sender,
 		Port:             port,
 		ChannelID:        channelID,
 		TimeoutTimestamp: timeoutTimestamp,
+		PlayerAddress:     playerAddress,
+		WonCount:         wonCount,
+		DateAdded:        DateAdded,
 	}
 }
 

@@ -19,6 +19,9 @@ func CmdSendScore() *cobra.Command {
 		Short: "Send a score over IBC",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			argsPlayerAddress := ""
+			argsWonCount := uint64(0)
+			argsDateAdded := ""
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -42,7 +45,7 @@ func CmdSendScore() *cobra.Command {
 				timeoutTimestamp = consensusState.GetTimestamp() + timeoutTimestamp
 			}
 
-			msg := types.NewMsgSendScore(sender, srcPort, srcChannel, timeoutTimestamp)
+			msg := types.NewMsgSendScore(sender, srcPort, srcChannel, timeoutTimestamp, string(argsPlayerAddress), uint64(argsWonCount), string(argsDateAdded))
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

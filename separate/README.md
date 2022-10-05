@@ -48,7 +48,7 @@ wait till the connection is etablished and a channel is created.
 Jump into checkers container:
 
 ```
-$ docker exec -it checkersb bash
+$ docker exec -it checkers bash
 ```
 
 let the test script create and play a game:
