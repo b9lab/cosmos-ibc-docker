@@ -1,0 +1,20 @@
+syntax = "proto3";
+package b9lab.checkers.checkers;
+
+option go_package = "github.com/b9lab/checkers/x/checkers/types";
+
+message StoredGame {
+  string index = 1; 
+  string board = 2; 
+  string turn = 3; 
+  string black = 4; 
+  string red = 5; 
+  uint64 moveCount = 6;
+  string beforeIndex = 7;
+  string afterIndex = 8;
+  string deadline = 9;
+  string winner = 10;
+  uint64 wager = 11;
+  string denom = 12;
+}
+

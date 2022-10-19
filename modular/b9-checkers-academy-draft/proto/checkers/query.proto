@@ -1,0 +1,88 @@
+syntax = "proto3";
+package b9lab.checkers.checkers;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "checkers/params.proto";
+import "checkers/system_info.proto";
+import "checkers/stored_game.proto";
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/b9lab/checkers/x/checkers/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/b9lab/checkers/checkers/params";
+  }
+  // Queries a SystemInfo by index.
+	rpc SystemInfo(QueryGetSystemInfoRequest) returns (QueryGetSystemInfoResponse) {
+		option (google.api.http).get = "/b9lab/checkers/checkers/system_info";
+	}
+// Queries a StoredGame by index.
+	rpc StoredGame(QueryGetStoredGameRequest) returns (QueryGetStoredGameResponse) {
+		option (google.api.http).get = "/b9lab/checkers/checkers/stored_game/{index}";
+	}
+
+	// Queries a list of StoredGame items.
+	rpc StoredGameAll(QueryAllStoredGameRequest) returns (QueryAllStoredGameResponse) {
+		option (google.api.http).get = "/b9lab/checkers/checkers/stored_game";
+	}
+
+// Queries a list of CanPlayMove items.
+	rpc CanPlayMove(QueryCanPlayMoveRequest) returns (QueryCanPlayMoveResponse) {
+		option (google.api.http).get = "/b9lab/checkers/checkers/can_play_move/{gameIndex}/{player}/{fromX}/{fromY}/{toX}/{toY}";
+	}
+
+// this line is used by starport scaffolding # 2
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetSystemInfoRequest {}
+
+message QueryGetSystemInfoResponse {
+	SystemInfo SystemInfo = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetStoredGameRequest {
+	  string index = 1;
+
+}
+
+message QueryGetStoredGameResponse {
+	StoredGame storedGame = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllStoredGameRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllStoredGameResponse {
+	repeated StoredGame storedGame = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryCanPlayMoveRequest {
+  string gameIndex = 1;
+  string player = 2;
+  uint64 fromX = 3;
+  uint64 fromY = 4;
+  uint64 toX = 5;
+  uint64 toY = 6;
+}
+
+message QueryCanPlayMoveResponse {
+  bool possible = 1;
+  string reason = 2;
+}
+
+// this line is used by starport scaffolding # 3
