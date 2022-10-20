@@ -1,0 +1,10 @@
+syntax = "proto3";
+package b9lab.checkers.leaderboard;
+
+option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
+import "leaderboard/player_info.proto"; 
+
+message Board {
+  PlayerInfo playerInfo = 1; 
+  
+}

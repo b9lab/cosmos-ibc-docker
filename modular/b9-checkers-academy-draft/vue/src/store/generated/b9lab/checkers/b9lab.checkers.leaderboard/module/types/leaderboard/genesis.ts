@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Params } from "../leaderboard/params";
 import { PlayerInfo } from "../leaderboard/player_info";
+import { Board } from "../leaderboard/board";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "b9lab.checkers.leaderboard";
@@ -9,8 +10,9 @@ export const protobufPackage = "b9lab.checkers.leaderboard";
 export interface GenesisState {
   params: Params | undefined;
   port_id: string;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   playerInfoList: PlayerInfo[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  board: Board | undefined;
 }
 
 const baseGenesisState: object = { port_id: "" };
@@ -25,6 +27,9 @@ export const GenesisState = {
     }
     for (const v of message.playerInfoList) {
       PlayerInfo.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.board !== undefined) {
+      Board.encode(message.board, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -47,6 +52,9 @@ export const GenesisState = {
           message.playerInfoList.push(
             PlayerInfo.decode(reader, reader.uint32())
           );
+          break;
+        case 4:
+          message.board = Board.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -74,6 +82,11 @@ export const GenesisState = {
         message.playerInfoList.push(PlayerInfo.fromJSON(e));
       }
     }
+    if (object.board !== undefined && object.board !== null) {
+      message.board = Board.fromJSON(object.board);
+    } else {
+      message.board = undefined;
+    }
     return message;
   },
 
@@ -89,6 +102,8 @@ export const GenesisState = {
     } else {
       obj.playerInfoList = [];
     }
+    message.board !== undefined &&
+      (obj.board = message.board ? Board.toJSON(message.board) : undefined);
     return obj;
   },
 
@@ -109,6 +124,11 @@ export const GenesisState = {
       for (const e of object.playerInfoList) {
         message.playerInfoList.push(PlayerInfo.fromPartial(e));
       }
+    }
+    if (object.board !== undefined && object.board !== null) {
+      message.board = Board.fromPartial(object.board);
+    } else {
+      message.board = undefined;
     }
     return message;
   },

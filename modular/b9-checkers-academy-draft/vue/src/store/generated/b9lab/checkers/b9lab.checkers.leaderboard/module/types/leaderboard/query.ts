@@ -6,6 +6,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
+import { Board } from "../leaderboard/board";
 
 export const protobufPackage = "b9lab.checkers.leaderboard";
 
@@ -33,6 +34,12 @@ export interface QueryAllPlayerInfoRequest {
 export interface QueryAllPlayerInfoResponse {
   playerInfo: PlayerInfo[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryGetBoardRequest {}
+
+export interface QueryGetBoardResponse {
+  Board: Board | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -446,6 +453,105 @@ export const QueryAllPlayerInfoResponse = {
   },
 };
 
+const baseQueryGetBoardRequest: object = {};
+
+export const QueryGetBoardRequest = {
+  encode(_: QueryGetBoardRequest, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetBoardRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetBoardRequest } as QueryGetBoardRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetBoardRequest {
+    const message = { ...baseQueryGetBoardRequest } as QueryGetBoardRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetBoardRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryGetBoardRequest>): QueryGetBoardRequest {
+    const message = { ...baseQueryGetBoardRequest } as QueryGetBoardRequest;
+    return message;
+  },
+};
+
+const baseQueryGetBoardResponse: object = {};
+
+export const QueryGetBoardResponse = {
+  encode(
+    message: QueryGetBoardResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.Board !== undefined) {
+      Board.encode(message.Board, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetBoardResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetBoardResponse } as QueryGetBoardResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Board = Board.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetBoardResponse {
+    const message = { ...baseQueryGetBoardResponse } as QueryGetBoardResponse;
+    if (object.Board !== undefined && object.Board !== null) {
+      message.Board = Board.fromJSON(object.Board);
+    } else {
+      message.Board = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetBoardResponse): unknown {
+    const obj: any = {};
+    message.Board !== undefined &&
+      (obj.Board = message.Board ? Board.toJSON(message.Board) : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetBoardResponse>
+  ): QueryGetBoardResponse {
+    const message = { ...baseQueryGetBoardResponse } as QueryGetBoardResponse;
+    if (object.Board !== undefined && object.Board !== null) {
+      message.Board = Board.fromPartial(object.Board);
+    } else {
+      message.Board = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -458,6 +564,8 @@ export interface Query {
   PlayerInfoAll(
     request: QueryAllPlayerInfoRequest
   ): Promise<QueryAllPlayerInfoResponse>;
+  /** Queries a Board by index. */
+  Board(request: QueryGetBoardRequest): Promise<QueryGetBoardResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -500,6 +608,18 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllPlayerInfoResponse.decode(new Reader(data))
+    );
+  }
+
+  Board(request: QueryGetBoardRequest): Promise<QueryGetBoardResponse> {
+    const data = QueryGetBoardRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "b9lab.checkers.leaderboard.Query",
+      "Board",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetBoardResponse.decode(new Reader(data))
     );
   }
 }

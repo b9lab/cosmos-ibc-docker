@@ -1,12 +1,13 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
+import { Board } from "./module/types/leaderboard/board"
 import { LeaderboardPacketData } from "./module/types/leaderboard/packet"
 import { NoData } from "./module/types/leaderboard/packet"
 import { Params } from "./module/types/leaderboard/params"
 import { PlayerInfo } from "./module/types/leaderboard/player_info"
 
 
-export { LeaderboardPacketData, NoData, Params, PlayerInfo };
+export { Board, LeaderboardPacketData, NoData, Params, PlayerInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -47,8 +48,10 @@ const getDefaultState = () => {
 				Params: {},
 				PlayerInfo: {},
 				PlayerInfoAll: {},
+				Board: {},
 				
 				_Structure: {
+						Board: getStructure(Board.fromPartial({})),
 						LeaderboardPacketData: getStructure(LeaderboardPacketData.fromPartial({})),
 						NoData: getStructure(NoData.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
@@ -98,6 +101,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.PlayerInfoAll[JSON.stringify(params)] ?? {}
+		},
+				getBoard: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Board[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -198,6 +207,28 @@ export default {
 				return getters['getPlayerInfoAll']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryPlayerInfoAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryBoard({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryBoard()).data
+				
+					
+				commit('QUERY', { query: 'Board', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryBoard', payload: { options: { all }, params: {...key},query }})
+				return getters['getBoard']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryBoard API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},

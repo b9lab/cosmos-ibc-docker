@@ -9,6 +9,10 @@
  * ---------------------------------------------------------------
  */
 
+export interface LeaderboardBoard {
+  playerInfo?: LeaderboardPlayerInfo;
+}
+
 /**
  * Params defines the parameters for the module.
  */
@@ -41,6 +45,10 @@ export interface LeaderboardQueryAllPlayerInfoResponse {
    *  }
    */
   pagination?: V1Beta1PageResponse;
+}
+
+export interface LeaderboardQueryGetBoardResponse {
+  Board?: LeaderboardBoard;
 }
 
 export interface LeaderboardQueryGetPlayerInfoResponse {
@@ -321,10 +329,26 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title leaderboard/genesis.proto
+ * @title leaderboard/board.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryBoard
+   * @summary Queries a Board by index.
+   * @request GET:/b9lab/checkers/leaderboard/board
+   */
+  queryBoard = (params: RequestParams = {}) =>
+    this.request<LeaderboardQueryGetBoardResponse, RpcStatus>({
+      path: `/b9lab/checkers/leaderboard/board`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

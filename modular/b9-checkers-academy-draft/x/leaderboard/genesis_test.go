@@ -22,6 +22,9 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		Board: &types.Board{
+			PlayerInfo: new(types.PlayerInfo),
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -36,5 +39,6 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.PortId, got.PortId)
 
 	require.ElementsMatch(t, genesisState.PlayerInfoList, got.PlayerInfoList)
+	require.Equal(t, genesisState.Board, got.Board)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
