@@ -10,7 +10,7 @@
  */
 
 export interface LeaderboardBoard {
-  playerInfo?: LeaderboardPlayerInfo;
+  playerInfo?: LeaderboardPlayerInfo[];
 }
 
 /**

@@ -5,15 +5,15 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "b9lab.checkers.leaderboard";
 
 export interface Board {
-  playerInfo: PlayerInfo | undefined;
+  playerInfo: PlayerInfo[];
 }
 
 const baseBoard: object = {};
 
 export const Board = {
   encode(message: Board, writer: Writer = Writer.create()): Writer {
-    if (message.playerInfo !== undefined) {
-      PlayerInfo.encode(message.playerInfo, writer.uint32(10).fork()).ldelim();
+    for (const v of message.playerInfo) {
+      PlayerInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -22,11 +22,12 @@ export const Board = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBoard } as Board;
+    message.playerInfo = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.playerInfo = PlayerInfo.decode(reader, reader.uint32());
+          message.playerInfo.push(PlayerInfo.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -38,29 +39,34 @@ export const Board = {
 
   fromJSON(object: any): Board {
     const message = { ...baseBoard } as Board;
+    message.playerInfo = [];
     if (object.playerInfo !== undefined && object.playerInfo !== null) {
-      message.playerInfo = PlayerInfo.fromJSON(object.playerInfo);
-    } else {
-      message.playerInfo = undefined;
+      for (const e of object.playerInfo) {
+        message.playerInfo.push(PlayerInfo.fromJSON(e));
+      }
     }
     return message;
   },
 
   toJSON(message: Board): unknown {
     const obj: any = {};
-    message.playerInfo !== undefined &&
-      (obj.playerInfo = message.playerInfo
-        ? PlayerInfo.toJSON(message.playerInfo)
-        : undefined);
+    if (message.playerInfo) {
+      obj.playerInfo = message.playerInfo.map((e) =>
+        e ? PlayerInfo.toJSON(e) : undefined
+      );
+    } else {
+      obj.playerInfo = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<Board>): Board {
     const message = { ...baseBoard } as Board;
+    message.playerInfo = [];
     if (object.playerInfo !== undefined && object.playerInfo !== null) {
-      message.playerInfo = PlayerInfo.fromPartial(object.playerInfo);
-    } else {
-      message.playerInfo = undefined;
+      for (const e of object.playerInfo) {
+        message.playerInfo.push(PlayerInfo.fromPartial(e));
+      }
     }
     return message;
   },

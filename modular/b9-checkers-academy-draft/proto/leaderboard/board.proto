@@ -3,8 +3,9 @@ package b9lab.checkers.leaderboard;
 
 option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
 import "leaderboard/player_info.proto"; 
+import "gogoproto/gogo.proto";
 
 message Board {
-  PlayerInfo playerInfo = 1; 
+  repeated PlayerInfo playerInfo = 1 [(gogoproto.nullable) = false]; 
   
 }
