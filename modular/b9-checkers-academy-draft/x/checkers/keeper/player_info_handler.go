@@ -25,7 +25,7 @@ func mustAddDeltaGameResultToPlayer(
       WonCount:       0,
       LostCount:      0,
       ForfeitedCount: 0,
-      DateUpdated:    ctx.BlockTime().UTC().Format("2006-01-02 15:04:05.999999999 +0000 UTC"),
+      DateUpdated:    ctx.BlockTime().UTC().Format(types.DeadlineLayout),
     }
   }
   playerInfo.WonCount += wonDelta
