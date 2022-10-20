@@ -3,6 +3,7 @@ package b9lab.checkers.leaderboard;
 
 import "gogoproto/gogo.proto";
 import "leaderboard/params.proto";
+import "leaderboard/player_info.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
@@ -11,5 +12,6 @@ option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   string port_id = 2;
+  repeated PlayerInfo playerInfoList = 3 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }
