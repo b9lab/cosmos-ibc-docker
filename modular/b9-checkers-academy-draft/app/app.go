@@ -422,15 +422,6 @@ func NewApp(
 	)
 	monitoringModule := monitoringp.NewAppModule(appCodec, app.MonitoringKeeper)
 
-	app.CheckersKeeper = *checkersmodulekeeper.NewKeeper(
-		app.BankKeeper,
-		appCodec,
-		keys[checkersmoduletypes.StoreKey],
-		keys[checkersmoduletypes.MemStoreKey],
-		app.GetSubspace(checkersmoduletypes.ModuleName),
-	)
-	checkersModule := checkersmodule.NewAppModule(appCodec, app.CheckersKeeper, app.AccountKeeper, app.BankKeeper)
-
 	scopedLeaderboardKeeper := app.CapabilityKeeper.ScopeToModule(leaderboardmoduletypes.ModuleName)
 	app.ScopedLeaderboardKeeper = scopedLeaderboardKeeper
 	app.LeaderboardKeeper = *leaderboardmodulekeeper.NewKeeper(
@@ -443,6 +434,16 @@ func NewApp(
 		scopedLeaderboardKeeper,
 	)
 	leaderboardModule := leaderboardmodule.NewAppModule(appCodec, app.LeaderboardKeeper, app.AccountKeeper, app.BankKeeper)
+
+	app.CheckersKeeper = *checkersmodulekeeper.NewKeeper(
+		app.BankKeeper,
+		app.LeaderboardKeeper,
+		appCodec,
+		keys[checkersmoduletypes.StoreKey],
+		keys[checkersmoduletypes.MemStoreKey],
+		app.GetSubspace(checkersmoduletypes.ModuleName),
+	)
+	checkersModule := checkersmodule.NewAppModule(appCodec, app.CheckersKeeper, app.AccountKeeper, app.BankKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
