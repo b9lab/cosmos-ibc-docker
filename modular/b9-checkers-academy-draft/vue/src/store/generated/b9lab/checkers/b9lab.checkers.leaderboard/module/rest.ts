@@ -13,6 +13,8 @@ export interface LeaderboardBoard {
   playerInfo?: LeaderboardPlayerInfo[];
 }
 
+export type LeaderboardMsgUpdateBoardResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */

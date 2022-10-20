@@ -13,7 +13,7 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		PortId:         PortID,
 		PlayerInfoList: []PlayerInfo{},
-		Board:          Board {
+		Board: Board{
 			PlayerInfo: []PlayerInfo{},
 		},
 		// this line is used by starport scaffolding # genesis/types/default

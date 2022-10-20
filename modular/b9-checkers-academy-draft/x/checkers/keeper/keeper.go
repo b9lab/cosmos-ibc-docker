@@ -40,7 +40,7 @@ func NewKeeper(
 
 	return &Keeper{
 		bank:       bank,
-		board: 			board,
+		board:      board,
 		cdc:        cdc,
 		storeKey:   storeKey,
 		memKey:     memKey,

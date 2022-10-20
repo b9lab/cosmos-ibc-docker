@@ -31650,6 +31650,8 @@ definitions:
               format: uint64
             dateUpdated:
               type: string
+  b9lab.checkers.leaderboard.MsgUpdateBoardResponse:
+    type: object
   b9lab.checkers.leaderboard.Params:
     type: object
     description: Params defines the parameters for the module.

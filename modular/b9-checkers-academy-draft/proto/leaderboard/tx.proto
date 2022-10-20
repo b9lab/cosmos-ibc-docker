@@ -7,7 +7,15 @@ option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc UpdateBoard(MsgUpdateBoard) returns (MsgUpdateBoardResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgUpdateBoard {
+  string creator = 1;
+}
+
+message MsgUpdateBoardResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message
