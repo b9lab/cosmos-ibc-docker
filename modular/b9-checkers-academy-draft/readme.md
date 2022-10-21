@@ -1,84 +1,72 @@
-# Checkers tutorial project
+# Checkers leaderboard extension
 
-This is a companion project of the Cosmos SDK tutorials. Its object is to show various features of the Cosmos SDK and of Ignite, along with the progression of the code as elements and features are added.
+You can scaffold an ibc enabled module for a leaderboard via:
 
-The progression of the code is demonstrated via the help of branches and diffs.
-
-## Build steps taken
-
-All the build steps were run inside the Docker container.
-
-```sh
-$ ignite scaffold chain github.com/b9lab/checkers
+```
+$ ignite scaffold module leaderboard --ibc
 ```
 
-## Progressive feature branches
+in order to create and maintain a leaderboard, we need to store player information, so you can scaffold a structure with:
 
-Versions used here are:
+```
+$ ignite scaffold map playerInfo wonCount:uint lostCount:uint forfeitedCount:uint dateUpdated:string --module leaderboard --no-message
+```
 
-* Go: 1.18.3
-* Ignite (formerly Starport): 0.22.1
-* Cosmos SDK: v0.45.4
+you can use this structure to create the board itself:
 
-Branches:
+```
+$ ignite scaffold single board PlayerInfo:PlayerInfo --module leaderboard --no-message
+```
 
-* [`ignite-start`](../../tree/ignite-start)
-* [`rules-added`](../../tree/rules-added), [diff](../../compare/ignite-start..rules-added)
-* [`stored-game`](../../tree/stored-game), [diff](../../compare/rules-added..stored-game)
-* [`full-game-object`](../../tree/full-game-object), [diff](../../compare/stored-game..full-game-object)
-* [`create-game-msg`](../../tree/create-game-msg), [diff](../../compare/full-game-object..create-game-msg)
-* [`create-game-handler`](../../tree/create-game-handler), [diff](../../compare/create-game-msg..create-game-handler)
-* [`play-move-msg`](../../tree/play-move-msg), [diff](../../compare/create-game-handler..play-move-msg)
-* [`play-move-handler`](../../tree/play-move-handler), [diff](../../compare/play-move-msg..play-move-handler)
-* [`two-events`](../../tree/two-events), [diff](../../compare/play-move-handler..two-events)
-* [`reject-game-msg`](../../tree/reject-game-msg), [diff](../../compare/two-events..reject-game-msg)
-* [`reject-game-handler`](../../tree/reject-game-handler), [diff](../../compare/reject-game-msg..reject-game-handler)
-* [`game-fifo`](../../tree/game-fifo), [diff](../../compare/reject-game-handler..game-fifo)
-* [`game-deadline`](../../tree/game-deadline), [diff](../../compare/game-fifo..game-deadline)
-* [`game-winner`](../../tree/game-winner), [diff](../../compare/game-deadline..game-winner)
-* [`forfeit-game`](../../tree/forfeit-game), [diff](../../compare/game-winner..forfeit-game)
-* [`game-wager`](../../tree/game-wager), [diff](../../compare/forfeit-game..game-wager)
-* [`payment-winning`](../../tree/payment-winning), [diff](../../compare/game-wager..payment-winning)
-* [`gas-meter`](../../tree/gas-meter), [diff](../../compare/payment-winning..gas-meter)
-* [`can-play-move-query`](../../tree/can-play-move-query), [diff](../../compare/gas-meter..can-play-move-query)
-* [`can-play-move-handler`](../../tree/can-play-move-handler), [diff](../../compare/can-play-move-query..can-play-move-handler)
-* [`wager-denomination`](../../tree/wager-denomination), [diff](../../compare/can-play-move-handler..wager-denomination)
+A few manual adjusments after that:
 
-## Version 1 progressive tags
+- [Make the board nullable](https://github.com/b9lab/cosmos-ibc-docker/commit/c674769cf38213f7c3375dd3235e359018ab6f4a#diff-41f55b417481bd4e1ae4b119eac6da05349977de6b302b2e2ba8d93e6ede01f8)
+- [Adjust the capabilities](https://github.com/b9lab/cosmos-ibc-docker/commit/a51bb14a50904e74c24e003286110b7ebcc0519e)
+- [Create a PlayerInfo handler](https://github.com/b9lab/cosmos-ibc-docker/commit/dacc390929eae01f37b7be1d922402f385641c46)
+- [Make checkers game update PlayerInfo](https://github.com/b9lab/cosmos-ibc-docker/commit/007cb92d24afb3689e8c3a41127870e74fb511cd)
+- [Sort and clip the board](https://github.com/b9lab/cosmos-ibc-docker/commit/dde366bbd210b18d425ebdcd6d16e40b81e2ca15)
 
-Versions used in version 1 are:
+You can scaffold a message to trigger an update on the leaderboard:
 
-* Go: 1.16.15
-* Ignite (formerly Starport): 0.17.3
-* Cosmos SDK: v0.42.6
-* NodeJs: 16.x
+```
+$ ignite scaffold message updateBoard --module leaderboard
+```
 
-Tags:
+after [a small adjusment](https://github.com/b9lab/cosmos-ibc-docker/commit/2fa4fb91cdb9eb297d6e923350dec231e7f29564#diff-395f05563b2a96352e919ca4382dd37aab5153c7f6ae6fd2c1e23985abb8a0fc), this message can bbe used to update(sort&clip) the board from the PlayerInfo.
 
-* [`v1-starport-start`](../../tree/v1-starport-start)
-* [`v1-rules-added`](../../tree/v1-rules-added), [diff](../../compare/v1-starport-start..v1-rules-added)
-* [`v1-stored-game`](../../tree/v1-stored-game), [diff](../../compare/v1-rules-added..v1-stored-game)
-* [`v1-full-game-object`](../../tree/v1-full-game-object), [diff](../../compare/v1-stored-game..v1-full-game-object)
-* [`v1-create-game-msg`](../../tree/v1-create-game-msg), [diff](../../compare/v1-full-game-object..v1-create-game-msg)
-* [`v1-create-game-handler`](../../tree/v1-create-game-handler), [diff](../../compare/v1-create-game-msg..v1-create-game-handler)
-* [`v1-play-move-msg`](../../tree/v1-play-move-msg), [diff](../../compare/v1-create-game-handler..v1-play-move-msg)
-* [`v1-play-move-handler`](../../tree/v1-play-move-handler), [diff](../../compare/v1-play-move-msg..v1-play-move-handler)
-* [`v1-two-events`](../../tree/v1-two-events), [diff](../../compare/v1-play-move-handler..v1-two-events)
-* [`v1-reject-game-msg`](../../tree/v1-reject-game-msg), [diff](../../compare/v1-two-events..v1-reject-game-msg)
-* [`v1-reject-game-handler`](../../tree/v1-reject-game-handler), [diff](../../compare/v1-reject-game-msg..v1-reject-game-handler)
-* [`v1-game-fifo`](../../tree/v1-game-fifo), [diff](../../compare/v1-reject-game-handler..v1-game-fifo)
-* [`v1-game-deadline`](../../tree/v1-game-deadline), [diff](../../compare/v1-game-fifo..v1-game-deadline)
-* [`v1-game-winner`](../../tree/v1-game-winner), [diff](../../compare/v1-game-deadline..v1-game-winner)
-* [`v1-forfeit-game`](../../tree/v1-forfeit-game), [diff](../../compare/v1-game-winner..v1-forfeit-game)
-* [`v1-game-wager`](../../tree/v1-game-wager), [diff](../../compare/v1-forfeit-game..v1-game-wager)
-* [`v1-payment-winning`](../../tree/v1-payment-winning), [diff](../../compare/v1-game-wager..v1-payment-winning)
-* [`v1-gas-meter`](../../tree/v1-gas-meter), [diff](../../compare/v1-payment-winning..v1-gas-meter)
-* [`v1-can-play-move-query`](../../tree/v1-can-play-move-query), [diff](../../compare/v1-gas-meter..v1-can-play-move-query)
-* [`v1-can-play-move-handler`](../../tree/v1-can-play-move-handler), [diff](../../compare/v1-can-play-move-query..v1-can-play-move-handler)
-* [`v1-wager-denomination`](../../tree/v1-wager-denomination), [diff](../../compare/v1-can-play-move-handler..v1-wager-denomination)
-* [`v1-cosmjs-elements`](../../tree/v1-cosmjs-elements), [diff](../../compare/v1-wager-denomination..v1-cosmjs-elements)
-* [`v1-player-info-object`](../../tree/v1-player-info-object), [diff](../../compare/v1-cosmjs-elements..v1-player-info-object)
-* [`v1-player-info-handling`](../../tree/v1-player-info-handling), [diff](../../compare/v1-player-info-object..v1-player-info-handling)
-* [`v1-leaderboard-object`](../../tree/v1-leaderboard-object), [diff](../../compare/v1-player-info-handling..v1-leaderboard-object)
-* [`v1-leaderboard-handling`](../../tree/v1-leaderboard-handling), [diff](../../compare/v1-leaderboard-object..v1-leaderboard-handling)
-* [`v1-genesis-migration`](../../tree/v1-genesis-migration), [diff](../../compare/v1-leaderboard-handling..v1-genesis-migration)
+You can start the chain with:
+```
+$ ignite chain serve --reset-once
+```
+
+and run a test game, using your addresses:
+
+```
+$ ./test.sh 1 checkers $player1address $player2address
+```
+
+for the next game to test, use
+
+```
+$ ./test.sh 2 checkers $player1address $player2address
+```
+
+or switch the addresses to let the other player win.
+
+You can query the playerInfo with:
+
+```
+$ checkersd query leaderboard list-player-info
+```
+
+and update the board with:
+
+```
+$ checkersd tx leaderboard update-board --from $useraddress
+```
+
+and query with:
+
+```
+$  checkersd query leaderboard show-board
+```
