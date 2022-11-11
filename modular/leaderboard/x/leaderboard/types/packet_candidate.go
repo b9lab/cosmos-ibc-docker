@@ -1,9 +1,18 @@
 package types
 
+import (
+	"errors"
+)
+
 // ValidateBasic is used for validating the packet
 func (p CandidatePacketData) ValidateBasic() error {
 
 	// TODO: Validate the packet data
+
+  // return error if player address is empty
+  if p.PlayerInfo.Index == "" {
+      return errors.New("Player address cannot be empty")
+  }
 
 	return nil
 }
