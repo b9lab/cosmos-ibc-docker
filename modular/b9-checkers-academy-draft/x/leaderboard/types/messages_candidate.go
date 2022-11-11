@@ -14,14 +14,12 @@ func NewMsgSendCandidate(
 	port string,
 	channelID string,
 	timeoutTimestamp uint64,
-	playerInfo *PlayerInfo,
 ) *MsgSendCandidate {
 	return &MsgSendCandidate{
 		Creator:          creator,
 		Port:             port,
 		ChannelID:        channelID,
 		TimeoutTimestamp: timeoutTimestamp,
-		PlayerInfo:       playerInfo,
 	}
 }
 

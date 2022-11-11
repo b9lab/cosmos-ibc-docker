@@ -3,7 +3,6 @@ package cli
 import (
 	"strconv"
 
-	"encoding/json"
 	"github.com/b9lab/checkers/x/leaderboard/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -29,12 +28,6 @@ func CmdSendCandidate() *cobra.Command {
 			srcPort := args[0]
 			srcChannel := args[1]
 
-			argPlayerInfo := new(types.PlayerInfo)
-			err = json.Unmarshal([]byte(args[2]), argPlayerInfo)
-			if err != nil {
-				return err
-			}
-
 			// Get the relative timeout timestamp
 			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
 			if err != nil {
@@ -48,7 +41,7 @@ func CmdSendCandidate() *cobra.Command {
 				timeoutTimestamp = consensusState.GetTimestamp() + timeoutTimestamp
 			}
 
-			msg := types.NewMsgSendCandidate(creator, srcPort, srcChannel, timeoutTimestamp, argPlayerInfo)
+			msg := types.NewMsgSendCandidate(creator, srcPort, srcChannel, timeoutTimestamp)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
