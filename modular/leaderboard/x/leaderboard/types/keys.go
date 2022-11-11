@@ -35,3 +35,8 @@ func KeyPrefix(p string) []byte {
 const (
 	BoardKey = "Board-value-"
 )
+
+const (
+	TimeLayout              = "2006-01-02 15:04:05.999999999 +0000 UTC"
+	LeaderboardWinnerLength = uint64(100)
+)
