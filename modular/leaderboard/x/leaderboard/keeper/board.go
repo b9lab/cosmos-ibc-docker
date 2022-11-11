@@ -38,8 +38,8 @@ func (k Keeper) RemoveBoard(ctx sdk.Context) {
 }
 
 func ParseDateAddedAsTime(dateAdded string) (dateAddedParsed time.Time, err error) {
-    dateAddedParsed, errDateAdded := time.Parse(types.TimeLayout, dateAdded)
-    return dateAddedParsed, sdkerrors.Wrapf(errDateAdded, types.ErrInvalidDateAdded.Error(), dateAdded)
+	dateAddedParsed, errDateAdded := time.Parse(types.TimeLayout, dateAdded)
+	return dateAddedParsed, sdkerrors.Wrapf(errDateAdded, types.ErrInvalidDateAdded.Error(), dateAdded)
 }
 
 func SortPlayerInfo(playerInfoList []types.PlayerInfo) {
@@ -51,7 +51,7 @@ func SortPlayerInfo(playerInfoList []types.PlayerInfo) {
 			return false
 		}
 		firstPlayerTime, _ := ParseDateAddedAsTime(playerInfoList[i].DateUpdated)
-		secondPlayerTime,_ := ParseDateAddedAsTime(playerInfoList[j].DateUpdated)
+		secondPlayerTime, _ := ParseDateAddedAsTime(playerInfoList[j].DateUpdated)
 
 		return firstPlayerTime.After(secondPlayerTime)
 	})
@@ -64,7 +64,7 @@ func (k Keeper) UpdateBoard(ctx sdk.Context, playerInfoList []types.PlayerInfo) 
 		playerInfoList = playerInfoList[:types.LeaderboardWinnerLength]
 	}
 
-	k.SetBoard(ctx, types.Board {
+	k.SetBoard(ctx, types.Board{
 		PlayerInfo: playerInfoList,
 	})
 }

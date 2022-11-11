@@ -3,11 +3,13 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { Board } from "./module/types/leaderboard/board"
 import { LeaderboardPacketData } from "./module/types/leaderboard/packet"
 import { NoData } from "./module/types/leaderboard/packet"
+import { CandidatePacketData } from "./module/types/leaderboard/packet"
+import { CandidatePacketAck } from "./module/types/leaderboard/packet"
 import { Params } from "./module/types/leaderboard/params"
 import { PlayerInfo } from "./module/types/leaderboard/player_info"
 
 
-export { Board, LeaderboardPacketData, NoData, Params, PlayerInfo };
+export { Board, LeaderboardPacketData, NoData, CandidatePacketData, CandidatePacketAck, Params, PlayerInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -54,6 +56,8 @@ const getDefaultState = () => {
 						Board: getStructure(Board.fromPartial({})),
 						LeaderboardPacketData: getStructure(LeaderboardPacketData.fromPartial({})),
 						NoData: getStructure(NoData.fromPartial({})),
+						CandidatePacketData: getStructure(CandidatePacketData.fromPartial({})),
+						CandidatePacketAck: getStructure(CandidatePacketAck.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						PlayerInfo: getStructure(PlayerInfo.fromPartial({})),
 						
