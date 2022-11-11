@@ -2,12 +2,14 @@ syntax = "proto3";
 package b9lab.checkers.leaderboard;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "leaderboard/player_info.proto";
 
 option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
 
 // Msg defines the Msg service.
 service Msg {
       rpc UpdateBoard(MsgUpdateBoard) returns (MsgUpdateBoardResponse);
+  rpc SendCandidate(MsgSendCandidate) returns (MsgSendCandidateResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -18,4 +20,14 @@ message MsgUpdateBoard {
 message MsgUpdateBoardResponse {
 }
 
+message MsgSendCandidate {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+  PlayerInfo playerInfo = 5;
+}
+
+message MsgSendCandidateResponse {
+}
 // this line is used by starport scaffolding # proto/tx/message

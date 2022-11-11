@@ -3,11 +3,13 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { Board } from "./module/types/leaderboard/board"
 import { LeaderboardPacketData } from "./module/types/leaderboard/packet"
 import { NoData } from "./module/types/leaderboard/packet"
+import { CandidatePacketData } from "./module/types/leaderboard/packet"
+import { CandidatePacketAck } from "./module/types/leaderboard/packet"
 import { Params } from "./module/types/leaderboard/params"
 import { PlayerInfo } from "./module/types/leaderboard/player_info"
 
 
-export { Board, LeaderboardPacketData, NoData, Params, PlayerInfo };
+export { Board, LeaderboardPacketData, NoData, CandidatePacketData, CandidatePacketAck, Params, PlayerInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -54,6 +56,8 @@ const getDefaultState = () => {
 						Board: getStructure(Board.fromPartial({})),
 						LeaderboardPacketData: getStructure(LeaderboardPacketData.fromPartial({})),
 						NoData: getStructure(NoData.fromPartial({})),
+						CandidatePacketData: getStructure(CandidatePacketData.fromPartial({})),
+						CandidatePacketAck: getStructure(CandidatePacketAck.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						PlayerInfo: getStructure(PlayerInfo.fromPartial({})),
 						
@@ -249,6 +253,21 @@ export default {
 				}
 			}
 		},
+		async sendMsgSendCandidate({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendCandidate(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSendCandidate:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSendCandidate:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
 		async MsgUpdateBoard({ rootGetters }, { value }) {
 			try {
@@ -260,6 +279,19 @@ export default {
 					throw new Error('TxClient:MsgUpdateBoard:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgUpdateBoard:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgSendCandidate({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendCandidate(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSendCandidate:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSendCandidate:Create Could not create message: ' + e.message)
 				}
 			}
 		},
