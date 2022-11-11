@@ -1,0 +1,31 @@
+# This Dockerfile will: 
+# set up a Golang environment(using Golang Docker Image)
+# install Ignite
+# start a leaderboard blockchain
+# expose api endpoints
+
+# Use Golang Docker Image
+FROM golang:1.18
+
+# Set working dir
+WORKDIR /home/leaderboard
+
+# Install tools
+RUN apt-get install curl git
+
+# Install ignite
+RUN curl -L https://get.ignite.com/cli@v0.22.1! | bash
+
+# Copy local repository
+ADD leaderboard /home/leaderboard
+
+# Copy Test
+COPY ./test.sh /home/leaderboard
+RUN chmod +x ./test.sh
+
+# Copy serve script
+COPY ./run-leaderboard.sh /home/leaderboard
+RUN chmod +x ./run-leaderboard.sh
+
+ENTRYPOINT ["/bin/bash", "-c", "/home/leaderboard/run-leaderboard.sh"]
+EXPOSE 26657 1317 4500
