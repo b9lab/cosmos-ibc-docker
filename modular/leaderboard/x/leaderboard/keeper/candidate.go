@@ -75,6 +75,21 @@ func (k Keeper) OnRecvCandidatePacket(ctx sdk.Context, packet channeltypes.Packe
 
 	// TODO: packet reception logic
 
+	allPlayerInfo := k.GetAllPlayerInfo(ctx)
+
+	found_in_player_list:= false
+	for i := range allPlayerInfo {
+		if allPlayerInfo[i].Index == data.PlayerInfo.Index {
+			allPlayerInfo[i] = *data.PlayerInfo;
+			found_in_player_list = true
+			break
+		}
+	}
+
+	if !found_in_player_list {
+		k.SetPlayerInfo(ctx, *data.PlayerInfo)
+	}
+
 	return packetAck, nil
 }
 
