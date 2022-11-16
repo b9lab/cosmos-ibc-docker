@@ -55,14 +55,14 @@ checkersd tx checkers create-game ${Players[1]} ${Players[0]} 0 token --from ${P
 
 for i in "${!Moves1[@]}"
 do
-    cmd="checkersd tx checkers play-move $Gameid ${Moves1[i]} --from ${Players[$((i%2))]} --chain-id checkers --yes"
+    cmd="checkersd tx checkers play-move $Gameid ${Moves1[i]} --from ${Players[$(((i+1)%2))]} --chain-id checkers --yes"
     $cmd
     sleep $Sleeptime
 done
 
 for i in "${!Moves2[@]}"
 do
-    cmd="checkersd tx checkers play-move $Gameid ${Moves2[i]} --from ${Players[$((i%2))]} --chain-id checkers --yes"
+    cmd="checkersd tx checkers play-move $Gameid ${Moves2[i]} --from ${Players[$(((i+1)%2))]} --chain-id checkers --yes"
     $cmd
     sleep $Sleeptime
 done

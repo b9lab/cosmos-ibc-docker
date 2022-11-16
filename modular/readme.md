@@ -59,7 +59,7 @@ and run:
 $ ./test.sh 1 cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8 cosmos1n4mqetruv26lm2frkjah86h642ts84qyd5uvyz
 ```
 
-this will crate and play a game in the checkers chain. 
+this will crate and play a game in the checkers chain. The number `1` indicates the game index. You can increase it for the next test if you want it to play another game. It lets win the second address.
 
 After a game is over, you can query the player information:
 
