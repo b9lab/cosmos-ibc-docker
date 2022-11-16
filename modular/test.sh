@@ -51,7 +51,7 @@ Moves2=(
 "1 6 3 4" 
 )
 
-checkersd tx checkers create-game ${Players[1]} ${Players[0]} token 0 --from ${Players[1]} --chain-id checkers --yes
+checkersd tx checkers create-game ${Players[1]} ${Players[0]} 0 token --from ${Players[1]} --chain-id checkers --yes
 
 for i in "${!Moves1[@]}"
 do

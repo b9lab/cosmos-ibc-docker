@@ -56,7 +56,7 @@ $ docker exec -it checkers bash
 and run:
 
 ```
-$ ./test.sh 1 checkers cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8 cosmos1n4mqetruv26lm2frkjah86h642ts84qyd5uvyz
+$ ./test.sh 1 cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8 cosmos1n4mqetruv26lm2frkjah86h642ts84qyd5uvyz
 ```
 
 this will crate and play a game in the checkers chain. 
