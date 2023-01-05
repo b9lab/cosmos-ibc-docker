@@ -68,29 +68,31 @@ func (k Keeper) TransmitCandidatePacket(
 
 // OnRecvCandidatePacket processes packet reception
 func (k Keeper) OnRecvCandidatePacket(ctx sdk.Context, packet channeltypes.Packet, data types.CandidatePacketData) (packetAck types.CandidatePacketAck, err error) {
-	// validate packet data upon receiving
-	if err := data.ValidateBasic(); err != nil {
-		return packetAck, err
-	}
+    // validate packet data upon receiving
+    if err := data.ValidateBasic(); err != nil {
+        return packetAck, err
+    }
 
-	// TODO: packet reception logic
+    allPlayerInfo := k.GetAllPlayerInfo(ctx)
 
-	allPlayerInfo := k.GetAllPlayerInfo(ctx)
+    found_in_player_list:= false
+    for i := range allPlayerInfo {
+        if allPlayerInfo[i].Index == data.PlayerInfo.Index {
+            allPlayerInfo[i] = *data.PlayerInfo;
+            found_in_player_list = true
+            break
+        }
+    }
 
-	found_in_player_list:= false
-	for i := range allPlayerInfo {
-		if allPlayerInfo[i].Index == data.PlayerInfo.Index {
-			allPlayerInfo[i] = *data.PlayerInfo;
-			found_in_player_list = true
-			break
-		}
-	}
+    if !found_in_player_list {
+        k.SetPlayerInfo(ctx, *data.PlayerInfo)
+    }
 
-	if !found_in_player_list {
-		k.SetPlayerInfo(ctx, *data.PlayerInfo)
-	}
+    // Here we can fetch the PlayerInfo and update the board
+    playerInfoList := k.GetAllPlayerInfo(ctx)
+    k.UpdateBoard(ctx, playerInfoList)
 
-	return packetAck, nil
+    return packetAck, nil
 }
 
 // OnAcknowledgementCandidatePacket responds to the the success or failure of a packet
