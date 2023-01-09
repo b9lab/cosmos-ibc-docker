@@ -41,8 +41,11 @@ func CheckersKeeperWithMocks(t testing.TB, bank *mock_types.MockBankEscrowKeeper
 		memStoreKey,
 		"CheckersParams",
 	)
+
+	leaderboardKeeper,_ := LeaderboardKeeper(t);
 	k := keeper.NewKeeper(
 		bank,
+		*leaderboardKeeper,
 		cdc,
 		storeKey,
 		memStoreKey,
