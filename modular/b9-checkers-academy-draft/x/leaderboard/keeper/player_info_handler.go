@@ -30,14 +30,14 @@ func mustAddDeltaGameResultToPlayer(
 	return playerInfo
 }
 
-func (k *Keeper) MustAddWonGameResultToPlayer(ctx sdk.Context, player sdk.AccAddress) types.PlayerInfo {
-	return mustAddDeltaGameResultToPlayer(k, ctx, player, 1, 0, 0)
+func (k Keeper) MustAddWonGameResultToPlayer(ctx sdk.Context, player sdk.AccAddress) types.PlayerInfo {
+	return mustAddDeltaGameResultToPlayer(&k, ctx, player, 1, 0, 0)
 }
 
-func (k *Keeper) MustAddLostGameResultToPlayer(ctx sdk.Context, player sdk.AccAddress) types.PlayerInfo {
-	return mustAddDeltaGameResultToPlayer(k, ctx, player, 0, 1, 0)
+func (k Keeper) MustAddLostGameResultToPlayer(ctx sdk.Context, player sdk.AccAddress) types.PlayerInfo {
+	return mustAddDeltaGameResultToPlayer(&k, ctx, player, 0, 1, 0)
 }
 
-func (k *Keeper) MustAddForfeitedGameResultToPlayer(ctx sdk.Context, player sdk.AccAddress) types.PlayerInfo {
-	return mustAddDeltaGameResultToPlayer(k, ctx, player, 0, 0, 1)
+func (k Keeper) MustAddForfeitedGameResultToPlayer(ctx sdk.Context, player sdk.AccAddress) types.PlayerInfo {
+	return mustAddDeltaGameResultToPlayer(&k, ctx, player, 0, 0, 1)
 }
