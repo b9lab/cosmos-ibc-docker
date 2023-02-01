@@ -1,8 +1,8 @@
 package keeper
 
 import (
-	"errors"
 	"context"
+	"errors"
 
 	"github.com/b9lab/checkers/x/leaderboard/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
