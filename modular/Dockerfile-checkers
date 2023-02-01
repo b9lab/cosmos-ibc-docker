@@ -1,0 +1,33 @@
+# This Dockerfile will: 
+# set up a Golang environment(using Golang Docker Image)
+# install Ignite
+# use the checkers game repository
+# with the leaderboard included
+# start a checkers blockchain
+# expose api endpoints
+
+# Use Golang Docker Image
+FROM golang:1.18
+
+# Set working dir
+WORKDIR /home/checkers
+
+# Install tools
+RUN apt-get install curl git
+
+# Install ignite
+RUN curl -L https://get.ignite.com/cli@v0.22.1! | bash
+
+# Copy local repository
+ADD b9-checkers-academy-draft /home/checkers
+
+# Copy Test
+COPY ./test.sh /home/checkers
+RUN chmod +x ./test.sh
+
+# Copy serve script
+COPY ./run-checkers.sh /home/checkers
+RUN chmod +x ./run-checkers.sh
+
+ENTRYPOINT ["/bin/bash", "-c", "/home/checkers/run-checkers.sh"]
+EXPOSE 26657 1317 4500

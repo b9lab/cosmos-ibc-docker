@@ -1,0 +1,69 @@
+syntax = "proto3";
+package b9lab.checkers.leaderboard;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "leaderboard/params.proto";
+import "leaderboard/player_info.proto";
+import "leaderboard/board.proto";
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/b9lab/checkers/leaderboard/params";
+  }
+  // Queries a PlayerInfo by index.
+	rpc PlayerInfo(QueryGetPlayerInfoRequest) returns (QueryGetPlayerInfoResponse) {
+		option (google.api.http).get = "/b9lab/checkers/leaderboard/player_info/{index}";
+	}
+
+	// Queries a list of PlayerInfo items.
+	rpc PlayerInfoAll(QueryAllPlayerInfoRequest) returns (QueryAllPlayerInfoResponse) {
+		option (google.api.http).get = "/b9lab/checkers/leaderboard/player_info";
+	}
+
+// Queries a Board by index.
+	rpc Board(QueryGetBoardRequest) returns (QueryGetBoardResponse) {
+		option (google.api.http).get = "/b9lab/checkers/leaderboard/board";
+	}
+// this line is used by starport scaffolding # 2
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetPlayerInfoRequest {
+	  string index = 1;
+
+}
+
+message QueryGetPlayerInfoResponse {
+	PlayerInfo playerInfo = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPlayerInfoRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPlayerInfoResponse {
+	repeated PlayerInfo playerInfo = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBoardRequest {}
+
+message QueryGetBoardResponse {
+	Board Board = 1 [(gogoproto.nullable) = false];
+}
+// this line is used by starport scaffolding # 3

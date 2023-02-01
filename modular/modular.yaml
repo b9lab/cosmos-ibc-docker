@@ -1,0 +1,41 @@
+# start with docker-compose -f modular.yml up -d
+
+version: '3'
+
+services:
+
+  leaderboard:
+    container_name: leaderboard
+    image: "leaderboard"
+
+    ports:
+      - "26656:26657"
+      - "1316:1317"
+      - "4499:4500"
+
+    networks:
+      - leaderboarddemo
+
+  checkers:
+    container_name: checkers
+    image: "checkers"
+
+    ports:
+      - "26657:26657"
+      - "1317:1317"
+      - "4500:4500"
+
+    networks:
+      - leaderboarddemo
+
+  relayer:
+    container_name: relayer
+    image: "relayer"
+    tty: true
+    stdin_open: true
+
+    networks:
+      - leaderboarddemo
+
+networks:
+    leaderboarddemo:

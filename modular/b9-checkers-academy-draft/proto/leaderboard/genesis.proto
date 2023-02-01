@@ -1,0 +1,19 @@
+syntax = "proto3";
+package b9lab.checkers.leaderboard;
+
+import "gogoproto/gogo.proto";
+import "leaderboard/params.proto";
+import "leaderboard/player_info.proto";
+import "leaderboard/board.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
+
+// GenesisState defines the leaderboard module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  string port_id = 2;
+  repeated PlayerInfo playerInfoList = 3 [(gogoproto.nullable) = false];
+  Board board = 4 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}
