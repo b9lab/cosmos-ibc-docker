@@ -18,7 +18,7 @@ func setupMsgServerWithOneGameForRejectGame(t testing.TB) (types.MsgServer, keep
 	*gomock.Controller, *mock_types.MockBankEscrowKeeper) {
 	ctrl := gomock.NewController(t)
 	bankMock := mock_types.NewMockBankEscrowKeeper(ctrl)
-	k, ctx := keepertest.CheckersKeeperWithMocks(t, bankMock)
+	k, ctx := keepertest.CheckersKeeperWithMocks(t, bankMock, nil)
 	checkers.InitGenesis(ctx, *k, *types.DefaultGenesis())
 	server := keeper.NewMsgServerImpl(*k)
 	context := sdk.WrapSDKContext(ctx)

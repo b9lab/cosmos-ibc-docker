@@ -7,8 +7,9 @@ package mock_types
 import (
 	reflect "reflect"
 
-	types "github.com/cosmos/cosmos-sdk/types"
-	types0 "github.com/cosmos/cosmos-sdk/x/auth/types"
+	types "github.com/b9lab/checkers/x/leaderboard/types"
+	types0 "github.com/cosmos/cosmos-sdk/types"
+	types1 "github.com/cosmos/cosmos-sdk/x/auth/types"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -36,10 +37,10 @@ func (m *MockAccountKeeper) EXPECT() *MockAccountKeeperMockRecorder {
 }
 
 // GetAccount mocks base method.
-func (m *MockAccountKeeper) GetAccount(ctx types.Context, addr types.AccAddress) types0.AccountI {
+func (m *MockAccountKeeper) GetAccount(ctx types0.Context, addr types0.AccAddress) types1.AccountI {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAccount", ctx, addr)
-	ret0, _ := ret[0].(types0.AccountI)
+	ret0, _ := ret[0].(types1.AccountI)
 	return ret0
 }
 
@@ -73,10 +74,10 @@ func (m *MockBankKeeper) EXPECT() *MockBankKeeperMockRecorder {
 }
 
 // SpendableCoins mocks base method.
-func (m *MockBankKeeper) SpendableCoins(ctx types.Context, addr types.AccAddress) types.Coins {
+func (m *MockBankKeeper) SpendableCoins(ctx types0.Context, addr types0.AccAddress) types0.Coins {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SpendableCoins", ctx, addr)
-	ret0, _ := ret[0].(types.Coins)
+	ret0, _ := ret[0].(types0.Coins)
 	return ret0
 }
 
@@ -110,7 +111,7 @@ func (m *MockBankEscrowKeeper) EXPECT() *MockBankEscrowKeeperMockRecorder {
 }
 
 // SendCoinsFromAccountToModule mocks base method.
-func (m *MockBankEscrowKeeper) SendCoinsFromAccountToModule(ctx types.Context, senderAddr types.AccAddress, recipientModule string, amt types.Coins) error {
+func (m *MockBankEscrowKeeper) SendCoinsFromAccountToModule(ctx types0.Context, senderAddr types0.AccAddress, recipientModule string, amt types0.Coins) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SendCoinsFromAccountToModule", ctx, senderAddr, recipientModule, amt)
 	ret0, _ := ret[0].(error)
@@ -124,7 +125,7 @@ func (mr *MockBankEscrowKeeperMockRecorder) SendCoinsFromAccountToModule(ctx, se
 }
 
 // SendCoinsFromModuleToAccount mocks base method.
-func (m *MockBankEscrowKeeper) SendCoinsFromModuleToAccount(ctx types.Context, senderModule string, recipientAddr types.AccAddress, amt types.Coins) error {
+func (m *MockBankEscrowKeeper) SendCoinsFromModuleToAccount(ctx types0.Context, senderModule string, recipientAddr types0.AccAddress, amt types0.Coins) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SendCoinsFromModuleToAccount", ctx, senderModule, recipientAddr, amt)
 	ret0, _ := ret[0].(error)
@@ -135,4 +136,69 @@ func (m *MockBankEscrowKeeper) SendCoinsFromModuleToAccount(ctx types.Context, s
 func (mr *MockBankEscrowKeeperMockRecorder) SendCoinsFromModuleToAccount(ctx, senderModule, recipientAddr, amt interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendCoinsFromModuleToAccount", reflect.TypeOf((*MockBankEscrowKeeper)(nil).SendCoinsFromModuleToAccount), ctx, senderModule, recipientAddr, amt)
+}
+
+// MockCheckersLeaderboardKeeper is a mock of CheckersLeaderboardKeeper interface.
+type MockCheckersLeaderboardKeeper struct {
+	ctrl     *gomock.Controller
+	recorder *MockCheckersLeaderboardKeeperMockRecorder
+}
+
+// MockCheckersLeaderboardKeeperMockRecorder is the mock recorder for MockCheckersLeaderboardKeeper.
+type MockCheckersLeaderboardKeeperMockRecorder struct {
+	mock *MockCheckersLeaderboardKeeper
+}
+
+// NewMockCheckersLeaderboardKeeper creates a new mock instance.
+func NewMockCheckersLeaderboardKeeper(ctrl *gomock.Controller) *MockCheckersLeaderboardKeeper {
+	mock := &MockCheckersLeaderboardKeeper{ctrl: ctrl}
+	mock.recorder = &MockCheckersLeaderboardKeeperMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCheckersLeaderboardKeeper) EXPECT() *MockCheckersLeaderboardKeeperMockRecorder {
+	return m.recorder
+}
+
+// MustAddForfeitedGameResultToPlayer mocks base method.
+func (m *MockCheckersLeaderboardKeeper) MustAddForfeitedGameResultToPlayer(ctx types0.Context, player types0.AccAddress) types.PlayerInfo {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "MustAddForfeitedGameResultToPlayer", ctx, player)
+	ret0, _ := ret[0].(types.PlayerInfo)
+	return ret0
+}
+
+// MustAddForfeitedGameResultToPlayer indicates an expected call of MustAddForfeitedGameResultToPlayer.
+func (mr *MockCheckersLeaderboardKeeperMockRecorder) MustAddForfeitedGameResultToPlayer(ctx, player interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MustAddForfeitedGameResultToPlayer", reflect.TypeOf((*MockCheckersLeaderboardKeeper)(nil).MustAddForfeitedGameResultToPlayer), ctx, player)
+}
+
+// MustAddLostGameResultToPlayer mocks base method.
+func (m *MockCheckersLeaderboardKeeper) MustAddLostGameResultToPlayer(ctx types0.Context, player types0.AccAddress) types.PlayerInfo {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "MustAddLostGameResultToPlayer", ctx, player)
+	ret0, _ := ret[0].(types.PlayerInfo)
+	return ret0
+}
+
+// MustAddLostGameResultToPlayer indicates an expected call of MustAddLostGameResultToPlayer.
+func (mr *MockCheckersLeaderboardKeeperMockRecorder) MustAddLostGameResultToPlayer(ctx, player interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MustAddLostGameResultToPlayer", reflect.TypeOf((*MockCheckersLeaderboardKeeper)(nil).MustAddLostGameResultToPlayer), ctx, player)
+}
+
+// MustAddWonGameResultToPlayer mocks base method.
+func (m *MockCheckersLeaderboardKeeper) MustAddWonGameResultToPlayer(ctx types0.Context, player types0.AccAddress) types.PlayerInfo {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "MustAddWonGameResultToPlayer", ctx, player)
+	ret0, _ := ret[0].(types.PlayerInfo)
+	return ret0
+}
+
+// MustAddWonGameResultToPlayer indicates an expected call of MustAddWonGameResultToPlayer.
+func (mr *MockCheckersLeaderboardKeeperMockRecorder) MustAddWonGameResultToPlayer(ctx, player interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MustAddWonGameResultToPlayer", reflect.TypeOf((*MockCheckersLeaderboardKeeper)(nil).MustAddWonGameResultToPlayer), ctx, player)
 }

@@ -85,10 +85,11 @@ func playAllMoves(t *testing.T, msgServer types.MsgServer, context context.Conte
 }
 
 func TestPlayMoveUpToWinner(t *testing.T) {
-	msgServer, keeper, context, ctrl, escrow := setupMsgServerWithOneGameForPlayMove(t)
+	msgServer, keeper, context, ctrl, escrow, board := setupMsgServerWithOneGameForPlayMove(t)
 	ctx := sdk.UnwrapSDKContext(context)
 	defer ctrl.Finish()
 	escrow.ExpectAny(context)
+	board.ExpectAny(context)
 
 	playAllMoves(t, msgServer, context, "1", game1Moves)
 
@@ -131,11 +132,22 @@ func TestPlayMoveUpToWinner(t *testing.T) {
 }
 
 func TestPlayMoveUpToWinnerCalledBank(t *testing.T) {
-	msgServer, _, context, ctrl, escrow := setupMsgServerWithOneGameForPlayMove(t)
+	msgServer, _, context, ctrl, escrow, board := setupMsgServerWithOneGameForPlayMove(t)
 	defer ctrl.Finish()
+	board.ExpectAny(context)
 	payBob := escrow.ExpectPay(context, bob, 45).Times(1)
 	payCarol := escrow.ExpectPay(context, carol, 45).Times(1).After(payBob)
 	escrow.ExpectRefund(context, bob, 90).Times(1).After(payCarol)
+
+	playAllMoves(t, msgServer, context, "1", game1Moves)
+}
+
+func TestPlayMoveUpToWinnerCalledLeaderboard(t *testing.T) {
+	msgServer, _, context, ctrl, escrow, board := setupMsgServerWithOneGameForPlayMove(t)
+	defer ctrl.Finish()
+	escrow.ExpectAny(context)
+	board.ExpectWin(context, bob).Times(1)
+	board.ExpectLoss(context, carol).Times(1)
 
 	playAllMoves(t, msgServer, context, "1", game1Moves)
 }
