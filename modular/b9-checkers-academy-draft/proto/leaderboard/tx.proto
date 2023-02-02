@@ -8,7 +8,7 @@ option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
 
 // Msg defines the Msg service.
 service Msg {
-      rpc UpdateBoard(MsgUpdateBoard) returns (MsgUpdateBoardResponse);
+  rpc UpdateBoard(MsgUpdateBoard) returns (MsgUpdateBoardResponse);
   rpc SendCandidate(MsgSendCandidate) returns (MsgSendCandidateResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
