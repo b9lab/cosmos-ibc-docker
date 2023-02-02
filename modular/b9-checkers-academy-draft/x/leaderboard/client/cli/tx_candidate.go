@@ -15,9 +15,9 @@ var _ = strconv.Itoa(0)
 
 func CmdSendCandidate() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "send-candidate [src-port] [src-channel] [player-info]",
+		Use:   "send-candidate [src-port] [src-channel]",
 		Short: "Send a candidate over IBC",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

@@ -25,7 +25,6 @@ message MsgSendCandidate {
   string port = 2;
   string channelID = 3;
   uint64 timeoutTimestamp = 4;
-  PlayerInfo playerInfo = 5;
 }
 
 message MsgSendCandidateResponse {

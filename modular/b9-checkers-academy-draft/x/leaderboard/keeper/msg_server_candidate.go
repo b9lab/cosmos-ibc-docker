@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"context"
-	"errors"
 
 	"github.com/b9lab/checkers/x/leaderboard/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -15,15 +14,16 @@ func (k msgServer) SendCandidate(goCtx context.Context, msg *types.MsgSendCandid
 	// TODO: logic before transmitting the packet
 
 	// get the Player data
-	PlayerInfo, PlayerFound := k.GetPlayerInfo(ctx, msg.Creator)
+	playerInfo, found := k.GetPlayerInfo(ctx, msg.Creator)
 
-	if !PlayerFound {
-		return nil, errors.New("Player not found")
+	if !found {
+		return nil, types.ErrCandidateNotFound
 	}
 
 	// Construct the packet
-	var packet types.CandidatePacketData
-	packet.PlayerInfo = &PlayerInfo
+	var packet = types.CandidatePacketData{
+		PlayerInfo: &playerInfo,
+	}
 
 	// Transmit the packet
 	err := k.TransmitCandidatePacket(
