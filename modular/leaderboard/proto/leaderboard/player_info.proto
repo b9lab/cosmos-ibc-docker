@@ -9,6 +9,5 @@ message PlayerInfo {
   uint64 lostCount = 3; 
   uint64 forfeitedCount = 4; 
   string dateUpdated = 5; 
-  
 }
 
