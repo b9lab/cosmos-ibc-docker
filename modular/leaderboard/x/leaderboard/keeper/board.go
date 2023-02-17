@@ -1,14 +1,10 @@
 package keeper
 
 import (
-	"sort"
-	"time"
+	"leaderboard/x/leaderboard/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"leaderboard/x/leaderboard/types"
-
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 // SetBoard set board in the store
@@ -37,28 +33,8 @@ func (k Keeper) RemoveBoard(ctx sdk.Context) {
 	store.Delete([]byte{0})
 }
 
-func ParseDateAddedAsTime(dateAdded string) (dateAddedParsed time.Time, err error) {
-	dateAddedParsed, errDateAdded := time.Parse(types.TimeLayout, dateAdded)
-	return dateAddedParsed, sdkerrors.Wrapf(errDateAdded, types.ErrInvalidDateAdded.Error(), dateAdded)
-}
-
-func SortPlayerInfo(playerInfoList []types.PlayerInfo) {
-	sort.SliceStable(playerInfoList[:], func(i, j int) bool {
-		if playerInfoList[i].WonCount > playerInfoList[j].WonCount {
-			return true
-		}
-		if playerInfoList[i].WonCount < playerInfoList[j].WonCount {
-			return false
-		}
-		firstPlayerTime, _ := ParseDateAddedAsTime(playerInfoList[i].DateUpdated)
-		secondPlayerTime, _ := ParseDateAddedAsTime(playerInfoList[j].DateUpdated)
-
-		return firstPlayerTime.After(secondPlayerTime)
-	})
-}
-
 func (k Keeper) UpdateBoard(ctx sdk.Context, playerInfoList []types.PlayerInfo) {
-	SortPlayerInfo(playerInfoList)
+	types.SortPlayerInfo(playerInfoList)
 
 	if types.LeaderboardWinnerLength < uint64(len(playerInfoList)) {
 		playerInfoList = playerInfoList[:types.LeaderboardWinnerLength]

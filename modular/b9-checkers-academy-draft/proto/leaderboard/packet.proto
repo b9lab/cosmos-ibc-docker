@@ -7,11 +7,11 @@ import "leaderboard/player_info.proto";
 option go_package = "github.com/b9lab/checkers/x/leaderboard/types";
 
 message LeaderboardPacketData {
-    oneof packet {
-        NoData noData = 1;
-        // this line is used by starport scaffolding # ibc/packet/proto/field
-				CandidatePacketData candidatePacket = 2; // this line is used by starport scaffolding # ibc/packet/proto/field/number
-    }
+  oneof packet {
+    NoData noData = 1;
+    // this line is used by starport scaffolding # ibc/packet/proto/field
+    CandidatePacketData candidatePacket = 2; // this line is used by starport scaffolding # ibc/packet/proto/field/number
+  }
 }
 
 message NoData {
@@ -24,5 +24,5 @@ message CandidatePacketData {
 
 // CandidatePacketAck defines a struct for the packet acknowledgment
 message CandidatePacketAck {
-	}
+}
 // this line is used by starport scaffolding # ibc/packet/proto/message
