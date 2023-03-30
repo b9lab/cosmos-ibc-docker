@@ -3,12 +3,13 @@ package keeper
 import (
 	"errors"
 
+	"leaderboard/x/leaderboard/types"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
-	"leaderboard/x/leaderboard/types"
 )
 
 // TransmitCandidatePacket transmits the packet over IBC with the specified source port and source channel
@@ -68,18 +69,34 @@ func (k Keeper) TransmitCandidatePacket(
 
 // OnRecvCandidatePacket processes packet reception
 func (k Keeper) OnRecvCandidatePacket(ctx sdk.Context, packet channeltypes.Packet, data types.CandidatePacketData) (packetAck types.CandidatePacketAck, err error) {
-    // validate packet data upon receiving
-    if err := data.ValidateBasic(); err != nil {
-        return packetAck, err
-    }
-    
-    // Override the entry
-    k.SetPlayerInfo(ctx, *data.PlayerInfo)
+	// validate packet data upon receiving
+	if err := data.ValidateBasic(); err != nil {
+		return packetAck, err
+	}
 
-    // Update the board
-    k.UpdateBoard(ctx, k.GetAllPlayerInfo(ctx))
+	// Override the entry
+	k.SetPlayerInfo(ctx, *data.PlayerInfo)
 
-    return packetAck, nil
+	// Update the board
+	board, found := k.GetBoard(ctx)
+	if !found {
+		panic("Leaderboard not found")
+	}
+	listed := board.PlayerInfo
+	replaced := false
+	for i := range listed {
+		if listed[i].Index == data.PlayerInfo.Index {
+			listed[i] = *data.PlayerInfo
+			replaced = true
+			break
+		}
+	}
+	if !replaced {
+		listed = append(listed, *data.PlayerInfo)
+	}
+	k.UpdateBoard(ctx, listed)
+
+	return packetAck, nil
 }
 
 // OnAcknowledgementCandidatePacket responds to the the success or failure of a packet

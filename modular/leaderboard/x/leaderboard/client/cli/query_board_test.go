@@ -21,13 +21,13 @@ func networkWithBoardObjects(t *testing.T) (*network.Network, types.Board) {
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 
-	board := &types.Board{}
+	board := types.Board{}
 	nullify.Fill(&board)
 	state.Board = board
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
 	cfg.GenesisState[types.ModuleName] = buf
-	return network.New(t, cfg), *state.Board
+	return network.New(t, cfg), state.Board
 }
 
 func TestShowBoard(t *testing.T) {

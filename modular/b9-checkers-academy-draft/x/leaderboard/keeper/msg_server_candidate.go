@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"errors"
 	"context"
 
 	"github.com/b9lab/checkers/x/leaderboard/types"
@@ -12,18 +11,17 @@ import (
 func (k msgServer) SendCandidate(goCtx context.Context, msg *types.MsgSendCandidate) (*types.MsgSendCandidateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: logic before transmitting the packet
-
 	// get the Player data
-	PlayerInfo, PlayerFound := k.GetPlayerInfo(ctx, msg.Creator)
+	playerInfo, found := k.GetPlayerInfo(ctx, msg.Creator)
 
-	if !PlayerFound {
-		return nil, errors.New("Player not found")
+	if !found {
+		return nil, types.ErrCandidateNotFound
 	}
 
 	// Construct the packet
 	var packet types.CandidatePacketData
-	packet.PlayerInfo = &PlayerInfo
+
+	packet.PlayerInfo = &playerInfo
 
 	// Transmit the packet
 	err := k.TransmitCandidatePacket(

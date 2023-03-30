@@ -3,8 +3,9 @@ package types_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"leaderboard/x/leaderboard/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
@@ -30,8 +31,8 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
-				Board: &types.Board{
-					PlayerInfo: new(types.PlayerInfo),
+				Board: types.Board{
+					PlayerInfo: []types.PlayerInfo{},
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
