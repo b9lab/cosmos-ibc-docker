@@ -89,4 +89,4 @@ to query the leaderboard:
 
 ```
 $ leaderboardd q leaderboard show-board
-``
+```
