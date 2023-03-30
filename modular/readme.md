@@ -70,7 +70,7 @@ $ checkersd query leaderboard list-player-info
 You can send the score of the player to leaderboard chain. In the checkers chain container:
 
 ```
-$ checkersd tx leaderboard send-candidate leaderboard channel-0 foo --from cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8
+$ checkersd tx leaderboard send-candidate leaderboard channel-0 --from cosmos14y0kdvznkssdtal2r60a8us266n0mm97r2xju8
 ```
 
 After a while, you can jump into the leaderboard chain:
@@ -83,4 +83,10 @@ to query the received player information:
 
 ```
 $ leaderboardd q leaderboard list-player-info
+```
+
+to query the leaderboard:
+
+```
+$ leaderboardd q leaderboard show-board
 ```
