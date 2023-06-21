@@ -11,11 +11,8 @@ WORKDIR /home/rly
 # Install git
 RUN apt-get install git
 
-# Clone relayer repository
-RUN git clone https://github.com/cosmos/relayer.git
-
-# Install relayer
-RUN cd relayer && make install
+# Clone relayer repository and install relayer
+RUN git clone https://github.com/cosmos/relayer.git && cd relayer && git checkout v2.0.0-rc3 && make install
 
 # Copy configs
 ADD configs /home/rly/configs
