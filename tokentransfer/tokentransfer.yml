@@ -19,8 +19,8 @@ services:
     image: "checkersb"
     ports:
       - "26658:26657"
-      - "1318:26657"
-      - "4501:26657"
+      - "1318:1317"
+      - "4501:4501"
     networks:
       - tokendemo
 
